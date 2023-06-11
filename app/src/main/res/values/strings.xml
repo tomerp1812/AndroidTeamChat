@@ -1,8 +1,25 @@
 <resources>
     <string name="app_name">TeamChat</string>
+    <string name="TeamChatTextView">TeamChat</string>
+    <string name="RegisterTextView">Register</string>
+    <string name="HasUserAlreadyTextView">Have an account? </string>
+    <string name="hintUsername">Username</string>
+    <string name="hintPassword">Password</string>
+    <string name="hintConfirmPassword">Confirm Password</string>
+    <string name="hintDisplayName">Display Name</string>
+    <string name="Click_Here">Click here</string>
+    <string name="LoginTextView">Login</string>
+    <string name="Login">Login</string>
+    <string name="NoAccount">Don\'t have an account? </string>
+    <string name="SignUp">Sign up</string>
+    <string name="ProfilePictureString">Profile picture</string>
+    <string name="usernameTermsMessage">Username must be between 2 and 10 characters.</string>
+    <string name="passwordTermsMessage">Password must be 8–16 characters long and contain English letters and numbers.</string>
     <string name="imSend">sendButton</string>
     <string name="tvUsername">User Name</string>
     <string name="imContact">SearchButton</string>
     <string name="etMessage">Message</string>
     <string name="etHintMessage">Enter Message</string>
+
+<!--  from 11.06.2023 strings  -->
 </resources>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+<!--  Register  -->
+    <item name="usernameEditTextInRegister" type="id" />
+    <item name="TeamChatTextView" type="id"/>
+    <item name="RegisterTextView" type="id"/>
+    <item name="PasswordEditTextInRegister" type="id"/>
+    <item name="ConfirmPasswordEditText" type="id"/>
+    <item name="DisplayNameEditText" type="id"/>
+    <item name="RegisterButton" type="id"/>
+    <item name="ProfileImageLinearLayout" type="id"/>
+    <item name="ProfileImageImageView" type="id"/>
+    <item name="HasUserAlreadyTextView" type="id"/>
+
+<!--  terms in Register  -->
+    <item name="usernameTerms" type="id"/>
+    <item name="passwordTerms" type="id"/>
+    <item name="displayNameTerms" type="id"/>
+
+<!--  Login  -->
+    <item name="toLoginTextViewInRegister" type="id"/>
+    <item name="LoginTextViewInLogin" type="id"/>
+    <item name="usernameEditTextInLogin" type="id"/>
+    <item name="PasswordEditTextInLogin" type="id"/>
+    <item name="LoginButton" type="id"/>
+
+</resources>
