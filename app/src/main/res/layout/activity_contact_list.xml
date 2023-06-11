@@ -35,7 +35,6 @@
             android:layout_height="50dp"
             android:src="?android:attr/actionModeWebSearchDrawable"
             android:layout_weight="1"
-            android:background="@null"
             android:contentDescription="SearchButton" />
         <ImageButton
             android:id="@+id/addButton"
@@ -43,7 +42,6 @@
             android:layout_height="50dp"
             android:src="@android:drawable/ic_menu_add"
             android:layout_weight="1"
-            android:background="@null"
             android:contentDescription="AddButton" />
         <ImageButton
             android:id="@+id/preferencesButton"

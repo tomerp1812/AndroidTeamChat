@@ -14,10 +14,12 @@
     <string name="SignUp">Sign up</string>
     <string name="ProfilePictureString">Profile picture</string>
     <string name="usernameTermsMessage">Username must be between 2 and 10 characters.</string>
-    <string name="passwordTermsMessage">Password must be 8-16 characters long and contain English letters and numbers.</string>
+    <string name="passwordTermsMessage">Password must be 8–16 characters long and contain English letters and numbers.</string>
     <string name="imSend">sendButton</string>
     <string name="tvUsername">User Name</string>
     <string name="imContact">SearchButton</string>
     <string name="etMessage">Message</string>
     <string name="etHintMessage">Enter Message</string>
+
+<!--  from 11.06.2023 strings  -->
 </resources>
