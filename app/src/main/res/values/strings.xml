@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">TeamChat</string>
+    <string name="imSend">sendButton</string>
+    <string name="tvUsername">User Name</string>
+    <string name="imContact">SearchButton</string>
+    <string name="etMessage">Message</string>
+    <string name="etHintMessage">Enter Message</string>
 </resources>
