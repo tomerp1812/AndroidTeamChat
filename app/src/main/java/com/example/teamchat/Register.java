@@ -1,9 +1,10 @@
 package com.example.teamchat;
 
-import androidx.appcompat.app.AppCompatActivity;
+import
+        androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
-import android.icu.number.IntegerWidth;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,19 +12,31 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.teamchat.api.userApi;
+
 public class Register extends AppCompatActivity {
+    public static Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         createTermsView();
+        context = getApplicationContext();
 
 
 
 
         Button btnRegister = findViewById(R.id.RegisterButton);
         btnRegister.setOnClickListener(v -> {
+            String username = "tomer4";
+            String password = "1234";
+            String displayName = "Tomerrrrrr";
+            String profilePic = "Picture";
+
+            UserWithPass user = new UserWithPass(username, password, displayName, profilePic);
+            userApi userApi = new userApi(context);
+            userApi.onRegister(user);
             Intent i = new Intent(this, MainActivity.class);
             startActivity(i);
         });
