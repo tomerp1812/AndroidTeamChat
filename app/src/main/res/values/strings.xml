@@ -20,6 +20,8 @@
     <string name="imContact">SearchButton</string>
     <string name="etMessage">Message</string>
     <string name="etHintMessage">Enter Message</string>
+    <string name="userUrl">http://10.0.2.2:5000/api/</string>
+<!--    <string name="userUrl">http://192.168.221.1:5000/api/Users/</string>-->
 
-<!--  from 11.06.2023 strings  -->
+    <!--  from 11.06.2023 strings  -->
 </resources>
