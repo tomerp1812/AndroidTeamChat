@@ -1,14 +1,15 @@
 package com.example.teamchat;
 
-import
-        androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -25,14 +26,20 @@ public class Register extends AppCompatActivity {
         context = getApplicationContext();
 
 
-
-
         Button btnRegister = findViewById(R.id.RegisterButton);
         btnRegister.setOnClickListener(v -> {
-            String username = "tomer4";
-            String password = "1234";
-            String displayName = "Tomerrrrrr";
-            String profilePic = "Picture";
+            EditText usernameEditText = findViewById(R.id.usernameEditTextInRegister);
+            EditText passwordEditText = findViewById(R.id.PasswordEditTextInRegister);
+            EditText confirmPasswordEditText = findViewById(R.id.ConfirmPasswordEditText);
+            EditText displayNameEditText = findViewById(R.id.DisplayNameEditText);
+            ImageView profileImageView = findViewById(R.id.ProfileImageImageView);
+
+            String username = usernameEditText.getText().toString();
+            String password = passwordEditText.getText().toString();
+            String confirmPassword = confirmPasswordEditText.getText().toString();
+            String displayName = displayNameEditText.getText().toString();
+            String profilePic = profileImageView.toString();
+
 
             UserWithPass user = new UserWithPass(username, password, displayName, profilePic);
             userApi userApi = new userApi(context);
@@ -48,7 +55,7 @@ public class Register extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void createTermsView(){
+    public void createTermsView() {
         //creating instances of the edit texts
         EditText editUserName = findViewById(R.id.usernameEditTextInRegister);
         EditText editPassword = findViewById(R.id.PasswordEditTextInRegister);
