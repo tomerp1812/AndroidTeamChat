@@ -1,6 +1,11 @@
-package com.example.teamchat;
+package com.example.teamchat.entities;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class UserWithPass {
+    @PrimaryKey(autoGenerate = true)
     private String username;
     private String password;
 

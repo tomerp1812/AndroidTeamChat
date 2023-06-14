@@ -1,14 +1,19 @@
 package com.example.teamchat.entities;
 
-import java.util.Date;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+@Entity
 public class Contact {
+    @PrimaryKey(autoGenerate = true)
     private String username;
+    private int id;
     private String lastMessage;
-    private String profilePic;
-    private Date date;
+    private int profilePic;
+    private String date;
 
-    public Contact(String username, String lastMessage, String profilePic, Date date) {
+
+    public Contact(String username, String lastMessage, int profilePic, String date) {
         this.username = username;
         this.lastMessage = lastMessage;
         this.profilePic = profilePic;
@@ -23,11 +28,11 @@ public class Contact {
         this.lastMessage = lastMessage;
     }
 
-    public void setProfilePic(String profilePic) {
+    public void setProfilePic(int profilePic) {
         this.profilePic = profilePic;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -39,11 +44,11 @@ public class Contact {
         return lastMessage;
     }
 
-    public String getProfilePic() {
+    public int getProfilePic() {
         return profilePic;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 }

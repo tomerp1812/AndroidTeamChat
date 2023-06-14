@@ -14,7 +14,7 @@ public class ContactViewModel extends ViewModel {
 
     public ContactViewModel() {
         repository = new ContactRepository();
-//        contacts = repository.getAll();
+        contacts = repository.getAll();
     }
 
     public LiveData<List<Contact>> get() {
@@ -22,11 +22,11 @@ public class ContactViewModel extends ViewModel {
     }
 
     public void add(Contact contact) {
-//        repository.add(contact);
+        repository.add(contact);
     }
 
     public void delete(Contact contact) {
-//        repository.delete(contact);
+        repository.delete(contact);
     }
 
 }
