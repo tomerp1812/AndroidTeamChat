@@ -1,61 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ContactList"
-    android:background="@color/material_dynamic_primary40">
+    android:background="@color/blue"
+    tools:context=".chats.ContactList">
 
     <LinearLayout
         android:id="@+id/headerLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp">
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/tvTeamChat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TeamChat"
-            android:textColor="@android:color/white"
-            android:textSize="24sp"
-            android:layout_weight="10" />
+            android:layout_weight="10"
+            android:text="@string/teamChat"
+            android:textColor="@color/white"
+            android:textSize="24sp" />
 
         <ImageButton
-            android:id="@+id/searchButton"
+            android:id="@+id/ibPreferences"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="?android:attr/actionModeWebSearchDrawable"
-            android:layout_weight="1"
-            android:contentDescription="SearchButton" />
-        <ImageButton
-            android:id="@+id/addButton"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@android:drawable/ic_menu_add"
-            android:layout_weight="1"
-            android:contentDescription="AddButton" />
-        <ImageButton
-            android:id="@+id/preferencesButton"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@android:drawable/ic_menu_preferences"
             android:layout_weight="1"
             android:background="@null"
-            android:contentDescription="preferencesButton" />
+            android:contentDescription="@string/preferencesButton"
+            android:src="@android:drawable/ic_menu_preferences" />
 
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/contact_list"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/lvContactList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -63,5 +49,31 @@
         app:layout_constraintVertical_bias="0.0"
         tools:layout_editor_absoluteX="0dp"
         tools:listitem="@layout/contact_item" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:contentDescription="@string/addButton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_add"
+        android:focusable="true" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="336dp"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:contentDescription="@string/searchButton"
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_search" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -21,10 +21,10 @@
             android:windowSoftInputMode="adjustResize"
             android:exported="false" />
         <activity
-            android:name=".ChatScreen"
+            android:name=".chats.ChatScreen"
             android:exported="false" />
         <activity
-            android:name=".ContactList"
+            android:name=".chats.ContactList"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
