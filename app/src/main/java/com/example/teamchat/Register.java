@@ -1,19 +1,15 @@
 package com.example.teamchat;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.teamchat.api.userApi;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class Register extends AppCompatActivity {
     public static Context context;
@@ -40,17 +36,38 @@ public class Register extends AppCompatActivity {
             String displayName = displayNameEditText.getText().toString();
             String profilePic = profileImageView.toString();
 
+//            !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-            UserWithPass user = new UserWithPass(username, password, displayName, profilePic);
-            userApi userApi = new userApi(context);
-            userApi.onRegister(user);
-            Intent i = new Intent(this, MainActivity.class);
-            startActivity(i);
+//            if (user !2 - 8...){
+//
+//            }else if (!password.equals(confirmPassword)) {
+//
+//            } else if (password < 2 && password > 8...){
+//
+//            }else if (displayName ...){
+//
+//            }else if (profilePic ...){
+//
+//            }else{
+//                UserWithPass user = new UserWithPass(username, password, displayName, "abc");
+//                userApi userApi = new userApi(context);
+//
+//                CompletableFuture<UserNoPass> registrationFuture = userApi.onRegister(user);
+//                registrationFuture.whenComplete((registeredUser, throwable) -> {
+//                    if (registeredUser != null) {
+//                        navigateToLoginScreen();
+//                    } else {
+//                        setErrorMessageForRegistrationFailure
+//                    }
+//                });
+//            }
+
+
+            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         });
-
     }
 
-    public void navigateToLoginScreen(View view) {
+    public void navigateToLoginScreen() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
