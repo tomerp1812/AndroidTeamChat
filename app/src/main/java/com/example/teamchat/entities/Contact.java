@@ -6,49 +6,37 @@ import androidx.room.PrimaryKey;
 @Entity
 public class Contact {
     @PrimaryKey(autoGenerate = true)
-    private String username;
     private int id;
-    private String lastMessage;
-    private int profilePic;
-    private String date;
+    private UserNoPass user;
+    private LastMsg lastMsg;
 
-
-    public Contact(String username, String lastMessage, int profilePic, String date) {
-        this.username = username;
-        this.lastMessage = lastMessage;
-        this.profilePic = profilePic;
-        this.date = date;
+    public Contact(int id, UserNoPass user, LastMsg lastMsg) {
+        this.id = id;
+        this.user = user;
+        this.lastMsg = lastMsg;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public int getId() {
+        return id;
     }
 
-    public void setLastMessage(String lastMessage) {
-        this.lastMessage = lastMessage;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setProfilePic(int profilePic) {
-        this.profilePic = profilePic;
+    public UserNoPass getUser() {
+        return user;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setUser(UserNoPass user) {
+        this.user = user;
     }
 
-    public String getUsername() {
-        return username;
+    public LastMsg getLastMsg() {
+        return lastMsg;
     }
 
-    public String getLastMessage() {
-        return lastMessage;
-    }
-
-    public int getProfilePic() {
-        return profilePic;
-    }
-
-    public String getDate() {
-        return date;
+    public void setLastMsg(LastMsg lastMsg) {
+        this.lastMsg = lastMsg;
     }
 }

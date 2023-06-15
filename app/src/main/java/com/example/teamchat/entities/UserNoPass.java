@@ -7,11 +7,10 @@ import androidx.room.PrimaryKey;
 public class UserNoPass {
     @PrimaryKey(autoGenerate = true)
     private String username;
-
     private String displayName;
-    private String profilePic;
+    private int profilePic;
 
-    public UserNoPass(String username, String displayName, String profilePic) {
+    public UserNoPass(String username, String displayName, int profilePic) {
         setUsername(username);
         setDisplayName(displayName);
         setProfilePic(profilePic);
@@ -33,11 +32,11 @@ public class UserNoPass {
         this.username = username;
     }
 
-    public String getProfilePic() {
+    public int getProfilePic() {
         return profilePic;
     }
 
-    public void setProfilePic(String profilePic) {
+    public void setProfilePic(int profilePic) {
         this.profilePic = profilePic;
     }
 }

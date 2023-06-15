@@ -23,8 +23,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
         this.contacts = contacts;
     }
 
-    public ContactListAdapter(List<Contact> contacts, Context context) {
-        this.contacts = contacts;
+    public ContactListAdapter( Context context) {
         this.context = context;
     }
 
@@ -38,10 +37,10 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
     @Override
     public void onBindViewHolder(@NonNull ContactListAdapter.ContactViewHolder holder, int position) {
         Contact contact = contacts.get(position);
-        holder.username.setText(contact.getUsername());
-        holder.lastMessage.setText(contact.getLastMessage());
-        holder.profilePic.setImageResource(contact.getProfilePic());
-        holder.date.setText(contact.getDate());
+        holder.username.setText(contact.getUser().getUsername());
+        holder.lastMessage.setText(contact.getLastMsg().getContent());
+        holder.profilePic.setImageResource(contact.getUser().getProfilePic());
+        holder.date.setText(contact.getLastMsg().getCreated());
 
 
     }
@@ -50,7 +49,9 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
     public int getItemCount() {
         return contacts.size();
     }
-
+    public Contact getItem(int position){
+        return contacts.get(position);
+    }
 
     class ContactViewHolder extends  RecyclerView.ViewHolder{
         ImageView profilePic;

@@ -12,9 +12,11 @@ import java.util.List;
 
 @Dao
 public interface ContactDao {
+    //get all the contact from the DB
     @Query("SELECT * FROM Contact")
     List<Contact> index();
 
+    //get specific contact from the DB
     @Query("SELECT * FROM Contact WHERE id = :id")
     Contact get(int id);
 
