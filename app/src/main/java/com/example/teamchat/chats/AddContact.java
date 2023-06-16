@@ -15,8 +15,8 @@ public class AddContact extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_contact);
         ///DATABASE!!!!!
-        Button btnSave = findViewById(R.id.btnSave);
-        btnSave.setOnClickListener(view ->{
+        Button btnAdd = findViewById(R.id.btnAdd);
+        btnAdd.setOnClickListener(view ->{
             EditText username = findViewById(R.id.etContent);
 //            username.getText().toString()
             //CHECK IF THE USERNAME IS IN THE DB AND ENTER IT
