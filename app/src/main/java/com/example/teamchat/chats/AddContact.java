@@ -7,6 +7,7 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.teamchat.R;
+import com.example.teamchat.repositories.ContactRepository;
 
 public class AddContact extends AppCompatActivity {
 
@@ -14,13 +15,12 @@ public class AddContact extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_contact);
-        ///DATABASE!!!!!
+        ContactRepository repository = new ContactRepository(this);
         Button btnAdd = findViewById(R.id.btnAdd);
         btnAdd.setOnClickListener(view ->{
             EditText username = findViewById(R.id.etContent);
-//            username.getText().toString()
-            //CHECK IF THE USERNAME IS IN THE DB AND ENTER IT
-
+            String user = username.getText().toString();
+            repository.add(user);
             finish();
         });
     }

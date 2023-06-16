@@ -21,7 +21,7 @@ public interface ContactDao {
     Contact get(int id);
 
     @Insert
-    void insert(Contact... contacts);
+    void insert(String username);
 
     @Update
     void update(Contact... contacts);

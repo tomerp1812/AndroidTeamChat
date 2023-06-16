@@ -24,7 +24,7 @@ public class ContactViewModel extends ViewModel {
         return contacts;
     }
 
-    public void add(Contact contact) {
+    public void add(String contact) {
         repository.add(contact);
     }
 

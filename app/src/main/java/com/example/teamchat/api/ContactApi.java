@@ -69,7 +69,9 @@ public class ContactApi {
             }
         });
     }
-
+//public Contact onGetContactDetails(int i){
+//        Call<Contact> call = contactApiService.get
+//}
     public void onDeleteContact() {
         /////need to add id
         Call<Void> call = contactApiService.deleteContact(1);
