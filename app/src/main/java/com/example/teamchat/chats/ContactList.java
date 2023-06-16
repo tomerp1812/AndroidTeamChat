@@ -27,19 +27,20 @@ public class ContactList extends AppCompatActivity {
         setContentView(R.layout.activity_contact_list);
         context = getApplicationContext();
         viewModel = new ContactViewModel(context);
+        // Retrieve the token from the intent
+        Intent i = getIntent();
+        String token = i.getStringExtra("token");
 
         //check this!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
         RecyclerView lvContactList = findViewById(R.id.lvContactList);
         lvContactList.setClickable(true);
-        lvContactList.setLayoutManager(new LinearLayoutManager(this));
+        lvContactList.setLayoutManager(new LinearLayoutManager(context));
 
         final ContactListAdapter adapter = new ContactListAdapter(context);
         lvContactList.setAdapter(adapter);
-        viewModel.get().observe(this,contacts -> {
-            adapter.setContacts(contacts);
-        });
+       // viewModel.get().observe(this, adapter::setContacts);
 
 
        ///// DATABASE!!!!!
