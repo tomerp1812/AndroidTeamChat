@@ -11,6 +11,12 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.teamchat.api.userApi;
+import com.example.teamchat.entities.UserNoPass;
+import com.example.teamchat.entities.UserWithPass;
+
+import java.util.concurrent.CompletableFuture;
+
 public class Register extends AppCompatActivity {
     public static Context context;
 
@@ -49,18 +55,18 @@ public class Register extends AppCompatActivity {
 //            }else if (profilePic ...){
 //
 //            }else{
-//                UserWithPass user = new UserWithPass(username, password, displayName, "abc");
-//                userApi userApi = new userApi(context);
-//
-//                CompletableFuture<UserNoPass> registrationFuture = userApi.onRegister(user);
-//                registrationFuture.whenComplete((registeredUser, throwable) -> {
-//                    if (registeredUser != null) {
-//                        navigateToLoginScreen();
-//                    } else {
+                UserWithPass user = new UserWithPass(username, password, displayName, "abc");
+                userApi userApi = new userApi(context);
+
+                CompletableFuture<UserNoPass> registrationFuture = userApi.onRegister(user);
+                registrationFuture.whenComplete((registeredUser, throwable) -> {
+                    if (registeredUser != null) {
+                        navigateToLoginScreen();
+                    } else {
 //                        setErrorMessageForRegistrationFailure
-//                    }
-//                });
-//            }
+                    }
+                });
+
 
 
             //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1

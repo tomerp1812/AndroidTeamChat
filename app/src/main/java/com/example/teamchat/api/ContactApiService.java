@@ -12,7 +12,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
-public interface contactApiService {
+public interface ContactApiService {
     //////////TOKEN/////////
     @GET("Chats")
     Call<List<Contact>> getContacts();
