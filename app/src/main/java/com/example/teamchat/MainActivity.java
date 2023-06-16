@@ -13,6 +13,8 @@ import com.example.teamchat.api.userApi;
 import com.example.teamchat.chats.ContactList;
 import com.example.teamchat.entities.UserForLogin;
 
+import org.json.JSONObject;
+
 import java.util.concurrent.CompletableFuture;
 
 import okhttp3.ResponseBody;
@@ -38,15 +40,26 @@ public class MainActivity extends AppCompatActivity {
             userApi userApi = new userApi(context);
             CompletableFuture<ResponseBody> loginFuture = userApi.onLogin(user);
             loginFuture.thenAccept(responseBody -> {
-                // Handle login success
-                Intent i = new Intent(this, ContactList.class);
-                startActivity(i);
+                try {
+                    String response = responseBody.string();
+                    JSONObject jsonObject = new JSONObject(response);
+                    String token = jsonObject.getString("token");
+                    Intent i = new Intent(this, ContactList.class);
+                    // Pass the token to the next activity if needed
+                    i.putExtra("token", token);
+                    startActivity(i);
+                    // token variable now contains the token string
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    // Handle JSON parsing error or response body reading error
+                }
             }).exceptionally(ex -> {
                 // Handle login failure
-//                setErrorMessage("UserName or Password incorrect");!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                // setErrorMessage("UserName or Password incorrect");...
                 return null;
             });
         });
+
     }
 
     public void navigateToRegistrationScreen(View view) {
