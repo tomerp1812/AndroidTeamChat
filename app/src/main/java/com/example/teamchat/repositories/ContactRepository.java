@@ -1,10 +1,12 @@
 package com.example.teamchat.repositories;
 
 import android.content.Context;
+import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.teamchat.Dao.ContactDB;
 import com.example.teamchat.Dao.ContactDao;
 import com.example.teamchat.api.ContactApi;
 import com.example.teamchat.entities.Contact;
@@ -17,13 +19,11 @@ public class ContactRepository {
     private ContactApi contactApi;
     private ContactListData contactListData;
 
-
     public ContactRepository(Context context) {
-
         contactListData = new ContactListData();
         contactApi = new ContactApi(contactListData, contactDao, context);
-//        ContactDB db = ContactDB.getInstance(context);
-//        contactDao = db.contactDao();
+        ContactDB db = ContactDB.getInstance(context);
+        contactDao = db.contactDao();
     }
 
 
@@ -57,9 +57,15 @@ public class ContactRepository {
         return contactListData;
     }
 
-    public void add(final Contact contact) {
-        contactApi.onAddContact(contact.getUser().getUsername());
+    public void add(final String contact) {
+        contactApi.onAddContact(contact);
+        AsyncTask.execute(() -> contactDao.insert(contact));
+
     }
+
+//    public Contact getContact(int id){
+//        return contactApi.onGetContactDetails(id);
+//    }
 
     public void delete(final Contact contact) {
         contactApi.onDeleteContact();

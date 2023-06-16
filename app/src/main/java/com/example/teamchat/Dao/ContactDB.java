@@ -10,10 +10,16 @@ import com.example.teamchat.entities.Contact;
 
 @Database(entities = {Contact.class}, version = 1)
 public abstract class ContactDB extends RoomDatabase {
-    public static ContactDB getInstance(Context context) {
-        ContactDB contactDB = Room.databaseBuilder(context, ContactDB.class, "my-database")
-                .build();
-        return contactDB;
+    private static final String DATABASE_NAME = "contact_db";
+    private static ContactDB instance;
+
+    public static synchronized ContactDB getInstance(Context context) {
+        if (instance == null) {
+            instance = Room.databaseBuilder(context.getApplicationContext(), ContactDB.class, DATABASE_NAME)
+                    .fallbackToDestructiveMigration()
+                    .build();
+        }
+        return instance;
     }
 
     public abstract ContactDao contactDao();
