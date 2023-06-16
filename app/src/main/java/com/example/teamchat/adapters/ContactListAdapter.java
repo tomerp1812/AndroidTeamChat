@@ -13,18 +13,24 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.teamchat.R;
 import com.example.teamchat.entities.Contact;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.ContactViewHolder> {
      private List<Contact> contacts;
      private Context context;
 
-    public void setContacts(List<Contact> contacts) {
-        this.contacts = contacts;
+    public ContactListAdapter(Context context) {
+        contacts = new ArrayList<Contact>();
+        this.context = context;
     }
 
-    public ContactListAdapter( Context context) {
-        this.context = context;
+    public void setContacts(List<Contact> contacts) {
+        if(contacts == null){
+            this.contacts = new ArrayList<>();
+        }else{
+            this.contacts = contacts;
+        }
     }
 
     @NonNull

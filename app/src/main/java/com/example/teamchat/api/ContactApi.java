@@ -1,10 +1,11 @@
 package com.example.teamchat.api;
 
+import android.content.Context;
+
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.teamchat.Dao.ContactDao;
 import com.example.teamchat.R;
-import com.example.teamchat.TeamChat;
 import com.example.teamchat.entities.Contact;
 import com.example.teamchat.entities.ContactNoMsg;
 
@@ -22,11 +23,14 @@ public class ContactApi {
     private Retrofit retrofit;
     private ContactApiService contactApiService;
 
-    public ContactApi(MutableLiveData<List<Contact>> contacts, ContactDao contactDao) {
+    private Context context;
+
+    public ContactApi(MutableLiveData<List<Contact>> contacts, ContactDao contactDao, Context context1) {
+        context = context1;
         this.contacts = contacts;
         this.contactDao = contactDao;
         retrofit = new Retrofit.Builder()
-                .baseUrl(TeamChat.context.getString(R.string.userUrl))
+                .baseUrl(context.getString(R.string.userUrl))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         contactApiService = retrofit.create(ContactApiService.class);

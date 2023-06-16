@@ -5,7 +5,6 @@ import android.content.Context;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.teamchat.Dao.ContactDB;
 import com.example.teamchat.Dao.ContactDao;
 import com.example.teamchat.api.ContactApi;
 import com.example.teamchat.entities.Contact;
@@ -19,13 +18,12 @@ public class ContactRepository {
     private ContactListData contactListData;
 
 
+    public ContactRepository(Context context) {
 
-    public ContactRepository(Context context){
-
-        contactListData= new ContactListData();
-        contactApi= new ContactApi(contactListData,contactDao);
-        ContactDB db = ContactDB.getInstance(context);
-        contactDao = db.contactDao();
+        contactListData = new ContactListData();
+        contactApi = new ContactApi(contactListData, contactDao, context);
+//        ContactDB db = ContactDB.getInstance(context);
+//        contactDao = db.contactDao();
     }
 
 
@@ -45,21 +43,25 @@ public class ContactRepository {
 
 
             //get information from the DB
-            new Thread(()->{
+            new Thread(() -> {
                 contactListData.postValue(contactDao.index());
-            }).start();;
+            }).start();
+            ;
 
 
             contactApi.onGetContactList(this);
         }
     }
-public LiveData<List<Contact>> getAll(){return contactListData;}
 
-    public void add(final Contact contact){
+    public LiveData<List<Contact>> getAll() {
+        return contactListData;
+    }
+
+    public void add(final Contact contact) {
         contactApi.onAddContact(contact.getUser().getUsername());
     }
 
-    public void delete(final Contact contact){
+    public void delete(final Contact contact) {
         contactApi.onDeleteContact();
     }
 }

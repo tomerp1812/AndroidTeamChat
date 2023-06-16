@@ -10,10 +10,10 @@ public class UserWithPass {
     private String password;
 
     String displayName;
-    private String profilePic;
+    private int profilePic;
 
 
-    public UserWithPass(String username, String password, String displayName, String profilePic) {
+    public UserWithPass(String username, String password, String displayName, int profilePic) {
         setUsername(username);
         setPassword(password);
         setDisplayName(displayName);
@@ -46,11 +46,11 @@ public class UserWithPass {
         this.password = password;
     }
 
-    public String getProfilePic() {
+    public int getProfilePic() {
         return profilePic;
     }
 
-    public void setProfilePic(String profilePic) {
+    public void setProfilePic(int profilePic) {
         this.profilePic = profilePic;
     }
 }

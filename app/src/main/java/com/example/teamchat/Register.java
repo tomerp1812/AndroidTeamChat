@@ -55,7 +55,7 @@ public class Register extends AppCompatActivity {
 //            }else if (profilePic ...){
 //
 //            }else{
-                UserWithPass user = new UserWithPass(username, password, displayName, "abc");
+                UserWithPass user = new UserWithPass(username, password, displayName, 123);
                 userApi userApi = new userApi(context);
 
                 CompletableFuture<UserNoPass> registrationFuture = userApi.onRegister(user);
