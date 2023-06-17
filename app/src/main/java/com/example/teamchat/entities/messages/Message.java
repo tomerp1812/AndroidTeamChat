@@ -1,4 +1,4 @@
-package com.example.teamchat.entities;
+package com.example.teamchat.entities.messages;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -6,8 +6,16 @@ import androidx.room.PrimaryKey;
 @Entity
 public class Message {
     @PrimaryKey(autoGenerate = true)
+    private int id;
     private String message;
-    //private Date time;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public Message(String message) {
         this.message = message;

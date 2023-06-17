@@ -1,9 +1,9 @@
-package com.example.teamchat.Dao;
+package com.example.teamchat.Dao.Chat;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
 
-import com.example.teamchat.entities.Message;
+import com.example.teamchat.entities.messages.Message;
 
 /////////userId!!!!!!!
 @Dao

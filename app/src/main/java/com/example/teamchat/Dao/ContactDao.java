@@ -6,7 +6,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.example.teamchat.entities.Contact;
+import com.example.teamchat.entities.contacts.Contact;
 
 import java.util.List;
 
@@ -20,8 +20,11 @@ public interface ContactDao {
     @Query("SELECT * FROM Contact WHERE id = :id")
     Contact get(int id);
 
+    @Query("SELECT id FROM USERNOPASS WHERE username= :username")
+    int getId(String username);
+
     @Insert
-    void insert(String username);
+    void insert(Contact contact);
 
     @Update
     void update(Contact... contacts);

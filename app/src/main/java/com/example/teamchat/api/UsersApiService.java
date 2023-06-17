@@ -1,8 +1,8 @@
 package com.example.teamchat.api;
 
-import com.example.teamchat.entities.UserForLogin;
-import com.example.teamchat.entities.UserNoPass;
-import com.example.teamchat.entities.UserWithPass;
+import com.example.teamchat.entities.user.UserForLogin;
+import com.example.teamchat.entities.user.UserNoPass;
+import com.example.teamchat.entities.user.UserWithPass;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;

@@ -3,9 +3,9 @@ package com.example.teamchat.api;
 import android.content.Context;
 
 import com.example.teamchat.R;
-import com.example.teamchat.entities.UserForLogin;
-import com.example.teamchat.entities.UserNoPass;
-import com.example.teamchat.entities.UserWithPass;
+import com.example.teamchat.entities.user.UserForLogin;
+import com.example.teamchat.entities.user.UserNoPass;
+import com.example.teamchat.entities.user.UserWithPass;
 
 import java.util.concurrent.CompletableFuture;
 

@@ -4,9 +4,9 @@ import android.content.Context;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.teamchat.Dao.ChatDao;
+import com.example.teamchat.Dao.Chat.ChatDao;
 import com.example.teamchat.api.chatApi;
-import com.example.teamchat.entities.Message;
+import com.example.teamchat.entities.messages.Message;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -16,9 +16,9 @@ public class ChatRepository {
     private chatApi chatApi;
     private ChatListData chatListData;
 
-    public ChatRepository(Context context){
+    public ChatRepository(Context context, String authorizationToken){
         chatListData= new ChatListData();
-        chatApi = new chatApi(context);
+        chatApi = new chatApi(context, authorizationToken);
     }
 
     class ChatListData extends MutableLiveData<List<Message>>{

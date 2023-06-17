@@ -12,8 +12,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.teamchat.api.userApi;
-import com.example.teamchat.entities.UserNoPass;
-import com.example.teamchat.entities.UserWithPass;
+import com.example.teamchat.entities.user.UserNoPass;
+import com.example.teamchat.entities.user.UserWithPass;
 
 import java.util.concurrent.CompletableFuture;
 

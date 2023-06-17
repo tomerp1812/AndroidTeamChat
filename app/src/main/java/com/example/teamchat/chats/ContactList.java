@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.teamchat.R;
 import com.example.teamchat.adapters.ContactListAdapter;
-import com.example.teamchat.entities.Contact;
+import com.example.teamchat.entities.contacts.Contact;
 import com.example.teamchat.viewModels.ContactViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -26,10 +26,10 @@ public class ContactList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_list);
         context = getApplicationContext();
-        viewModel = new ContactViewModel(context);
         // Retrieve the token from the intent
-        Intent i = getIntent();
-        String token = i.getStringExtra("token");
+        String authorizationHeader = getIntent().getStringExtra("token");
+        viewModel = new ContactViewModel(context, authorizationHeader);
+
 
         //check this!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
@@ -40,7 +40,7 @@ public class ContactList extends AppCompatActivity {
 
         final ContactListAdapter adapter = new ContactListAdapter(context);
         lvContactList.setAdapter(adapter);
-       // viewModel.get().observe(this, adapter::setContacts);
+        viewModel.get().observe(this, adapter::setContacts);
 
 
        ///// DATABASE!!!!!
@@ -48,6 +48,7 @@ public class ContactList extends AppCompatActivity {
         FloatingActionButton btnAdd = findViewById(R.id.btnAdd);
         btnAdd.setOnClickListener(view ->{
             Intent intent = new Intent(this, AddContact.class);
+            intent.putExtra("token", authorizationHeader);
             startActivity(intent);
         });
 

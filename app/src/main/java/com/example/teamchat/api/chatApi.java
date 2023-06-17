@@ -5,7 +5,7 @@ import android.content.Context;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.teamchat.R;
-import com.example.teamchat.entities.Message;
+import com.example.teamchat.entities.messages.Message;
 
 import java.util.List;
 
@@ -20,7 +20,10 @@ public class chatApi {
     private Retrofit retrofit;
     private chatsApiService chatsApiService;
 
-    public chatApi(Context context){
+    private String authorizationToken;
+
+    public chatApi(Context context, String authorizationToken){
+        this.authorizationToken = authorizationToken;
         retrofit = new Retrofit.Builder()
                 .baseUrl(context.getString(R.string.userUrl))
                 .addConverterFactory(GsonConverterFactory.create())
@@ -29,7 +32,7 @@ public class chatApi {
     }
 
     public void onGetMessages(MutableLiveData<List<Message>> messageListData){
-        Call<List<Message>> call = chatsApiService.getMessages();
+        Call<List<Message>> call = chatsApiService.getMessages(authorizationToken);
 
         call.enqueue(new Callback<List<Message>>() {
             @Override
@@ -45,7 +48,7 @@ public class chatApi {
     }
 
     public void onAddMessage(MutableLiveData<Message> messageMutableLiveData){
-        Call<Message> call = chatsApiService.addMessage();
+        Call<Message> call = chatsApiService.addMessage(authorizationToken);
 
         call.enqueue(new Callback<Message>() {
             @Override

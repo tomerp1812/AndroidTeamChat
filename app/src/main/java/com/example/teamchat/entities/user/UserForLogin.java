@@ -1,4 +1,4 @@
-package com.example.teamchat.entities;
+package com.example.teamchat.entities.user;
 
 public class UserForLogin {
     private String username;

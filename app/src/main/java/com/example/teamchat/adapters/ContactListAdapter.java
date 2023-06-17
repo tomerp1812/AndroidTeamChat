@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.teamchat.R;
-import com.example.teamchat.entities.Contact;
+import com.example.teamchat.entities.contacts.Contact;
 
 import java.util.ArrayList;
 import java.util.List;

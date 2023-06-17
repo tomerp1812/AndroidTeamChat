@@ -1,4 +1,4 @@
-package com.example.teamchat.entities;
+package com.example.teamchat.entities.messages;
 
 public class LastMsg {
     private int id;

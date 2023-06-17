@@ -5,7 +5,7 @@ import android.content.Context;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.teamchat.entities.Contact;
+import com.example.teamchat.entities.contacts.Contact;
 import com.example.teamchat.repositories.ContactRepository;
 
 import java.util.List;
@@ -15,8 +15,8 @@ public class ContactViewModel extends ViewModel {
     private LiveData<List<Contact>> contacts;
     private Context context;
 
-    public ContactViewModel(Context context) {
-        repository = new ContactRepository(context);
+    public ContactViewModel(Context context, String authorizationHeader) {
+        repository = new ContactRepository(context, authorizationHeader);
         contacts = repository.getAll();
     }
 
