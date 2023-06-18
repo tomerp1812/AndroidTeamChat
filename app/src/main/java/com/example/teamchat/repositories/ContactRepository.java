@@ -11,11 +11,9 @@ import com.example.teamchat.api.ContactApi;
 import com.example.teamchat.entities.contacts.Contact;
 import com.example.teamchat.entities.messages.ContactNoMsg;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 
 public class ContactRepository {
     private ContactDao contactDao;
@@ -26,7 +24,7 @@ public class ContactRepository {
 
     public ContactRepository(Context context, String authorizationHeader) {
         contactListData = new ContactListData();
-        contactApi = new ContactApi(contactListData, context, authorizationHeader);
+        contactApi = new ContactApi(context, authorizationHeader);
         ContactDB db = ContactDB.getInstance(context);
         contactDao = db.contactDao();
         this.authorizationHeader = authorizationHeader;
@@ -43,7 +41,11 @@ public class ContactRepository {
     class ContactListData extends MutableLiveData<List<Contact>> {
         public ContactListData() {
             super();
-            List<Contact> contacts = new LinkedList<>();
+            List<Contact> contacts = new ArrayList<>();
+//            UserNoPass user = new UserNoPass("idit", "idit", R.drawable.background_image);
+//            LastMsg last = new LastMsg(1,"Hello","Hello");
+//            Contact newContact = new Contact(1,user, last);
+//            contacts.add(newContact);
             ///here we need to add items to the list
             setValue(contacts);
 
@@ -56,21 +58,25 @@ public class ContactRepository {
             //get information from the DB
             new Thread(() -> contactListData.postValue(contactDao.index())).start();
 
-
-            // Get information from the server
-            new Thread(() -> {
-                Future<List<Contact>> future = contactApi.onGetContactList();
-
-                try {
-                    contactListData.postValue(future.get());
-                } catch (InterruptedException e) {
-                    // Handle interrupted exception
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    // Handle execution exception
-                    e.printStackTrace();
-                }
-            }).start();
+            contactApi.onGetContactList(contactListData);
+//            contactApi.onGetContactList(this);
+//
+//            contactApi.onGetContactList();
+//
+//            // Get information from the server
+//            new Thread(() -> {
+//                Future<List<Contact>> future = contactApi.onGetContactList();
+//
+//                try {
+//                    contactListData.postValue(future.get());
+//                } catch (InterruptedException e) {
+//                    // Handle interrupted exception
+//                    e.printStackTrace();
+//                } catch (ExecutionException e) {
+//                    // Handle execution exception
+//                    e.printStackTrace();
+//                }
+//            }).start();
 
         }
     }
@@ -89,6 +95,7 @@ public class ContactRepository {
                 int id = contacts.size();
                 Contact newContact = new Contact(id, contactNoMsg.getUserNoPass(), null);
                 contactDao.insert(newContact);
+
             });
         }).exceptionally(throwable -> {
             // Handle exceptions occurred during the execution of the future
@@ -101,8 +108,8 @@ public class ContactRepository {
 //        return contactApi.onGetContactDetails(id);
 //    }
 
-    public void delete(final Contact contact) {
-        contactApi.onDeleteContact();
-    }
+//    public void delete(final Contact contact) {
+//        contactApi.onDeleteContact();
+//    }
 }
 

@@ -11,9 +11,9 @@ public class UserNoPass {
     private int id;
     private String username;
     private String displayName;
-    private int profilePic;
+    private String profilePic;
 
-    public UserNoPass(String username, String displayName, int profilePic) {
+    public UserNoPass(String username, String displayName, String profilePic) {
         setUsername(username);
         setDisplayName(displayName);
         setProfilePic(profilePic);
@@ -43,11 +43,11 @@ public class UserNoPass {
         this.username = username;
     }
 
-    public int getProfilePic() {
+    public String getProfilePic() {
         return profilePic;
     }
 
-    public void setProfilePic(int profilePic) {
+    public void setProfilePic(String profilePic) {
         this.profilePic = profilePic;
     }
 }

@@ -2,10 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="100dp"
     android:background="@color/white">
-
-
 
 
     <LinearLayout
@@ -15,12 +13,12 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:contentDescription="@string/ivProfilePic"
             android:id="@+id/ivProfile"
             android:layout_width="51dp"
             android:layout_height="60dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
+            android:contentDescription="@string/ivProfilePic"
             tools:src="@android:drawable/sym_def_app_icon" />
 
         <LinearLayout
@@ -65,6 +63,5 @@
         android:textColor="@color/black"
         android:textSize="15sp"
         tools:text="10:00" />
-
 
 </LinearLayout>

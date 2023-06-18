@@ -21,15 +21,16 @@ public class ContactViewModel extends ViewModel {
     }
 
     public LiveData<List<Contact>> get() {
-        return contacts;
+        return repository.getAll();
+        //return contacts
     }
 
     public void add(String contact) {
         repository.add(contact);
     }
 
-    public void delete(Contact contact) {
-        repository.delete(contact);
-    }
+//    public void delete(Contact contact) {
+//        repository.delete(contact);
+//    }
 
 }

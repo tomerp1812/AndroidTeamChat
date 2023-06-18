@@ -1,6 +1,7 @@
 package com.example.teamchat.api;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
@@ -12,7 +13,6 @@ import com.example.teamchat.entities.user.Username;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Future;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -22,7 +22,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ContactApi {
     private ContactDao contactDao;
-    private MutableLiveData<List<Contact>> contacts;
     private Retrofit retrofit;
     private ContactApiService contactApiService;
 
@@ -30,10 +29,9 @@ public class ContactApi {
 
     private String authorizationHeader;
 
-    public ContactApi(MutableLiveData<List<Contact>> contacts, Context context1, String authorizationHeader) {
+    public ContactApi(Context context1, String authorizationHeader) {
         this.authorizationHeader = authorizationHeader;
         context = context1;
-        this.contacts = contacts;
         retrofit = new Retrofit.Builder()
                 .baseUrl(context.getString(R.string.userUrl))
                 .addConverterFactory(GsonConverterFactory.create())
@@ -41,27 +39,23 @@ public class ContactApi {
         contactApiService = retrofit.create(ContactApiService.class);
     }
 
-    public Future<List<Contact>> onGetContactList() {
-        CompletableFuture<List<Contact>> future = new CompletableFuture<>();
-
+    public void onGetContactList(MutableLiveData<List<Contact>> contacts) {
         Call<List<Contact>> call = contactApiService.getContacts(authorizationHeader);
         call.enqueue(new Callback<List<Contact>>() {
             @Override
             public void onResponse(Call<List<Contact>> call, Response<List<Contact>> response) {
+                Log.i("Response", response.body().toString());
                 if (response.isSuccessful()) {
-                    future.complete(response.body());
-                } else {
-                    future.completeExceptionally(new Exception("Failed to get contact list"));
+                    contacts.setValue(response.body());
                 }
             }
 
             @Override
             public void onFailure(Call<List<Contact>> call, Throwable t) {
-                future.completeExceptionally(t);
+                Log.i("ResponseFail", t.toString());
             }
         });
 
-        return future;
     }
 
 
