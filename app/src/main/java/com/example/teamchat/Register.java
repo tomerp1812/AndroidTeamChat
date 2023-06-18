@@ -2,7 +2,10 @@ package com.example.teamchat;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -12,13 +15,15 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.teamchat.api.userApi;
-import com.example.teamchat.entities.UserNoPass;
-import com.example.teamchat.entities.UserWithPass;
+import com.example.teamchat.entities.user.UserNoPass;
+import com.example.teamchat.entities.user.UserWithPass;
 
 import java.util.concurrent.CompletableFuture;
 
 public class Register extends AppCompatActivity {
     public static Context context;
+    private static final int GALLERY_REQUEST_CODE = 1;
+    private ImageView profilePic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +31,15 @@ public class Register extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         createTermsView();
         context = getApplicationContext();
+
+        profilePic = findViewById(R.id.ProfileImageImageView);
+        LinearLayout profileImageLayout = findViewById(R.id.ProfileImageLinearLayout);
+        profileImageLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openGallery();
+            }
+        });
 
 
         Button btnRegister = findViewById(R.id.RegisterButton);
@@ -55,7 +69,7 @@ public class Register extends AppCompatActivity {
 //            }else if (profilePic ...){
 //
 //            }else{
-                UserWithPass user = new UserWithPass(username, password, displayName, 123);
+                UserWithPass user = new UserWithPass(username, password, displayName, profilePic);
                 userApi userApi = new userApi(context);
 
                 CompletableFuture<UserNoPass> registrationFuture = userApi.onRegister(user);
@@ -66,11 +80,26 @@ public class Register extends AppCompatActivity {
 //                        setErrorMessageForRegistrationFailure
                     }
                 });
-
-
-
-            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         });
+    }
+
+    // Method to open the gallery
+    private void openGallery() {
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == GALLERY_REQUEST_CODE && resultCode == RESULT_OK) {
+            // Get the selected image URI
+            Uri selectedImageUri = data.getData();
+
+            // Set the image in the ImageView
+            profilePic.setImageURI(selectedImageUri);
+        }
     }
 
     public void navigateToLoginScreen() {

@@ -11,9 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.teamchat.api.userApi;
 import com.example.teamchat.chats.ContactList;
-import com.example.teamchat.entities.UserForLogin;
-
-import org.json.JSONObject;
+import com.example.teamchat.entities.user.UserForLogin;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -42,11 +40,10 @@ public class MainActivity extends AppCompatActivity {
             loginFuture.thenAccept(responseBody -> {
                 try {
                     String response = responseBody.string();
-                    JSONObject jsonObject = new JSONObject(response);
-                    String token = jsonObject.getString("token");
+                    String authorizationHeader = "bearer " + response;
                     Intent i = new Intent(this, ContactList.class);
                     // Pass the token to the next activity if needed
-                    i.putExtra("token", token);
+                    i.putExtra("token", authorizationHeader);
                     startActivity(i);
                     // token variable now contains the token string
                 } catch (Exception e) {

@@ -1,4 +1,4 @@
-package com.example.teamchat.entities;
+package com.example.teamchat.entities.user;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -10,10 +10,10 @@ public class UserWithPass {
     private String password;
 
     String displayName;
-    private int profilePic;
+    private String profilePic;
 
 
-    public UserWithPass(String username, String password, String displayName, int profilePic) {
+    public UserWithPass(String username, String password, String displayName, String profilePic) {
         setUsername(username);
         setPassword(password);
         setDisplayName(displayName);
@@ -46,11 +46,11 @@ public class UserWithPass {
         this.password = password;
     }
 
-    public int getProfilePic() {
+    public String getProfilePic() {
         return profilePic;
     }
 
-    public void setProfilePic(int profilePic) {
+    public void setProfilePic(String profilePic) {
         this.profilePic = profilePic;
     }
 }

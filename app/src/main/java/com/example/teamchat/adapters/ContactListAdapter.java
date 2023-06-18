@@ -1,6 +1,9 @@
 package com.example.teamchat.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,63 +14,20 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.teamchat.R;
-import com.example.teamchat.entities.Contact;
+import com.example.teamchat.entities.contacts.Contact;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.ContactViewHolder> {
-     private List<Contact> contacts;
-     private Context context;
 
-    public ContactListAdapter(Context context) {
-        contacts = new ArrayList<Contact>();
-        this.context = context;
-    }
-
-    public void setContacts(List<Contact> contacts) {
-        if(contacts == null){
-            this.contacts = new ArrayList<>();
-        }else{
-            this.contacts = contacts;
-        }
-    }
-
-    @NonNull
-    @Override
-    public ContactListAdapter.ContactViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.contact_item,parent,false);
-        return new ContactListAdapter.ContactViewHolder(view);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull ContactListAdapter.ContactViewHolder holder, int position) {
-        Contact contact = contacts.get(position);
-        holder.username.setText(contact.getUser().getUsername());
-        holder.lastMessage.setText(contact.getLastMsg().getContent());
-        holder.profilePic.setImageResource(contact.getUser().getProfilePic());
-        holder.date.setText(contact.getLastMsg().getCreated());
+    class ContactViewHolder extends RecyclerView.ViewHolder {
+        private final ImageView profilePic;
+        private final TextView username;
+        private final TextView lastMessage;
+        private final TextView date;
 
 
-    }
-
-    @Override
-    public int getItemCount() {
-        return contacts.size();
-    }
-    public Contact getItem(int position){
-        return contacts.get(position);
-    }
-
-    class ContactViewHolder extends  RecyclerView.ViewHolder{
-        ImageView profilePic;
-        TextView username;
-        TextView lastMessage;
-        TextView date;
-
-
-
-        public ContactViewHolder(@NonNull View itemView) {
+        private ContactViewHolder(@NonNull View itemView) {
             super(itemView);
             profilePic = itemView.findViewById(R.id.ivProfile);
             username = itemView.findViewById(R.id.tvUsername);
@@ -75,4 +35,58 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
             date = itemView.findViewById(R.id.tvTime);
         }
     }
+
+    private final LayoutInflater mInflater;
+    private List<Contact> contacts;
+
+    public ContactListAdapter(Context context) {
+        mInflater = LayoutInflater.from(context);
+    }
+
+
+    @NonNull
+    @Override
+    public ContactViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View itemView = mInflater.inflate(R.layout.contact_item, parent, false);
+        return new ContactViewHolder(itemView);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ContactViewHolder holder, int position) {
+        if (contacts != null) {
+            final Contact contact = contacts.get(position);
+            holder.username.setText(contact.getUser().getUsername());
+            if(contact.getLastMsg() == null){
+                holder.lastMessage.setText("");
+                holder.date.setText("");
+            }else{
+                holder.lastMessage.setText(contact.getLastMsg().getContent());
+                holder.date.setText(contact.getLastMsg().getCreated());
+            }
+            byte[] imageInBytes = Base64.decode(contact.getUser().getProfilePic(), Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(imageInBytes,0, imageInBytes.length);
+            holder.profilePic.setImageBitmap(bitmap);
+//            Bitmap bitmap = BitmapFactory.decodeFile(contact.getUser().getProfilePic());
+//            holder.profilePic.setImageBitmap(bitmap);
+        }
+    }
+
+    public void setContacts(List<Contact> s) {
+        contacts = s;
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public int getItemCount() {
+        if (contacts != null) {
+            return contacts.size();
+        } else {
+            return 0;
+        }
+    }
+
+    public List<Contact> getContacts() {
+        return contacts;
+    }
+
 }

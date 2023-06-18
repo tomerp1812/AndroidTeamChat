@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.teamchat.entities.Message;
+import com.example.teamchat.entities.messages.Message;
 
 import java.util.List;
 
