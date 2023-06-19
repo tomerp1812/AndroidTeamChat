@@ -55,7 +55,20 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
     public void onBindViewHolder(@NonNull ContactViewHolder holder, int position) {
         if (contacts != null) {
             final Contact contact = contacts.get(position);
-            holder.username.setText(contact.getUser().getUsername());
+            if(contact.getUser() != null){
+                holder.username.setText(contact.getUser().getUsername());
+                if(contact.getUser().getProfilePic() != null){
+                    byte[] imageInBytes = Base64.decode(contact.getUser().getProfilePic(), Base64.DEFAULT);
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(imageInBytes,0, imageInBytes.length);
+                    holder.profilePic.setImageBitmap(bitmap);
+                }else{
+                    holder.profilePic.setImageBitmap(null);
+                }
+            }else{
+                holder.username.setText("");
+                holder.profilePic.setImageBitmap(null);
+            }
+
             if(contact.getLastMsg() == null){
                 holder.lastMessage.setText("");
                 holder.date.setText("");
@@ -63,9 +76,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
                 holder.lastMessage.setText(contact.getLastMsg().getContent());
                 holder.date.setText(contact.getLastMsg().getCreated());
             }
-            byte[] imageInBytes = Base64.decode(contact.getUser().getProfilePic(), Base64.DEFAULT);
-            Bitmap bitmap = BitmapFactory.decodeByteArray(imageInBytes,0, imageInBytes.length);
-            holder.profilePic.setImageBitmap(bitmap);
+
 //            Bitmap bitmap = BitmapFactory.decodeFile(contact.getUser().getProfilePic());
 //            holder.profilePic.setImageBitmap(bitmap);
         }
