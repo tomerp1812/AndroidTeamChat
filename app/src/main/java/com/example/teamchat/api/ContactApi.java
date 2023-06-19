@@ -1,9 +1,6 @@
 package com.example.teamchat.api;
 
 import android.content.Context;
-import android.util.Log;
-
-import androidx.lifecycle.MutableLiveData;
 
 import com.example.teamchat.Dao.ContactDao;
 import com.example.teamchat.R;
@@ -39,23 +36,23 @@ public class ContactApi {
         contactApiService = retrofit.create(ContactApiService.class);
     }
 
-    public void onGetContactList(MutableLiveData<List<Contact>> contacts) {
+    public CompletableFuture<List<Contact>> onGetContactList() {
+        CompletableFuture<List<Contact>> future = new CompletableFuture<>();
         Call<List<Contact>> call = contactApiService.getContacts(authorizationHeader);
         call.enqueue(new Callback<List<Contact>>() {
             @Override
             public void onResponse(Call<List<Contact>> call, Response<List<Contact>> response) {
-                Log.i("Response", response.body().toString());
                 if (response.isSuccessful()) {
-                    contacts.setValue(response.body());
+                    future.complete(response.body());
                 }
             }
 
             @Override
             public void onFailure(Call<List<Contact>> call, Throwable t) {
-                Log.i("ResponseFail", t.toString());
+                future.completeExceptionally(t); // Resolve the future with the failure exception
             }
         });
-
+        return future;
     }
 
 
