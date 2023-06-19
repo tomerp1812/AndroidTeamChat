@@ -11,7 +11,6 @@ import com.example.teamchat.api.ContactApi;
 import com.example.teamchat.entities.contacts.Contact;
 import com.example.teamchat.entities.messages.ContactNoMsg;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -20,14 +19,24 @@ public class ContactRepository {
     private ContactApi contactApi;
     private ContactListData contactListData;
 
+    private int id;
+
     private String authorizationHeader;
 
     public ContactRepository(Context context, String authorizationHeader) {
-        contactListData = new ContactListData();
-        contactApi = new ContactApi(context, authorizationHeader);
+        id = 0;
         ContactDB db = ContactDB.getInstance(context);
         contactDao = db.contactDao();
+        contactListData = new ContactListData();
+        contactApi = new ContactApi(context, authorizationHeader);
         this.authorizationHeader = authorizationHeader;
+//        UserNoPass userNoPass = new UserNoPass("tomer", "tomer", null);
+//        LastMsg lastMsg = new LastMsg(1, "1", "hi");
+//        Contact contact = new Contact(1,userNoPass, null);
+//        new Thread(() -> {
+//            contactDao.insert(contact);
+//        }).start();
+
     }
 
     public String getToken() {
@@ -38,48 +47,6 @@ public class ContactRepository {
         this.authorizationHeader = authorizationHeader;
     }
 
-    class ContactListData extends MutableLiveData<List<Contact>> {
-        public ContactListData() {
-            super();
-            List<Contact> contacts = new ArrayList<>();
-//            UserNoPass user = new UserNoPass("idit", "idit", R.drawable.background_image);
-//            LastMsg last = new LastMsg(1,"Hello","Hello");
-//            Contact newContact = new Contact(1,user, last);
-//            contacts.add(newContact);
-            ///here we need to add items to the list
-            setValue(contacts);
-
-
-        }
-
-        @Override
-        protected void onActive() {
-            super.onActive();
-            //get information from the DB
-            new Thread(() -> contactListData.postValue(contactDao.index())).start();
-
-            contactApi.onGetContactList(contactListData);
-//            contactApi.onGetContactList(this);
-//
-//            contactApi.onGetContactList();
-//
-//            // Get information from the server
-//            new Thread(() -> {
-//                Future<List<Contact>> future = contactApi.onGetContactList();
-//
-//                try {
-//                    contactListData.postValue(future.get());
-//                } catch (InterruptedException e) {
-//                    // Handle interrupted exception
-//                    e.printStackTrace();
-//                } catch (ExecutionException e) {
-//                    // Handle execution exception
-//                    e.printStackTrace();
-//                }
-//            }).start();
-
-        }
-    }
 
     public LiveData<List<Contact>> getAll() {
         return contactListData;
@@ -89,17 +56,12 @@ public class ContactRepository {
         CompletableFuture<ContactNoMsg> future = contactApi.onAddContact(contact);
 
         future.thenAccept(contactNoMsg -> {
-            // The future has completed, and the contact data is available
-            CompletableFuture<List<Contact>> indexFuture = CompletableFuture.supplyAsync(() -> contactDao.index());
-            indexFuture.thenAccept(contacts -> {
-                int id = contacts.size();
-                Contact newContact = new Contact(id, contactNoMsg.getUserNoPass(), null);
+            Contact newContact = new Contact(id, contactNoMsg.getUserNoPass(), null);
+            new Thread(() -> {
                 contactDao.insert(newContact);
-
-            });
-        }).exceptionally(throwable -> {
-            // Handle exceptions occurred during the execution of the future
-            return null;
+                contactListData.setValue(contactDao.index());
+            }).start();
+            id++;
         });
     }
 
@@ -111,5 +73,21 @@ public class ContactRepository {
 //    public void delete(final Contact contact) {
 //        contactApi.onDeleteContact();
 //    }
+
+    class ContactListData extends MutableLiveData<List<Contact>> {
+        public ContactListData() {
+            super();
+            new Thread(() -> {
+                List<Contact> contacts = contactDao.index();
+                contactListData.postValue(contacts);
+            }).start();
+
+        }
+
+        @Override
+        protected void onActive() {
+            super.onActive();
+        }
+    }
 }
 

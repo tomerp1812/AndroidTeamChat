@@ -1,14 +1,7 @@
 package com.example.teamchat.entities.user;
 
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
-
-@Entity
 public class UserNoPass {
 
-
-    @PrimaryKey(autoGenerate = true)
-    private int id;
     private String username;
     private String displayName;
     private String profilePic;
@@ -17,14 +10,6 @@ public class UserNoPass {
         setUsername(username);
         setDisplayName(displayName);
         setProfilePic(profilePic);
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getDisplayName() {

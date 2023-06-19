@@ -5,11 +5,11 @@ import com.example.teamchat.entities.user.UserNoPass;
 public class ContactNoMsg {
 
     private int id;
-    private UserNoPass userNoPass;
+    private UserNoPass user;
 
-    public ContactNoMsg(int id, UserNoPass userNoPass) {
+    public ContactNoMsg(int id, UserNoPass user) {
         this.id = id;
-        this.userNoPass = userNoPass;
+        this.user = user;
     }
 
     public int getId() {
@@ -21,10 +21,10 @@ public class ContactNoMsg {
     }
 
     public UserNoPass getUserNoPass() {
-        return userNoPass;
+        return user;
     }
 
-    public void setUserNoPass(UserNoPass userNoPass) {
-        this.userNoPass = userNoPass;
+    public void setUserNoPass(UserNoPass user) {
+        this.user = user;
     }
 }

@@ -7,9 +7,8 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import com.example.teamchat.entities.contacts.Contact;
-import com.example.teamchat.entities.user.UserNoPass;
 
-@Database(entities = {Contact.class, UserNoPass.class}, version = 3)
+@Database(entities = {Contact.class}, version = 5)
 public abstract class ContactDB extends RoomDatabase {
     private static final String DATABASE_NAME = "contact_db";
     private static ContactDB instance;
