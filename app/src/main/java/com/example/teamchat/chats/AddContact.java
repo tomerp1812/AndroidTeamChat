@@ -17,7 +17,7 @@ public class AddContact extends AppCompatActivity {
         setContentView(R.layout.activity_add_contact);
         // Retrieve the token from the intent
         String token = getIntent().getStringExtra("token");
-        ContactRepository repository = new ContactRepository(this, token);
+        ContactRepository repository = ContactRepository.getRepository(this, token);
         Button btnAdd = findViewById(R.id.btnAdd);
         btnAdd.setOnClickListener(view ->{
             EditText username = findViewById(R.id.etContent);

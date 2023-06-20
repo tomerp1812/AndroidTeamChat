@@ -3,6 +3,7 @@ package com.example.teamchat.adapters;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.teamchat.R;
 import com.example.teamchat.entities.contacts.Contact;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.ContactViewHolder> {
@@ -39,8 +41,15 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
     private final LayoutInflater mInflater;
     private List<Contact> contacts;
 
+    private List<Contact> filteredContactList;
+
+    private List<Contact> tempContacts;
+
     public ContactListAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
+        filteredContactList = new ArrayList<>();
+        contacts = new ArrayList<>();
+        tempContacts = new ArrayList<>();
     }
 
 
@@ -57,13 +66,9 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
             final Contact contact = contacts.get(position);
             if(contact.getUser() != null){
                 holder.username.setText(contact.getUser().getUsername());
-                if(contact.getUser().getProfilePic() != null){
-                    byte[] imageInBytes = Base64.decode(contact.getUser().getProfilePic(), Base64.DEFAULT);
-                    Bitmap bitmap = BitmapFactory.decodeByteArray(imageInBytes,0, imageInBytes.length);
-                    holder.profilePic.setImageBitmap(bitmap);
-                }else{
-                    holder.profilePic.setImageBitmap(null);
-                }
+                byte[] imageInBytes = Base64.decode(contact.getUser().getProfilePic(), Base64.DEFAULT);
+                Bitmap bitmap = BitmapFactory.decodeByteArray(imageInBytes,0, imageInBytes.length);
+                holder.profilePic.setImageBitmap(bitmap);
             }else{
                 holder.username.setText("");
                 holder.profilePic.setImageBitmap(null);
@@ -84,7 +89,30 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
 
     public void setContacts(List<Contact> s) {
         contacts = s;
+        tempContacts.clear();
+        tempContacts.addAll(s);
+//        filterContacts("");
         notifyDataSetChanged();
+    }
+
+    public void filterContacts(String searchText) {
+        filteredContactList.clear();
+        if (TextUtils.isEmpty(searchText)) {
+            contacts.clear();
+            contacts.addAll(tempContacts);
+            filteredContactList.addAll(tempContacts);
+        } else {
+            for (Contact contact : tempContacts) {
+                // Customize the search logic based on your Contact model
+                if (contact.getUser().getUsername().toLowerCase().contains(searchText.toLowerCase())) {
+                    filteredContactList.add(contact);
+                }
+            }
+        }
+        contacts.clear();
+        contacts.addAll(filteredContactList);
+        notifyDataSetChanged();
+        //contacts = tempContacts;
     }
 
     @Override
@@ -98,6 +126,10 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
 
     public List<Contact> getContacts() {
         return contacts;
+    }
+
+    public Contact getContactByPosition(int position){
+        return tempContacts.get(position);
     }
 
 }
