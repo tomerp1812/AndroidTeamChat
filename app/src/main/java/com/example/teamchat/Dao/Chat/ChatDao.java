@@ -3,7 +3,7 @@ package com.example.teamchat.Dao.Chat;
 import androidx.room.Dao;
 import androidx.room.Insert;
 
-import com.example.teamchat.entities.messages.Message;
+import com.example.teamchat.entities.messages.MessageReturn;
 
 /////////userId!!!!!!!
 @Dao
@@ -12,6 +12,6 @@ public interface ChatDao {
 //    List<Message> getMessagesForUser(String userId);
 
     @Insert
-    void insert(Message... messages);
+    void insert(MessageReturn... messages);
 }
 
