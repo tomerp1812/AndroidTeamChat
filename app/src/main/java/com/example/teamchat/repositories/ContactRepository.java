@@ -21,47 +21,57 @@ public class ContactRepository {
 
     private int id;
 
+    private Context context;
+
+    private ContactDB db;
+    private static ContactRepository contactRepository;
     private String authorizationHeader;
 
-    public ContactRepository(Context context, String authorizationHeader) {
-        id = 0;
-        ContactDB db = ContactDB.getInstance(context);
-        contactDao = db.contactDao();
-        contactListData = new ContactListData();
-        contactApi = new ContactApi(context, authorizationHeader);
+    private ContactRepository(Context context, String authorizationHeader) {
+        this.db = ContactDB.getInstance(context);
+        this.contactDao = db.contactDao();
+        this.contactListData = new ContactListData();
+        this.contactApi = new ContactApi(context, authorizationHeader);
         this.authorizationHeader = authorizationHeader;
-//        UserNoPass userNoPass = new UserNoPass("tomer", "tomer", null);
-//        LastMsg lastMsg = new LastMsg(1, "1", "hi");
-//        Contact contact = new Contact(1,userNoPass, null);
-//        new Thread(() -> {
-//            contactDao.insert(contact);
-//        }).start();
+        this.context = context;
 
     }
 
-    public String getToken() {
-        return authorizationHeader;
+    public void setContext(Context context) {
+        this.context = context;
     }
 
-    public void setToken(String token) {
+    public void setAuthorizationHeader(String authorizationHeader){
         this.authorizationHeader = authorizationHeader;
     }
 
+    public static ContactRepository getRepository(Context context, String authorizationHeader) {
+        if (contactRepository == null) {
+            contactRepository = new ContactRepository(context, authorizationHeader);
+        } else {
+            contactRepository.setContext(context);
+            contactRepository.setAuthorizationHeader(authorizationHeader);
+        }
+        return contactRepository;
+    }
 
     public LiveData<List<Contact>> getAll() {
+        CompletableFuture.supplyAsync(() -> contactDao.index())
+                .thenAccept(contactList -> contactListData.postValue(contactList));
         return contactListData;
     }
+
 
     public void add(final String contact) {
         CompletableFuture<ContactNoMsg> future = contactApi.onAddContact(contact);
 
         future.thenAccept(contactNoMsg -> {
-            Contact newContact = new Contact(id, contactNoMsg.getUserNoPass(), null);
+            Contact newContact = new Contact(contactNoMsg.getUserNoPass(), null);
             new Thread(() -> {
                 contactDao.insert(newContact);
-                contactListData.setValue(contactDao.index());
+                List<Contact> contacts = contactDao.index();
+                contactListData.postValue(contacts);
             }).start();
-            id++;
         });
     }
 
