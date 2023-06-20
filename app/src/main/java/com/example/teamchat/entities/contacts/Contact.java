@@ -17,8 +17,7 @@ public class Contact {
     private UserNoPass user;
     private LastMsg lastMsg;
 
-    public Contact(int id, UserNoPass user, LastMsg lastMsg) {
-        this.id = id;
+    public Contact(UserNoPass user, LastMsg lastMsg) {
         this.user = user;
         this.lastMsg = lastMsg;
     }

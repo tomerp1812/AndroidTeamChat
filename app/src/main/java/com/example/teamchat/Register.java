@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,12 +19,18 @@ import com.example.teamchat.api.userApi;
 import com.example.teamchat.entities.user.UserNoPass;
 import com.example.teamchat.entities.user.UserWithPass;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.concurrent.CompletableFuture;
 
 public class Register extends AppCompatActivity {
     public static Context context;
     private static final int GALLERY_REQUEST_CODE = 1;
     private ImageView profilePic;
+
+    private Uri selectedImageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +76,7 @@ public class Register extends AppCompatActivity {
 //            }else if (profilePic ...){
 //
 //            }else{
-                UserWithPass user = new UserWithPass(username, password, displayName, profilePic);
+                UserWithPass user = new UserWithPass(username, password, displayName, transferToBase64());
                 userApi userApi = new userApi(context);
 
                 CompletableFuture<UserNoPass> registrationFuture = userApi.onRegister(user);
@@ -89,13 +96,36 @@ public class Register extends AppCompatActivity {
         startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE);
     }
 
+    public String transferToBase64(){
+        InputStream inputStream = null;
+        try {
+            inputStream = getContentResolver().openInputStream(selectedImageUri);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        byte[] buffer = new byte[4096];
+        int bytesRead;
+        while (true) {
+            try {
+                if ((bytesRead = inputStream.read(buffer)) == -1) break;
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            byteArrayOutputStream.write(buffer, 0, bytesRead);
+        }
+        byte[] imageBytes = byteArrayOutputStream.toByteArray();
+
+        return Base64.encodeToString(imageBytes, Base64.DEFAULT);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == GALLERY_REQUEST_CODE && resultCode == RESULT_OK) {
             // Get the selected image URI
-            Uri selectedImageUri = data.getData();
+            this.selectedImageUri = data.getData();
 
             // Set the image in the ImageView
             profilePic.setImageURI(selectedImageUri);

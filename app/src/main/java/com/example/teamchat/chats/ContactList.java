@@ -3,13 +3,20 @@ package com.example.teamchat.chats;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.EditText;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.teamchat.R;
 import com.example.teamchat.adapters.ContactListAdapter;
+import com.example.teamchat.entities.contacts.Contact;
 import com.example.teamchat.viewModels.ContactViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -45,42 +52,71 @@ public class ContactList extends AppCompatActivity {
             startActivity(intent);
         });
 
-        //move to the chat screen
-//        lvContactList.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
-//            @Override
-//            public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
-//                View childView = rv.findChildViewUnder(e.getX(), e.getY());
-//                if (childView != null && e.getAction() == MotionEvent.ACTION_DOWN) {
-//                    int position = rv.getChildAdapterPosition(childView);
-//                    // Retrieve the item details at the clicked position
-//                    Contact data = adapter.getItem(position);
-//
-//                    // Start a new activity and pass the item details
-//                    Intent intent = new Intent(getApplicationContext(), ChatScreen.class);
-//                    String userName = data.getUser().getUsername();
-//                    int profilePicture = data.getUser().getProfilePic();
+
+
+
+        //search contacts!!!!!!!
+
+        EditText etSearch = findViewById(R.id.etSearch);
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//                adapter.filterContacts("");
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                String searchText = s.toString();
+//                adapter.filterContacts(searchText);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String searchText = s.toString();
+                adapter.filterContacts(searchText);
+            }
+        });
+
+
+
+
+
+//        move to the chat screen
+        lvContactList.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+            @Override
+            public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+                View childView = rv.findChildViewUnder(e.getX(), e.getY());
+                if (childView != null && e.getAction() == MotionEvent.ACTION_DOWN) {
+                    int position = rv.getChildAdapterPosition(childView);
+                    // Retrieve the item details at the clicked position
+                    Contact data = adapter.getContactByPosition(position);
+
+                    // Start a new activity and pass the item details
+                    Intent intent = new Intent(context, ChatScreen.class);
+                    String userName = data.getUser().getUsername();
+                    String profilePicture = data.getUser().getProfilePic();
 //                    String lastMassage = data.getLastMsg().getContent();
 //                    String time = data.getLastMsg().getCreated();
-//                    // Retrieve other fields if needed
-//                    intent.putExtra("userName", userName);
-//                    intent.putExtra("profilePicture", profilePicture);
+                    // Retrieve other fields if needed
+                    intent.putExtra("userName", userName);
+                    intent.putExtra("profilePicture", profilePicture);
 //                    intent.putExtra("lastMassage", lastMassage);
 //                    intent.putExtra("time", time);
-//                    startActivity(intent);
-//
-//                    return true;
-//                }
-//                return false;
-//            }
-//            @Override
-//            public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
-//
-//            }
-//            @Override
-//            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-//
-//            }
-//        });
+                    startActivity(intent);
+
+                    return true;
+                }
+                return false;
+            }
+            @Override
+            public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+
+            }
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+            }
+        });
     }
 
 

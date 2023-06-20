@@ -16,8 +16,12 @@ public class ContactViewModel extends ViewModel {
     private Context context;
 
     public ContactViewModel(Context context, String authorizationHeader) {
-        repository = new ContactRepository(context, authorizationHeader);
+        repository = ContactRepository.getRepository(context, authorizationHeader);
         contacts = repository.getAll();
+    }
+
+    public ContactRepository getRepository() {
+        return repository;
     }
 
     public LiveData<List<Contact>> get() {
