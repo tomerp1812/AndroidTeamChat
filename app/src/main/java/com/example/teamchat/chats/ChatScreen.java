@@ -40,8 +40,8 @@ public class ChatScreen extends AppCompatActivity {
         lvChat.setAdapter(adapter);
         chatViewModel.get().observe(this, adapter::setMessages);
 
-        ImageView image_send_message = findViewById(R.id.image_send_message);
-        image_send_message.setImageURI(Uri.parse(profilePic));
+//        ImageView image_send_message = findViewById(R.id.image_send_message);
+//        image_send_message.setImageURI(Uri.parse(profilePic));
 
 
 
