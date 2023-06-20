@@ -99,6 +99,8 @@ public class ContactList extends AppCompatActivity {
 //                    String time = data.getLastMsg().getCreated();
                     // Retrieve other fields if needed
                     intent.putExtra("userName", userName);
+                    intent.putExtra("token", authorizationHeader);
+
                     intent.putExtra("profilePicture", profilePicture);
 //                    intent.putExtra("lastMassage", lastMassage);
 //                    intent.putExtra("time", time);

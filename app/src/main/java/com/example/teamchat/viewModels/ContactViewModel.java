@@ -29,9 +29,6 @@ public class ContactViewModel extends ViewModel {
         //return contacts
     }
 
-    public void add(String contact) {
-        repository.add(contact);
-    }
 
 //    public void delete(Contact contact) {
 //        repository.delete(contact);

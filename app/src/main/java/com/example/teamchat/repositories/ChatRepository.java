@@ -2,46 +2,58 @@ package com.example.teamchat.repositories;
 
 import android.content.Context;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.teamchat.Dao.Chat.ChatDao;
-import com.example.teamchat.api.chatApi;
+import com.example.teamchat.Dao.ContactDB;
+import com.example.teamchat.api.ChatApi;
 import com.example.teamchat.entities.messages.Message;
+import com.example.teamchat.entities.messages.MessageReturn;
 
-import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public class ChatRepository {
     private ChatDao chatDao;
-    private chatApi chatApi;
+    private ChatApi chatApi;
     private ChatListData chatListData;
+    private int id;
+    private String authorizationHeader;
 
-    public ChatRepository(Context context, String authorizationToken){
-        chatListData= new ChatListData();
-        chatApi = new chatApi(context, authorizationToken);
+
+    public ChatRepository(Context context, String authorizationToken) {
+        id = 0;
+        ContactDB db = ContactDB.getInstance(context);
+        chatDao = db.chatDao();
+        chatListData = new ChatListData();
+        chatApi = new ChatApi(context, authorizationToken);
+        this.authorizationHeader = authorizationToken;
     }
 
-    class ChatListData extends MutableLiveData<List<Message>>{
-        public ChatListData(){
+    public void add(String msg) {
+        CompletableFuture<MessageReturn> future = chatApi.addMessage(msg);
+        future.thenAccept(message -> {
+            new Thread(() -> {
+                chatDao.insert(message);
+            }).start();
+        });
+
+    }
+
+    public LiveData<List<Message>> getAll() {
+        return chatListData;
+    }
+
+    class ChatListData extends MutableLiveData<List<Message>> {
+        public ChatListData() {
             super();
-            List<Message> messages = new LinkedList<>();
-            ///here we need to add items to the list
-            setValue(messages);
         }
 
         @Override
         protected void onActive() {
             super.onActive();
 
-
-            //get information from the DB
-            new Thread(()->{
-//                chatListData.postValue(....);
-            }).start();;
-
-
-//            chatApi chatApi = new chatApi();
-            chatApi.onGetMessages(this);
         }
     }
 }

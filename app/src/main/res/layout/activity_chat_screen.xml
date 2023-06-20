@@ -41,8 +41,7 @@
         app:layout_constraintBottom_toTopOf="@id/messageLayout"
         app:layout_constraintTop_toBottomOf="@id/contactLayout">
 
-        <ListView
-            android:id="@+id/lvChat"
+        <androidx.recyclerview.widget.RecyclerView            android:id="@+id/lvChat"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:divider="@null"
