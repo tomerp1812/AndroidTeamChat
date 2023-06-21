@@ -56,6 +56,20 @@ public class ContactRepository {
     public LiveData<List<Contact>> getAll() {
         CompletableFuture.supplyAsync(() -> contactDao.index())
                 .thenAccept(contactList -> contactListData.postValue(contactList));
+
+        CompletableFuture<List<Contact>> future = contactApi.onGetContactList();
+        future.thenAccept(contacts -> {
+            new Thread(() -> {
+                for (Contact contact: contacts) {
+                    if(contactDao.get(contact.getId()) == null){
+                        contactDao.insert(contact);
+                    }else{
+                        contactDao.update(contact);
+                    }
+                }
+                contactListData.postValue(contactDao.index());
+            }).start();
+        });
         return contactListData;
     }
 

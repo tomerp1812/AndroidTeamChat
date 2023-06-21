@@ -2,11 +2,14 @@ package com.example.teamchat.api;
 
 import android.content.Context;
 
-import com.example.teamchat.R;
+import com.example.teamchat.Dao.Settings.SettingsDB;
+import com.example.teamchat.Dao.Settings.SettingsDao;
+import com.example.teamchat.entities.SettingsEntity;
 import com.example.teamchat.entities.user.UserForLogin;
 import com.example.teamchat.entities.user.UserNoPass;
 import com.example.teamchat.entities.user.UserWithPass;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 import okhttp3.ResponseBody;
@@ -17,11 +20,21 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class userApi {
-    Retrofit retrofit;
-    UsersApiService usersApiService;
+    private Retrofit retrofit;
+    private UsersApiService usersApiService;
+
+    private SettingsDao settingsDao;
+
+    private SettingsDB settingsDB;
+
+    private List<SettingsEntity> settingsEntityList;
 
     public userApi(Context context){
-        retrofit = new Retrofit.Builder().baseUrl(context.getString(R.string.userUrl)).
+        this.settingsDB = SettingsDB.getInstance(context);
+        this.settingsDao = settingsDB.settingsDao();
+        this.settingsEntityList = settingsDao.index();
+        String url = this.settingsEntityList.get(0).getUrl();
+        retrofit = new Retrofit.Builder().baseUrl(url).
                 addConverterFactory(GsonConverterFactory.create()).build();
         usersApiService = retrofit.create(UsersApiService.class);
     }

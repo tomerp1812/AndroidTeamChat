@@ -210,7 +210,6 @@
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:focusable="true"
-                android:onClick="navigateToLoginScreen"
                 android:text="@string/Click_Here"
                 android:textColor="@color/blue"
                 android:textSize="20sp"

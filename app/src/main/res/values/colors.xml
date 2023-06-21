@@ -4,5 +4,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="red">#FF0000</color>
     <color name="blue">#FF00668B</color>
+    <color name="my_dark_primary">#222020</color>
 
 </resources>

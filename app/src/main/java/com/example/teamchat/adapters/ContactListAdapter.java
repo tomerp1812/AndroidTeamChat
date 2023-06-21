@@ -74,16 +74,13 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
                 holder.profilePic.setImageBitmap(null);
             }
 
-            if(contact.getLastMsg() == null){
+            if(contact.getLastMessage() == null){
                 holder.lastMessage.setText("");
                 holder.date.setText("");
             }else{
-                holder.lastMessage.setText(contact.getLastMsg().getContent());
-                holder.date.setText(contact.getLastMsg().getCreated());
+                holder.lastMessage.setText(contact.getLastMessage().getContent());
+                holder.date.setText(contact.getLastMessage().getCreated());
             }
-
-//            Bitmap bitmap = BitmapFactory.decodeFile(contact.getUser().getProfilePic());
-//            holder.profilePic.setImageBitmap(bitmap);
         }
     }
 

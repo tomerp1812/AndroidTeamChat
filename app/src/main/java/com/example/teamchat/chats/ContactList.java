@@ -8,6 +8,7 @@ import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.teamchat.R;
+import com.example.teamchat.Settings;
 import com.example.teamchat.adapters.ContactListAdapter;
 import com.example.teamchat.entities.contacts.Contact;
 import com.example.teamchat.viewModels.ContactViewModel;
@@ -54,6 +56,12 @@ public class ContactList extends AppCompatActivity {
             startActivity(intent);
         });
 
+        ///// Settings!!!!!
+        ImageButton settingsBtn = findViewById(R.id.ibPreferences);
+        settingsBtn.setOnClickListener(v -> {
+            Intent settingIntent = new Intent(this, Settings.class);
+            startActivity(settingIntent);
+        });
 
 
 

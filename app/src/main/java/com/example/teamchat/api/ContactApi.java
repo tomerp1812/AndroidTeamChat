@@ -3,7 +3,9 @@ package com.example.teamchat.api;
 import android.content.Context;
 
 import com.example.teamchat.Dao.ContactDao;
-import com.example.teamchat.R;
+import com.example.teamchat.Dao.Settings.SettingsDB;
+import com.example.teamchat.Dao.Settings.SettingsDao;
+import com.example.teamchat.entities.SettingsEntity;
 import com.example.teamchat.entities.contacts.Contact;
 import com.example.teamchat.entities.contacts.ContactNoMsg;
 import com.example.teamchat.entities.user.Username;
@@ -26,11 +28,21 @@ public class ContactApi {
 
     private String authorizationHeader;
 
+    private SettingsDB settingsDB;
+
+    private SettingsDao settingsDao;
+
+    private List<SettingsEntity> settingsEntityList;
+
     public ContactApi(Context context1, String authorizationHeader) {
         this.authorizationHeader = authorizationHeader;
         context = context1;
+        this.settingsDB = SettingsDB.getInstance(context);
+        this.settingsDao = settingsDB.settingsDao();
+        this.settingsEntityList = settingsDao.index();
+        String url = this.settingsEntityList.get(0).getUrl();
         retrofit = new Retrofit.Builder()
-                .baseUrl(context.getString(R.string.userUrl))
+                .baseUrl(url)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         contactApiService = retrofit.create(ContactApiService.class);
@@ -83,7 +95,7 @@ public class ContactApi {
 
     public void onDeleteContact() {
         /////need to add id
-        Call<Void> call = contactApiService.deleteContact(authorizationHeader,1);
+        Call<Void> call = contactApiService.deleteContact(authorizationHeader, 1);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {

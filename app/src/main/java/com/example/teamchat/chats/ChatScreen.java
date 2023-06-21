@@ -42,7 +42,7 @@ public class ChatScreen extends AppCompatActivity {
         RecyclerView lvChat = findViewById(R.id.lvChat);
         lvChat.setLayoutManager(new LinearLayoutManager(this));
 
-        final ChatListAdapter adapter = new ChatListAdapter(this);
+        final ChatListAdapter adapter = new ChatListAdapter(this, me);
         lvChat.setAdapter(adapter);
         chatViewModel.get().observe(this, adapter::setMessages);
 

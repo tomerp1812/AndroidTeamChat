@@ -7,6 +7,13 @@
     android:background="@drawable/background_app"
     tools:context=".MainActivity">
 
+    <ImageButton
+        android:id="@+id/settingsBtnInLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:contentDescription="@string/preferencesButton"
+        android:src="@android:drawable/ic_menu_preferences"/>
     <TextView
         android:id="@+id/TeamChatTextView"
         android:layout_width="match_parent"

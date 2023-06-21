@@ -2,7 +2,9 @@ package com.example.teamchat.api;
 
 import android.content.Context;
 
-import com.example.teamchat.R;
+import com.example.teamchat.Dao.Settings.SettingsDB;
+import com.example.teamchat.Dao.Settings.SettingsDao;
+import com.example.teamchat.entities.SettingsEntity;
 import com.example.teamchat.entities.messages.Message;
 import com.example.teamchat.entities.messages.MessageString;
 
@@ -24,10 +26,20 @@ public class ChatApi {
 
     private int id;
 
+    private SettingsDB settingsDB;
+
+    private SettingsDao settingsDao;
+
+    private List<SettingsEntity> settingsEntityList;
+
     public ChatApi(Context context, String authorizationToken, int id) {
         this.authorizationToken = authorizationToken;
+        this.settingsDB = SettingsDB.getInstance(context);
+        this.settingsDao = settingsDB.settingsDao();
+        this.settingsEntityList = settingsDao.index();
+        String url = this.settingsEntityList.get(0).getUrl();
         retrofit = new Retrofit.Builder()
-                .baseUrl(context.getString(R.string.userUrl))
+                .baseUrl(url)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         chatsApiService = retrofit.create(ChatsApiService.class);
