@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
                     String authorizationHeader = "bearer " + response;
                     Intent i = new Intent(this, ContactList.class);
                     // Pass the token to the next activity if needed
+                    i.putExtra("me", edName);
                     i.putExtra("token", authorizationHeader);
                     startActivity(i);
                     // token variable now contains the token string
