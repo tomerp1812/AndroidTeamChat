@@ -1,4 +1,4 @@
-package com.example.teamchat.entities.messages;
+package com.example.teamchat.entities.contacts;
 
 import com.example.teamchat.entities.user.UserNoPass;
 

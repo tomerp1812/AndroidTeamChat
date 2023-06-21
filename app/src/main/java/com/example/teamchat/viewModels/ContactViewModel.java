@@ -26,7 +26,6 @@ public class ContactViewModel extends ViewModel {
 
     public LiveData<List<Contact>> get() {
         return repository.getAll();
-        //return contacts
     }
 
 

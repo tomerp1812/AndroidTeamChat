@@ -39,6 +39,12 @@ public class Register extends AppCompatActivity {
         createTermsView();
         context = getApplicationContext();
 
+        TextView moveToLogin = findViewById(R.id.toLoginTextViewInRegister);
+        moveToLogin.setOnClickListener(view -> {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        });
+
         profilePic = findViewById(R.id.ProfileImageImageView);
         LinearLayout profileImageLayout = findViewById(R.id.ProfileImageLinearLayout);
         profileImageLayout.setOnClickListener(new View.OnClickListener() {
@@ -76,17 +82,18 @@ public class Register extends AppCompatActivity {
 //            }else if (profilePic ...){
 //
 //            }else{
-                UserWithPass user = new UserWithPass(username, password, displayName, transferToBase64());
-                userApi userApi = new userApi(context);
+            UserWithPass user = new UserWithPass(username, password, displayName, transferToBase64());
+            userApi userApi = new userApi(context);
 
-                CompletableFuture<UserNoPass> registrationFuture = userApi.onRegister(user);
-                registrationFuture.whenComplete((registeredUser, throwable) -> {
-                    if (registeredUser != null) {
-                        navigateToLoginScreen();
-                    } else {
+            CompletableFuture<UserNoPass> registrationFuture = userApi.onRegister(user);
+            registrationFuture.whenComplete((registeredUser, throwable) -> {
+                if (registeredUser != null) {
+                    Intent intent = new Intent(this, MainActivity.class);
+                    startActivity(intent);
+                } else {
 //                        setErrorMessageForRegistrationFailure
-                    }
-                });
+                }
+            });
         });
     }
 
@@ -96,7 +103,7 @@ public class Register extends AppCompatActivity {
         startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE);
     }
 
-    public String transferToBase64(){
+    public String transferToBase64() {
         InputStream inputStream = null;
         try {
             inputStream = getContentResolver().openInputStream(selectedImageUri);
@@ -132,10 +139,10 @@ public class Register extends AppCompatActivity {
         }
     }
 
-    public void navigateToLoginScreen() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-    }
+//    public void navigateToLoginScreen() {
+//        Intent intent = new Intent(this, MainActivity.class);
+//        startActivity(intent);
+//    }
 
     public void createTermsView() {
         //creating instances of the edit texts

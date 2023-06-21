@@ -8,6 +8,7 @@ import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.teamchat.R;
+import com.example.teamchat.Settings;
 import com.example.teamchat.adapters.ContactListAdapter;
 import com.example.teamchat.entities.contacts.Contact;
 import com.example.teamchat.viewModels.ContactViewModel;
@@ -30,6 +32,7 @@ public class ContactList extends AppCompatActivity {
         setContentView(R.layout.activity_contact_list);
         context = getApplicationContext();
         // Retrieve the token from the intent
+        String me = getIntent().getStringExtra("me");
         String authorizationHeader = getIntent().getStringExtra("token");
         viewModel = new ContactViewModel(context, authorizationHeader);
 
@@ -48,10 +51,17 @@ public class ContactList extends AppCompatActivity {
         FloatingActionButton btnAdd = findViewById(R.id.btnAdd);
         btnAdd.setOnClickListener(view ->{
             Intent intent = new Intent(this, AddContact.class);
+            intent.putExtra("me", me);
             intent.putExtra("token", authorizationHeader);
             startActivity(intent);
         });
 
+        ///// Settings!!!!!
+        ImageButton settingsBtn = findViewById(R.id.ibPreferences);
+        settingsBtn.setOnClickListener(v -> {
+            Intent settingIntent = new Intent(this, Settings.class);
+            startActivity(settingIntent);
+        });
 
 
 
@@ -95,13 +105,14 @@ public class ContactList extends AppCompatActivity {
                     Intent intent = new Intent(context, ChatScreen.class);
                     String userName = data.getUser().getUsername();
                     String profilePicture = data.getUser().getProfilePic();
+                    int id = data.getId();
 //                    String lastMassage = data.getLastMsg().getContent();
 //                    String time = data.getLastMsg().getCreated();
                     // Retrieve other fields if needed
                     intent.putExtra("userName", userName);
                     intent.putExtra("token", authorizationHeader);
-
-                    intent.putExtra("profilePicture", profilePicture);
+                    intent.putExtra("id", id);
+                    intent.putExtra("profilePic", profilePicture);
 //                    intent.putExtra("lastMassage", lastMassage);
 //                    intent.putExtra("time", time);
                     startActivity(intent);

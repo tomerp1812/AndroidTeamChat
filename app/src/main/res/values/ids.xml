@@ -24,5 +24,11 @@
     <item name="usernameEditTextInLogin" type="id"/>
     <item name="PasswordEditTextInLogin" type="id"/>
     <item name="LoginButton" type="id"/>
+    <item name="settingsBtnInLogin" type="id"/>
+
+<!--   Settings -->
+    <item name="SwitchModeBtn" type="id"/>
+    <item name="SwitchUrlBtn" type="id"/>
+    <item name="SettingsET" type="id"/>
 
 </resources>

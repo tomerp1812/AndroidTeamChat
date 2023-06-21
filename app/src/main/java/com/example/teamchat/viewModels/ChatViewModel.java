@@ -15,12 +15,22 @@ public class ChatViewModel extends ViewModel {
     private LiveData<List<Message>> messages;
     private ChatRepository chatRepository;
 
-    public ChatViewModel(Context context, String authorizationHeader){
-        chatRepository = new ChatRepository(context,authorizationHeader);
-        messages = chatRepository.getAll();
+    private String me;
+    private String contact;
+
+    public ChatViewModel(Context context, String authorizationHeader, int id, String me, String contact) {
+        chatRepository = new ChatRepository(context, authorizationHeader, id);
+        this.me = me;
+        this.contact = contact;
+        messages = chatRepository.getAll(me, contact);
     }
 
-    public LiveData<List<Message>> get(){return chatRepository.getAll();}
-    public void add (String msg){ chatRepository.add(msg);}
+    public LiveData<List<Message>> get() {
+        return chatRepository.getAll(me, contact);
+    }
+
+    public void add(String msg, String receiver) {
+        chatRepository.add(msg, receiver);
+    }
 
 }

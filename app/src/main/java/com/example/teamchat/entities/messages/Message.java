@@ -2,45 +2,31 @@ package com.example.teamchat.entities.messages;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
+import com.example.teamchat.entities.converters.UserNoPassConverter;
+import com.example.teamchat.entities.user.UserNoPass;
 @Entity
+@TypeConverters({UserNoPassConverter.class})
+
 public class Message {
-    @PrimaryKey(autoGenerate = true)
+
+    @PrimaryKey
+
     private int id;
-    private String message;
-    private String sender;
+    private String created;
+    private UserNoPass sender;
+    private String content;
+
     private String receiver;
 
-
-    public Message(String message, String sender, String receiver) {
-        this.message = message;
-        this.receiver = receiver;
+    public Message(int id, String created, UserNoPass sender, String content) {
+        this.id = id;
+        this.created = created;
         this.sender = sender;
+        this.content = content;
     }
 
-    public String getMessage() {
-        return message;
-    }
-
-    public String getSender() {
-        return sender;
-    }
-
-    public void setSender(String sender) {
-        this.sender = sender;
-    }
-
-    public String getReceiver() {
-        return receiver;
-    }
-
-    public void setReceiver(String receiver) {
-        this.receiver = receiver;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
     public int getId() {
         return id;
     }
@@ -49,8 +35,35 @@ public class Message {
         this.id = id;
     }
 
-    //IMPLEMENT IS SENDER- NEED TO USE ID
-    public boolean isSender(){
-        return true;
+    public String getCreated() {
+        return created;
+    }
+
+    public void setCreated(String created) {
+        this.created = created;
+    }
+
+    public UserNoPass getSender() {
+        return sender;
+    }
+
+    public void setSender(UserNoPass sender) {
+        this.sender = sender;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(String receiver) {
+        this.receiver = receiver;
     }
 }

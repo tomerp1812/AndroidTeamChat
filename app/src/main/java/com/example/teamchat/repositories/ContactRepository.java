@@ -9,7 +9,7 @@ import com.example.teamchat.Dao.ContactDB;
 import com.example.teamchat.Dao.ContactDao;
 import com.example.teamchat.api.ContactApi;
 import com.example.teamchat.entities.contacts.Contact;
-import com.example.teamchat.entities.messages.ContactNoMsg;
+import com.example.teamchat.entities.contacts.ContactNoMsg;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -18,8 +18,6 @@ public class ContactRepository {
     private ContactDao contactDao;
     private ContactApi contactApi;
     private ContactListData contactListData;
-
-    private int id;
 
     private Context context;
 
@@ -58,6 +56,20 @@ public class ContactRepository {
     public LiveData<List<Contact>> getAll() {
         CompletableFuture.supplyAsync(() -> contactDao.index())
                 .thenAccept(contactList -> contactListData.postValue(contactList));
+
+        CompletableFuture<List<Contact>> future = contactApi.onGetContactList();
+        future.thenAccept(contacts -> {
+            new Thread(() -> {
+                for (Contact contact: contacts) {
+                    if(contactDao.get(contact.getId()) == null){
+                        contactDao.insert(contact);
+                    }else{
+                        contactDao.update(contact);
+                    }
+                }
+                contactListData.postValue(contactDao.index());
+            }).start();
+        });
         return contactListData;
     }
 
@@ -66,7 +78,8 @@ public class ContactRepository {
         CompletableFuture<ContactNoMsg> future = contactApi.onAddContact(contact);
 
         future.thenAccept(contactNoMsg -> {
-            Contact newContact = new Contact(contactNoMsg.getUserNoPass(), null);
+            int id = contactNoMsg.getId();
+            Contact newContact = new Contact(id ,contactNoMsg.getUserNoPass(), null);
             new Thread(() -> {
                 contactDao.insert(newContact);
                 List<Contact> contacts = contactDao.index();

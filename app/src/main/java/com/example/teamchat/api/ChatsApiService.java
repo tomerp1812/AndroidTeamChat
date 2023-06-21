@@ -1,7 +1,7 @@
 package com.example.teamchat.api;
 
 import com.example.teamchat.entities.messages.Message;
-import com.example.teamchat.entities.messages.MessageReturn;
+import com.example.teamchat.entities.messages.MessageString;
 
 import java.util.List;
 
@@ -10,12 +10,13 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface ChatsApiService {
 
     @GET("Chats/{id}/Messages")
-    Call<List<Message>> getMessages(@Header("Authorization") String authorization);
+    Call<List<Message>> getMessages(@Header("Authorization") String authorization, @Path("id") int id);
 
     @POST("Chats/{id}/Messages")
-    Call<MessageReturn> addMessage(@Header("Authorization") String authorization, @Body String msg);
+    Call<Message> addMessage(@Header("Authorization") String authorization, @Path("id") int id , @Body MessageString msg);
 }

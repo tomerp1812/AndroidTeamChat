@@ -2,11 +2,11 @@ package com.example.teamchat.api;
 
 import android.content.Context;
 
-import androidx.lifecycle.MutableLiveData;
-
-import com.example.teamchat.R;
+import com.example.teamchat.Dao.Settings.SettingsDB;
+import com.example.teamchat.Dao.Settings.SettingsDao;
+import com.example.teamchat.entities.SettingsEntity;
 import com.example.teamchat.entities.messages.Message;
-import com.example.teamchat.entities.messages.MessageReturn;
+import com.example.teamchat.entities.messages.MessageString;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -24,42 +24,64 @@ public class ChatApi {
 
     private String authorizationToken;
 
-    public ChatApi(Context context, String authorizationToken) {
+    private int id;
+
+    private SettingsDB settingsDB;
+
+    private SettingsDao settingsDao;
+
+    private List<SettingsEntity> settingsEntityList;
+
+    public ChatApi(Context context, String authorizationToken, int id) {
         this.authorizationToken = authorizationToken;
+        this.settingsDB = SettingsDB.getInstance(context);
+        this.settingsDao = settingsDB.settingsDao();
+        this.settingsEntityList = settingsDao.index();
+        String url = this.settingsEntityList.get(0).getUrl();
         retrofit = new Retrofit.Builder()
-                .baseUrl(context.getString(R.string.userUrl))
+                .baseUrl(url)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         chatsApiService = retrofit.create(ChatsApiService.class);
+        this.id = id;
     }
 
-    public void onGetMessages(MutableLiveData<List<Message>> messageListData) {
-        Call<List<Message>> call = chatsApiService.getMessages(authorizationToken);
+    public CompletableFuture<List<Message>> onGetMessages() {
+        CompletableFuture<List<Message>> completableFuture = new CompletableFuture<>();
+        Call<List<Message>> call = chatsApiService.getMessages(authorizationToken, id);
 
         call.enqueue(new Callback<List<Message>>() {
             @Override
             public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
-
+                if(response.isSuccessful()){
+                    List<Message> messages = response.body();
+                    completableFuture.complete(messages);
+                }else{
+                    // API request failed
+                    completableFuture.completeExceptionally(new Exception("API request failed"));
+                }
             }
 
             @Override
             public void onFailure(Call<List<Message>> call, Throwable t) {
-
+                // Handle network or other errors
+                completableFuture.completeExceptionally(t);
             }
         });
+        return completableFuture;
     }
 
-    public CompletableFuture<MessageReturn> addMessage(String message) {
-        CompletableFuture<MessageReturn> completableFuture = new CompletableFuture<>();
-
+    public CompletableFuture<Message> onAddMessage(String message) {
+        CompletableFuture<Message> completableFuture = new CompletableFuture<>();
+        MessageString messageString = new MessageString(message);
         // Make the API call to add the message
-        Call<MessageReturn> call = chatsApiService.addMessage(authorizationToken, message);
-        call.enqueue(new Callback<MessageReturn>() {
+        Call<Message> call = chatsApiService.addMessage(authorizationToken, id, messageString);
+        call.enqueue(new Callback<Message>() {
             @Override
-            public void onResponse(Call<MessageReturn> call, Response<MessageReturn> response) {
+            public void onResponse(Call<Message> call, Response<Message> response) {
                 if (response.isSuccessful()) {
                     // API request succeeded
-                    MessageReturn addedMessage = response.body();
+                    Message addedMessage = response.body();
                     completableFuture.complete(addedMessage);
                 } else {
                     // API request failed
@@ -68,13 +90,14 @@ public class ChatApi {
             }
 
             @Override
-            public void onFailure(Call<MessageReturn> call, Throwable t) {
+            public void onFailure(Call<Message> call, Throwable t) {
                 // Handle network or other errors
                 completableFuture.completeExceptionally(t);
             }
         });
 
         return completableFuture;
+
     }
 }
 
