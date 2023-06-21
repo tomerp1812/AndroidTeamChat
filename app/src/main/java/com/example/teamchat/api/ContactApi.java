@@ -5,7 +5,7 @@ import android.content.Context;
 import com.example.teamchat.Dao.ContactDao;
 import com.example.teamchat.R;
 import com.example.teamchat.entities.contacts.Contact;
-import com.example.teamchat.entities.messages.ContactNoMsg;
+import com.example.teamchat.entities.contacts.ContactNoMsg;
 import com.example.teamchat.entities.user.Username;
 
 import java.util.List;

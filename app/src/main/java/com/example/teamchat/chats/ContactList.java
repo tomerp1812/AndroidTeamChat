@@ -30,6 +30,7 @@ public class ContactList extends AppCompatActivity {
         setContentView(R.layout.activity_contact_list);
         context = getApplicationContext();
         // Retrieve the token from the intent
+        String me = getIntent().getStringExtra("me");
         String authorizationHeader = getIntent().getStringExtra("token");
         viewModel = new ContactViewModel(context, authorizationHeader);
 
@@ -48,6 +49,7 @@ public class ContactList extends AppCompatActivity {
         FloatingActionButton btnAdd = findViewById(R.id.btnAdd);
         btnAdd.setOnClickListener(view ->{
             Intent intent = new Intent(this, AddContact.class);
+            intent.putExtra("me", me);
             intent.putExtra("token", authorizationHeader);
             startActivity(intent);
         });
@@ -95,13 +97,14 @@ public class ContactList extends AppCompatActivity {
                     Intent intent = new Intent(context, ChatScreen.class);
                     String userName = data.getUser().getUsername();
                     String profilePicture = data.getUser().getProfilePic();
+                    int id = data.getId();
 //                    String lastMassage = data.getLastMsg().getContent();
 //                    String time = data.getLastMsg().getCreated();
                     // Retrieve other fields if needed
                     intent.putExtra("userName", userName);
                     intent.putExtra("token", authorizationHeader);
-
-                    intent.putExtra("profilePicture", profilePicture);
+                    intent.putExtra("id", id);
+                    intent.putExtra("profilePic", profilePicture);
 //                    intent.putExtra("lastMassage", lastMassage);
 //                    intent.putExtra("time", time);
                     startActivity(intent);

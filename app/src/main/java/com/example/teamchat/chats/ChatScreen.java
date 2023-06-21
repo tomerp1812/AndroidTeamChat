@@ -1,8 +1,10 @@
 package com.example.teamchat.chats;
 
 import android.content.Context;
-import android.net.Uri;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -28,11 +30,15 @@ public class ChatScreen extends AppCompatActivity {
         // Retrieve the token from the intent
         String authorizationHeader = getIntent().getStringExtra("token");
 
+        String me = getIntent().getStringExtra("me");
+
         //Retrieve the username and profile picture fro the intent
         String username = getIntent().getStringExtra("userName");
         String profilePic = getIntent().getStringExtra("profilePic");
 
-        chatViewModel = new ChatViewModel(context,authorizationHeader);
+        int id = getIntent().getIntExtra("id", -1);
+
+        chatViewModel = new ChatViewModel(context,authorizationHeader, id, me,username);
         RecyclerView lvChat = findViewById(R.id.lvChat);
         lvChat.setLayoutManager(new LinearLayoutManager(this));
 
@@ -49,13 +55,16 @@ public class ChatScreen extends AppCompatActivity {
         tvContact.setText(username);
 
         ImageView imContact = findViewById(R.id.imContact);
-        imContact.setImageURI(Uri.parse(profilePic));
+        byte[] imageInBytes = Base64.decode(profilePic, Base64.DEFAULT);
+        Bitmap bitmap = BitmapFactory.decodeByteArray(imageInBytes,0, imageInBytes.length);
+       imContact.setImageBitmap(bitmap);
 
         ImageButton ibSend = findViewById(R.id.ibSend);
         ibSend.setOnClickListener(view ->{
             EditText etMessage = findViewById(R.id.etMessage);
             String msg = etMessage.getText().toString();
-            chatViewModel.add(msg);
+            etMessage.setText("");
+            chatViewModel.add(msg, username);
         });
 
 

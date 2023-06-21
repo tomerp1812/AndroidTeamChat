@@ -20,7 +20,7 @@
     <string name="imContact">SearchButton</string>
     <string name="etMessage">Message</string>
     <string name="etHintMessage">Enter Message</string>
-    <string name="userUrl">http://192.168.180.1:5000/api/</string>
+    <string name="userUrl">http://10.0.2.2:5000/api/</string>
     <string name="teamChat">TeamChat</string>
     <string name="searchButton">SearchButton</string>
     <string name="addButton">AddButton</string>

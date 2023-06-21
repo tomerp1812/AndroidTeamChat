@@ -32,16 +32,17 @@
             android:textSize="24sp" />
 
     </LinearLayout>
+<!--    android:background="@drawable/listview_border"-->
+<!--    <FrameLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:layout_weight="1"-->
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@drawable/listview_border"
-        app:layout_constraintBottom_toTopOf="@id/messageLayout"
-        app:layout_constraintTop_toBottomOf="@id/contactLayout">
+<!--        app:layout_constraintBottom_toTopOf="@id/messageLayout"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/contactLayout">-->
 
-        <androidx.recyclerview.widget.RecyclerView            android:id="@+id/lvChat"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/lvChat"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:divider="@null"
@@ -50,9 +51,10 @@
             app:layout_constraintBottom_toTopOf="@id/messageLayout"
             app:layout_constraintTop_toBottomOf="@id/contactLayout"
             app:layout_constraintVertical_bias="0.0"
-            tools:layout_editor_absoluteX="0dp" />
+            tools:layout_editor_absoluteX="0dp"
+            tools:listitem="@layout/item_send_message"/>
 
-    </FrameLayout>
+<!--    </FrameLayout>-->
 
     <LinearLayout
         android:id="@+id/messageLayout"
@@ -63,12 +65,13 @@
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent">
 
+<!--        android:background="@drawable/edittext_background"/-->
         <EditText
             android:id="@+id/etMessage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/edittext_background"
+
             android:hint="@string/etHintMessage"
             android:imeOptions="actionSend"
             android:padding="8dp"
@@ -81,8 +84,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0"
-            android:contentDescription="@string/imSend"
             android:background="@color/blue"
+            android:contentDescription="@string/imSend"
             app:srcCompat="@android:drawable/ic_menu_send" />
 
     </LinearLayout>

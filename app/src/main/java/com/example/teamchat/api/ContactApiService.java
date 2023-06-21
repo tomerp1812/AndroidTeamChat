@@ -1,7 +1,7 @@
 package com.example.teamchat.api;
 
 import com.example.teamchat.entities.contacts.Contact;
-import com.example.teamchat.entities.messages.ContactNoMsg;
+import com.example.teamchat.entities.contacts.ContactNoMsg;
 import com.example.teamchat.entities.user.Username;
 
 import java.util.List;

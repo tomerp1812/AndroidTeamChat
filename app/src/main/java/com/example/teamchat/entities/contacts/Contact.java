@@ -12,12 +12,13 @@ import com.example.teamchat.entities.user.UserNoPass;
 @Entity
 @TypeConverters({UserNoPassConverter.class, LastMsgConverter.class})
 public class Contact {
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     private int id;
     private UserNoPass user;
     private LastMsg lastMsg;
 
-    public Contact(UserNoPass user, LastMsg lastMsg) {
+    public Contact(int id, UserNoPass user, LastMsg lastMsg) {
+        this.id = id;
         this.user = user;
         this.lastMsg = lastMsg;
     }
