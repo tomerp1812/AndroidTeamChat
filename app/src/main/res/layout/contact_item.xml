@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="120dp"
-    android:background="@color/white">
+    android:layout_height="130dp"
+    >
 
 
     <LinearLayout
@@ -16,7 +16,7 @@
             android:id="@+id/ivProfile"
             android:layout_width="51dp"
             android:layout_height="60dp"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"
             android:contentDescription="@string/ivProfilePic"
             tools:src="@android:drawable/sym_def_app_icon" />
@@ -25,18 +25,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginVertical="20dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="18dp"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tvUsername"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="25sp"
+                android:textSize="35sp"
                 android:textStyle="bold"
                 tools:text="User Name"
-
+                style="@style/TEXT"
                 />
 
             <TextView
@@ -44,8 +43,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
-                android:textColor="@color/black"
                 android:textSize="17sp"
+                style="@style/TEXT"
                 tools:text="Hi, how are you?" />
 
         </LinearLayout>
@@ -57,10 +56,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:layout_marginEnd="9dp"
+        android:layout_marginLeft="80dp"
         android:contentDescription="@string/currentTime"
         android:padding="15dp"
-        android:textColor="@color/black"
+        style="@style/TEXT"
         android:textSize="15sp"
         tools:text="10:00" />
 

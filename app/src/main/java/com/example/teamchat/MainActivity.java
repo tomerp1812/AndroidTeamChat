@@ -1,5 +1,6 @@
 package com.example.teamchat;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     private String firstLogin;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button btnLogin = findViewById(R.id.LoginButton);
         btnLogin.setOnClickListener(v -> {
+            TextView errorTextView = findViewById(R.id.errorTextView);
             //string of name and password
             EditText usernameEditText = findViewById(R.id.usernameEditTextInLogin);
             EditText passwordEditText = findViewById(R.id.PasswordEditTextInLogin);
@@ -87,11 +91,11 @@ public class MainActivity extends AppCompatActivity {
                     // token variable now contains the token string
                 } catch (Exception e) {
                     e.printStackTrace();
-                    // Handle JSON parsing error or response body reading error
-                }
+                    errorTextView.setText("Invalid username or password");
+                    errorTextView.setVisibility(View.VISIBLE);                }
             }).exceptionally(ex -> {
-                // Handle login failure
-                // setErrorMessage("UserName or Password incorrect");...
+                errorTextView.setText("Invalid username or password");
+                errorTextView.setVisibility(View.VISIBLE);
                 return null;
             });
         });

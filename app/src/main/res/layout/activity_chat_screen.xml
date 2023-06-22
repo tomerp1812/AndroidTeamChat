@@ -10,8 +10,8 @@
     <LinearLayout
         android:id="@+id/contactLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/blue"
+        android:layout_height="60dp"
+        style="@style/SCREEN"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         app:layout_constraintTop_toTopOf="parent">
@@ -29,7 +29,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="@string/tvUsername"
-            android:textSize="24sp" />
+            android:textStyle="bold"
+            style="@style/TEXT"
+            android:textSize="30sp" />
 
     </LinearLayout>
 <!--    android:background="@drawable/listview_border"-->
@@ -59,32 +61,32 @@
     <LinearLayout
         android:id="@+id/messageLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/blue"
+        android:layout_height="60dp"
+        style="@style/SCREEN"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent">
 
-<!--        android:background="@drawable/edittext_background"/-->
         <EditText
             android:id="@+id/etMessage"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-
+            android:textColorHint="@color/black"
             android:hint="@string/etHintMessage"
             android:imeOptions="actionSend"
             android:padding="8dp"
-            android:textColor="@color/black"
+            android:background="@drawable/edittext_rounded_background"
+            style="@style/TEXT"
             android:textSize="16sp"
             tools:ignore="Autofill" />
 
         <ImageButton
             android:id="@+id/ibSend"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="0"
-            android:background="@color/blue"
+            android:background="@null"
             android:contentDescription="@string/imSend"
             app:srcCompat="@android:drawable/ic_menu_send" />
 
