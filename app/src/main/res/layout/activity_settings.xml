@@ -28,7 +28,15 @@
         style="@style/TEXT"
         android:layout_width="match_parent"
         android:layout_height="60dp"/>
-
+    <TextView
+        android:id="@+id/successTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        style="@style/TEXT"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:visibility="gone" />
     <Button
         android:id="@+id/SwitchUrlBtn"
         style="@style/TEXT"

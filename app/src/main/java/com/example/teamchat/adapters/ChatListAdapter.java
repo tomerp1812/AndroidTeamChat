@@ -1,6 +1,7 @@
 package com.example.teamchat.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,11 +26,16 @@ public class ChatListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     private String me;
 
+    private Bitmap imContact;
+    private Bitmap imMy;
 
-    public ChatListAdapter(Context context, String me) {
+
+    public ChatListAdapter(Context context, String me,Bitmap imContact,Bitmap imMy) {
         mInflater = LayoutInflater.from(context);
         messages = new ArrayList<>();
         this.me = me;
+        this.imContact = imContact;
+        this.imMy = imMy;
     }
 
 
@@ -51,23 +57,14 @@ public class ChatListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         View itemView;
         if (viewType == VIEW_TYPE_SENDER) {
             itemView = inflater.inflate(R.layout.item_send_message, parent, false);
-            return new SentMessageViewHolder(itemView);
+            return new SentMessageViewHolder(itemView,imMy);
         }
         itemView = inflater.inflate(R.layout.item_receive_message, parent, false);
-        return new ReceivedMessageViewHolder(itemView);
+        return new ReceivedMessageViewHolder(itemView,imContact);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-//        if (messages != null) {
-//            final Message message = messages.get(position);
-//            if (message.getContent() != null) {
-//                holder.msg.setText(message.getContent());
-//            } else {
-//                holder.msg.setText("");
-//            }
-//        }
-
         if (messages != null) {
             final Message message = messages.get(position);
             if (holder instanceof SentMessageViewHolder) {
@@ -76,13 +73,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 ((ReceivedMessageViewHolder) holder).bind(message);
             }
         }
-//
-//        int viewType = getItemViewType(position);
-//        if (viewType == VIEW_TYPE_SENDER) {
-//            holder.msg.setBackgroundResource(R.drawable.bg_send_message);
-//        } else if (viewType == VIEW_TYPE_RECEIVER) {
-//            holder.msg.setBackgroundResource(R.drawable.bg_receive_message);
-//        }
+
     }
 
 
@@ -106,10 +97,11 @@ public class ChatListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         private final TextView msg;
         private final ImageView profilePic;
 
-        public SentMessageViewHolder(@NonNull View itemView) {
+        public SentMessageViewHolder(@NonNull View itemView,Bitmap imMy) {
             super(itemView);
             msg = itemView.findViewById(R.id.text_send_message);
             profilePic = itemView.findViewById(R.id.image_send_message);
+            profilePic.setImageBitmap(imMy);
         }
 
         void bind(Message message) {
@@ -126,10 +118,11 @@ public class ChatListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         private final TextView msg;
         private final ImageView profilePic;
 
-        public ReceivedMessageViewHolder(@NonNull View itemView) {
+        public ReceivedMessageViewHolder(@NonNull View itemView, Bitmap imContact) {
             super(itemView);
             msg = itemView.findViewById(R.id.text_receive_message);
             profilePic = itemView.findViewById(R.id.image_receive_message);
+            profilePic.setImageBitmap(imContact);
         }
 
         void bind(Message message) {

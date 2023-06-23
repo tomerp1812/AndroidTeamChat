@@ -63,21 +63,15 @@ public class ContactList extends AppCompatActivity {
             startActivity(settingIntent);
         });
 
-
-
-        //search contacts!!!!!!!
-
+        //search contacts!
         EditText etSearch = findViewById(R.id.etSearch);
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//                adapter.filterContacts("");
             }
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                String searchText = s.toString();
-//                adapter.filterContacts(searchText);
+
             }
 
             @Override
@@ -106,15 +100,13 @@ public class ContactList extends AppCompatActivity {
                     String userName = data.getUser().getUsername();
                     String profilePicture = data.getUser().getProfilePic();
                     int id = data.getId();
-//                    String lastMassage = data.getLastMsg().getContent();
-//                    String time = data.getLastMsg().getCreated();
+
                     // Retrieve other fields if needed
                     intent.putExtra("userName", userName);
                     intent.putExtra("token", authorizationHeader);
                     intent.putExtra("id", id);
                     intent.putExtra("profilePic", profilePicture);
-//                    intent.putExtra("lastMassage", lastMassage);
-//                    intent.putExtra("time", time);
+                    intent.putExtra("me", me);
                     startActivity(intent);
 
                     return true;

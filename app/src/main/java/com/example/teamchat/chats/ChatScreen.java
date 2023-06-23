@@ -32,35 +32,36 @@ public class ChatScreen extends AppCompatActivity {
 
         String me = getIntent().getStringExtra("me");
 
-        //Retrieve the username and profile picture fro the intent
+        //Retrieve the username and profile picture from the intent
         String username = getIntent().getStringExtra("userName");
         String profilePic = getIntent().getStringExtra("profilePic");
 
         int id = getIntent().getIntExtra("id", -1);
 
-        chatViewModel = new ChatViewModel(context,authorizationHeader, id, me,username);
+        ImageView imContact = findViewById(R.id.imContact);
+        byte[] imageInBytes = Base64.decode(profilePic, Base64.DEFAULT);
+        Bitmap bitmap = BitmapFactory.decodeByteArray(imageInBytes, 0, imageInBytes.length);
+        imContact.setImageBitmap(bitmap);
+
+        chatViewModel = new ChatViewModel(context, authorizationHeader, id, me, username);
         RecyclerView lvChat = findViewById(R.id.lvChat);
         lvChat.setLayoutManager(new LinearLayoutManager(this));
 
-        final ChatListAdapter adapter = new ChatListAdapter(this, me);
+//        UserNoPass user = chatViewModel.getUserDetail(me);
+//        String myPic = user.getProfilePic();
+//        byte[] imageInBytes1 = Base64.decode(myPic, Base64.DEFAULT);
+//        Bitmap bitmap1 = BitmapFactory.decodeByteArray(imageInBytes1, 0, imageInBytes1.length);
+        Bitmap bitmap1=null;
+        final ChatListAdapter adapter = new ChatListAdapter(this, me,bitmap,bitmap1);
         lvChat.setAdapter(adapter);
         chatViewModel.get().observe(this, adapter::setMessages);
-
-//        ImageView image_send_message = findViewById(R.id.image_send_message);
-//        image_send_message.setImageURI(Uri.parse(profilePic));
-
-
 
         TextView tvContact = findViewById(R.id.tvContact);
         tvContact.setText(username);
 
-        ImageView imContact = findViewById(R.id.imContact);
-        byte[] imageInBytes = Base64.decode(profilePic, Base64.DEFAULT);
-        Bitmap bitmap = BitmapFactory.decodeByteArray(imageInBytes,0, imageInBytes.length);
-       imContact.setImageBitmap(bitmap);
 
         ImageButton ibSend = findViewById(R.id.ibSend);
-        ibSend.setOnClickListener(view ->{
+        ibSend.setOnClickListener(view -> {
             EditText etMessage = findViewById(R.id.etMessage);
             String msg = etMessage.getText().toString();
             etMessage.setText("");

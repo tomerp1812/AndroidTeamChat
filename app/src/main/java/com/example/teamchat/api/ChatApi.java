@@ -7,6 +7,7 @@ import com.example.teamchat.Dao.Settings.SettingsDao;
 import com.example.teamchat.entities.SettingsEntity;
 import com.example.teamchat.entities.messages.Message;
 import com.example.teamchat.entities.messages.MessageString;
+import com.example.teamchat.entities.user.UserNoPass;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -44,6 +45,29 @@ public class ChatApi {
                 .build();
         chatsApiService = retrofit.create(ChatsApiService.class);
         this.id = id;
+    }
+
+    public CompletableFuture<UserNoPass> onGetUserDetails(String username) {
+        CompletableFuture<UserNoPass> completableFuture = new CompletableFuture<>();
+        Call<UserNoPass> call = chatsApiService.getUserDetails(authorizationToken, username);
+        call.enqueue(new Callback<UserNoPass>() {
+            @Override
+            public void onResponse(Call<UserNoPass> call, Response<UserNoPass> response) {
+                if (response.isSuccessful()) {
+                    UserNoPass user = response.body();
+                    completableFuture.complete(user);
+                } else {
+                    // API request failed
+                    completableFuture.completeExceptionally(new Exception("API request failed with status code: " + response.code()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserNoPass> call, Throwable t) {
+                completableFuture.completeExceptionally(t);
+            }
+        });
+        return completableFuture;
     }
 
     public CompletableFuture<List<Message>> onGetMessages() {

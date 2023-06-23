@@ -2,6 +2,7 @@ package com.example.teamchat.api;
 
 import com.example.teamchat.entities.messages.Message;
 import com.example.teamchat.entities.messages.MessageString;
+import com.example.teamchat.entities.user.UserNoPass;
 
 import java.util.List;
 
@@ -13,7 +14,8 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface ChatsApiService {
-
+    @GET("Users/{username}")
+    Call<UserNoPass> getUserDetails(@Header("Authorization") String authorization, @Path("username") String username);
     @GET("Chats/{id}/Messages")
     Call<List<Message>> getMessages(@Header("Authorization") String authorization, @Path("id") int id);
 
