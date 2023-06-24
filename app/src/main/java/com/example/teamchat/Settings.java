@@ -1,8 +1,11 @@
 package com.example.teamchat;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -22,6 +25,7 @@ public class Settings extends AppCompatActivity {
 
     private List<SettingsEntity> settingsEntity;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,9 +33,6 @@ public class Settings extends AppCompatActivity {
 
         this.settingsDB = SettingsDB.getInstance(getApplicationContext());
         this.settingsDao = settingsDB.settingsDao();
-
-
-
 
         //switch night/light mode
         SwitchMaterial switchBtn = findViewById(R.id.SwitchModeBtn);
@@ -47,6 +48,7 @@ public class Settings extends AppCompatActivity {
             }
 
         });
+        TextView tvSuccess = findViewById(R.id.successTextView);
 
         //switch url
         EditText urlText = findViewById(R.id.SettingsET);
@@ -59,6 +61,8 @@ public class Settings extends AppCompatActivity {
                     settingsEntity.get(0).setUrl(input + "/api/");
                     settingsDao.update(settingsEntity.get(0));
                 }).start();
+                tvSuccess.setText("URL changed successfully");
+                tvSuccess.setVisibility(View.VISIBLE);
             }
         });
 

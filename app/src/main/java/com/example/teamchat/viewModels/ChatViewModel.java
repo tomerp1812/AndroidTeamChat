@@ -33,4 +33,6 @@ public class ChatViewModel extends ViewModel {
         chatRepository.add(msg, receiver);
     }
 
+//    public UserNoPass getUserDetail(String username){ return chatRepository.getUserDetails(username);}
+
 }

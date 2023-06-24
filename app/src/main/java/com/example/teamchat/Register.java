@@ -24,6 +24,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.CompletableFuture;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Register extends AppCompatActivity {
     public static Context context;
@@ -69,32 +71,42 @@ public class Register extends AppCompatActivity {
             String displayName = displayNameEditText.getText().toString();
             String profilePic = profileImageView.toString();
 
-//            !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            TextView errorTextView = findViewById(R.id.errorTextView);
 
-//            if (user !2 - 8...){
-//
-//            }else if (!password.equals(confirmPassword)) {
-//
-//            } else if (password < 2 && password > 8...){
-//
-//            }else if (displayName ...){
-//
-//            }else if (profilePic ...){
-//
-//            }else{
-            UserWithPass user = new UserWithPass(username, password, displayName, transferToBase64());
-            userApi userApi = new userApi(context);
+            String regex = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,16}$";
+            Pattern pattern = Pattern.compile(regex);
+            Matcher matcher = pattern.matcher(password);
+            //check registration details
+            if (username.length() < 2 || username.length() > 10) {
+                errorTextView.setText("Invalid username");
+                errorTextView.setVisibility(View.VISIBLE);
+            } else if (!password.equals(confirmPassword)) {
+                errorTextView.setText("Passwords do not match.");
+                errorTextView.setVisibility(View.VISIBLE);
+            } else if (!matcher.matches()) {
+                errorTextView.setText("Invalid password.");
+                errorTextView.setVisibility(View.VISIBLE);
+            } else if (displayName.length() < 2 || displayName.length() > 10) {
+                errorTextView.setText("Invalid displayName");
+                errorTextView.setVisibility(View.VISIBLE);
+            } else if (profilePic.length() < 1) {
+                errorTextView.setText("Select picture");
+                errorTextView.setVisibility(View.VISIBLE);
+            } else {
+                UserWithPass user = new UserWithPass(username, password, displayName, transferToBase64());
+                userApi userApi = new userApi(context);
 
-            CompletableFuture<UserNoPass> registrationFuture = userApi.onRegister(user);
-            registrationFuture.whenComplete((registeredUser, throwable) -> {
-                if (registeredUser != null) {
-                    Intent intent = new Intent(this, MainActivity.class);
-                    startActivity(intent);
-                } else {
-//                        setErrorMessageForRegistrationFailure
-                }
-            });
-        });
+                CompletableFuture<UserNoPass> registrationFuture = userApi.onRegister(user);
+                registrationFuture.whenComplete((registeredUser, throwable) -> {
+                    if (registeredUser != null) {
+                        Intent intent = new Intent(this, MainActivity.class);
+                        startActivity(intent);
+                    } else {
+                        errorTextView.setText("Failed to register");
+                        errorTextView.setVisibility(View.VISIBLE);                    }
+                });
+            }
+        });//end of click
     }
 
     // Method to open the gallery
@@ -139,10 +151,10 @@ public class Register extends AppCompatActivity {
         }
     }
 
-//    public void navigateToLoginScreen() {
-//        Intent intent = new Intent(this, MainActivity.class);
-//        startActivity(intent);
-//    }
+    //    public void navigateToLoginScreen() {
+    //        Intent intent = new Intent(this, MainActivity.class);
+    //        startActivity(intent);
+    //    }
 
     public void createTermsView() {
         //creating instances of the edit texts

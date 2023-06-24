@@ -4,4 +4,41 @@
         <!-- Customize your dark theme here. -->
          <item name="colorPrimary">@color/my_dark_primary</item>
     </style>
+
+    <!--    Screen background if night mode on-->
+    <style name="SCREEN">
+        <item name="android:background">@drawable/img</item>
+    </style>
+    <style name="BACKGROUND">
+        <item name="android:background">@color/black</item>
+    </style>
+
+    <!--    Text color if night mode on-->
+    <style name="TEXT">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textColorHint">@color/white</item>
+        <item name="android:tint">@color/white</item>
+    </style>
+    <style name="USERNAME">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textColorHint">@color/white</item>
+        <item name="android:tint">@color/white</item>
+        <item name="android:drawableStart">@drawable/baseline_person_24_dark</item>
+    </style>
+    <style name="PASSWORD">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textColorHint">@color/white</item>
+        <item name="android:tint">@color/white</item>
+        <item name="android:drawableStart">@drawable/baseline_info_24_dark</item>
+    </style>
+    <style name="NAME">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textColorHint">@color/white</item>
+        <item name="android:tint">@color/white</item>
+        <item name="android:drawableStart">@drawable/baseline_insert_emoticon_24_dark</item>
+    </style>
+    <!-- Image color-->
+    <style name="IMAGE">
+        <item name="android:tint">@color/white</item>
+    </style>
 </resources>

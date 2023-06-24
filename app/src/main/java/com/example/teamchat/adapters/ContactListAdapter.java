@@ -19,7 +19,6 @@ import com.example.teamchat.entities.contacts.Contact;
 
 import java.util.ArrayList;
 import java.util.List;
-
 public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.ContactViewHolder> {
 
     class ContactViewHolder extends RecyclerView.ViewHolder {
@@ -79,7 +78,10 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
                 holder.date.setText("");
             }else{
                 holder.lastMessage.setText(contact.getLastMessage().getContent());
-                holder.date.setText(contact.getLastMessage().getCreated());
+                String date=contact.getLastMessage().getCreated();
+                String time = date.substring(11, 16);
+                holder.date.setText(time);
+
             }
         }
     }

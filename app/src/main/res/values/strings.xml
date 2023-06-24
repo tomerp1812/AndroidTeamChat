@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">TeamChat</string>
-    <string name="TeamChatTextView">TeamChat</string>
+    <string name="TeamChatTextView">Welcome</string>
     <string name="RegisterTextView">Register</string>
     <string name="HasUserAlreadyTextView">Have an account? </string>
     <string name="hintUsername">Username</string>
@@ -28,11 +28,14 @@
     <string name="currentTime">Current time</string>
     <string name="ivProfilePic">ProfilePic\n</string>
     <string name="etEnterUsername">Enter username</string>
-    <string name="AddNewContact">Add New Contact\n</string>
+    <string name="AddNewContact">Add Contact\n</string>
     <string name="search_contacts">Search contacts...</string>
     <string name="nightTheme">Change to night theme</string>
     <string name="suggestUrl">Enter Url</string>
     <string name="switchUrl">Click here To switch Url</string>
+    <string name="Setting">Settings</string>
+    <string name="errorMessage">Invalid username or password</string>
+    <string name="displayNameTermsMessage">Display name must be between 2 and 10 characters.</string>
     <!--    <string name="userUrl">http://192.168.221.1:5000/api/Users/</string>-->
 
     <!--  from 11.06.2023 strings  -->

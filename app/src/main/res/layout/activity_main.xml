@@ -1,48 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_app"
+    style="@style/SCREEN"
     tools:context=".MainActivity">
-
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <ImageButton
         android:id="@+id/settingsBtnInLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@null"
+        style="@style/IMAGE"
         android:contentDescription="@string/preferencesButton"
-        android:src="@android:drawable/ic_menu_preferences"/>
+        android:src="@drawable/baseline_settings_24"
+        android:layout_gravity="start" />
+
     <TextView
         android:id="@+id/TeamChatTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="90dp"
         android:layout_marginEnd="25dp"
         android:layout_marginBottom="25dp"
         android:gravity="center"
         android:text="@string/TeamChatTextView"
-        android:textColor="@color/blue"
-        android:textSize="45sp"
+        style="@style/TEXT"
+        android:textSize="60sp"
         android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/LoginTextViewInLogin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/TeamChatTextView"
-        android:gravity="center"
-        android:text="@string/LoginTextView"
-        android:textColor="@color/blue"
-        android:textSize="30sp"
-        android:textStyle="bold" />
-
-
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_below="@id/TeamChatTextView"
+        android:layout_centerHorizontal="true"
+        android:background="@null"
+        style="@style/IMAGE"
+        app:srcCompat="@drawable/baseline_account_circle_24" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/imageView3"
         android:layout_centerVertical="true"
         android:orientation="vertical">
 
@@ -53,12 +57,11 @@
             android:layout_margin="10dp"
             android:inputType="textPersonName"
             android:background="@drawable/edittext_rounded_background"
-            android:drawableStart="@drawable/baseline_person_24"
             android:drawablePadding="20dp"
             android:hint="@string/hintUsername"
             android:padding="20dp"
-            android:textColor="@color/blue"
-            android:textColorHint="@color/blue" />
+            style="@style/USERNAME"
+           />
 
         <EditText
             android:id="@+id/PasswordEditTextInLogin"
@@ -67,13 +70,21 @@
             android:layout_margin="10dp"
             android:inputType="textPassword"
             android:background="@drawable/edittext_rounded_background"
-            android:drawableStart="@drawable/baseline_info_24"
             android:drawablePadding="20dp"
             android:hint="@string/hintPassword"
             android:padding="20dp"
-            android:textColor="@color/blue"
-            android:textColorHint="@color/blue" />
-
+            style="@style/PASSWORD"
+             />
+        <TextView
+            android:id="@+id/errorTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/red"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:visibility="gone" />
         <Button
             android:id="@+id/LoginButton"
             android:layout_width="wrap_content"
@@ -95,7 +106,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/NoAccount"
-                android:textColor="@color/blue"
+                style="@style/TEXT"
                 android:layout_marginEnd="5dp"
                 android:textSize="20sp" />
 
@@ -106,12 +117,12 @@
                 android:focusable="true"
                 android:onClick="navigateToRegistrationScreen"
                 android:text="@string/SignUp"
-                android:textColor="@color/blue"
+                style="@style/TEXT"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
 
         </LinearLayout>
     </LinearLayout>
-
 </RelativeLayout>
+</ScrollView>

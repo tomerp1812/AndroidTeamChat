@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_app"
+    style="@style/SCREEN"
     tools:context=".Register">
 
     <RelativeLayout
@@ -12,50 +12,45 @@
         android:layout_height="wrap_content">
         <!--  Logo  -->
         <TextView
-            android:id="@+id/TeamChatTextView"
+            android:id="@+id/RegisterTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:gravity="center"
-            android:text="@string/TeamChatTextView"
-            android:textColor="@color/blue"
-            android:textSize="45sp"
-            android:textStyle="bold" />
-
-        <!--  Register  -->
-
-        <TextView
-            android:id="@+id/RegisterTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/TeamChatTextView"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
+            style="@style/TEXT"
             android:text="@string/RegisterTextView"
-            android:textColor="@color/blue"
-            android:textSize="30sp"
+            android:textSize="60sp"
             android:textStyle="bold" />
-
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            style="@style/IMAGE"
+            android:layout_below="@id/RegisterTextView"
+            android:layout_centerHorizontal="true"
+            android:background="@null"
+            app:srcCompat="@drawable/baseline_group_add_24" />
 
         <!--  Inputs  -->
 
         <EditText
             android:id="@+id/usernameEditTextInRegister"
+            style="@style/USERNAME"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/RegisterTextView"
+            android:layout_below="@+id/imageView3"
             android:layout_marginStart="7dp"
-            android:layout_marginTop="7dp"
+            android:layout_marginTop="2dp"
             android:layout_marginEnd="7dp"
             android:layout_marginBottom="7dp"
             android:background="@drawable/edittext_rounded_background"
-            android:drawableStart="@drawable/baseline_person_24"
             android:drawablePadding="20dp"
             android:hint="@string/hintUsername"
             android:inputType="textPersonName"
             android:padding="20dp"
-            android:textColor="@color/blue"
-            android:textColorHint="@color/blue" />
+
+            />
 
         <TextView
             android:id="@+id/usernameTerms"
@@ -79,13 +74,12 @@
             android:layout_marginEnd="7dp"
             android:layout_marginBottom="7dp"
             android:background="@drawable/edittext_rounded_background"
-            android:drawableStart="@drawable/baseline_info_24"
             android:drawablePadding="20dp"
             android:hint="@string/hintPassword"
             android:inputType="textPassword"
             android:padding="20dp"
-            android:textColor="@color/blue"
-            android:textColorHint="@color/blue" />
+            style="@style/PASSWORD"
+            />
 
         <TextView
             android:id="@+id/passwordTerms"
@@ -109,13 +103,12 @@
             android:layout_marginEnd="7dp"
             android:layout_marginBottom="7dp"
             android:background="@drawable/edittext_rounded_background"
-            android:drawableStart="@drawable/baseline_info_24"
             android:drawablePadding="20dp"
             android:hint="@string/hintConfirmPassword"
             android:inputType="textPassword"
             android:padding="20dp"
-            android:textColor="@color/blue"
-            android:textColorHint="@color/blue" />
+            style="@style/PASSWORD"
+            />
 
         <EditText
             android:id="@+id/DisplayNameEditText"
@@ -127,13 +120,12 @@
             android:layout_marginEnd="7dp"
             android:layout_marginBottom="7dp"
             android:background="@drawable/edittext_rounded_background"
-            android:drawableStart="@drawable/baseline_insert_emoticon_24"
             android:drawablePadding="20dp"
             android:hint="@string/hintDisplayName"
             android:inputType="textPersonName"
             android:padding="20dp"
-            android:textColor="@color/blue"
-            android:textColorHint="@color/blue" />
+            style="@style/NAME"
+            />
 
         <TextView
             android:id="@+id/displayNameTerms"
@@ -142,7 +134,7 @@
             android:layout_below="@+id/DisplayNameEditText"
             android:layout_marginStart="7dp"
             android:layout_marginTop="8dp"
-            android:text="@string/usernameTermsMessage"
+            android:text="@string/displayNameTermsMessage"
             android:textColor="@color/red"
             android:textSize="12sp"
             android:visibility="invisible" />
@@ -172,15 +164,26 @@
                 android:layout_height="wrap_content"
                 android:padding="20dp"
                 android:text="@string/ProfilePictureString"
-                android:textColor="@color/blue"
+                style="@style/TEXT"
                 android:textSize="20sp" />
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/errorTextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="16dp"
+            android:layout_below="@+id/ProfileImageLinearLayout"
+            android:textColor="@color/red"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            android:gravity="center" />
         <Button
             android:id="@+id/RegisterButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ProfileImageLinearLayout"
+            android:layout_below="@+id/errorTextView"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
             android:gravity="center"
@@ -201,17 +204,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:text="@string/HasUserAlreadyTextView"
-                android:textColor="@color/blue"
+                style="@style/TEXT"
                 android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/toLoginTextViewInRegister"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:clickable="true"
                 android:focusable="true"
                 android:text="@string/Click_Here"
-                android:textColor="@color/blue"
+                style="@style/TEXT"
                 android:textSize="20sp"
                 android:textStyle="bold" />
         </LinearLayout>
