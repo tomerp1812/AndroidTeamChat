@@ -88,6 +88,24 @@ public class ContactRepository {
         });
     }
 
+    public void receivedMessage(int id, String created, String sender, String content){
+        new Thread(() -> {
+            CompletableFuture.supplyAsync(() -> contactDao.index())
+                    .thenAccept(contactList -> {
+                        for (Contact contact: contactList) {
+                            if(contact.getUser().getUsername().equals(sender)){
+                                contact.getLastMessage().setId(id);
+                                contact.getLastMessage().setCreated(created);
+                                contact.getLastMessage().setContent(content);
+                                contactDao.update(contact);
+                                List<Contact> contacts = contactDao.index();
+                                contactListData.postValue(contacts);
+                            }
+                        }
+                    });
+        }).start();
+    }
+
 
 //    public Contact getContact(int id){
 //        return contactApi.onGetContactDetails(id);

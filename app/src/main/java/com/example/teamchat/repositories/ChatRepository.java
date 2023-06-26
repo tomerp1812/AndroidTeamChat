@@ -56,10 +56,10 @@ public class ChatRepository {
 
         CompletableFuture<List<Message>> future = chatApi.onGetMessages();
         future.thenAccept(messages -> {
-            for (Message message: messages) {
-                if(message.getSender().getUsername().equals(sender)){
+            for (Message message : messages) {
+                if (message.getSender().getUsername().equals(sender)) {
                     message.setReceiver(receiver);
-                }else{
+                } else {
                     message.setReceiver(sender);
                 }
             }
@@ -67,8 +67,8 @@ public class ChatRepository {
 
             //update room
             new Thread(() -> {
-                for(Message message: messages){
-                    if(chatDao.getMessageById(message.getId()) == null){
+                for (Message message : messages) {
+                    if (chatDao.getMessageById(message.getId()) == null) {
                         chatDao.insert(message);
                     }
                 }
@@ -93,13 +93,27 @@ public class ChatRepository {
     }
 
 
-    public UserNoPass getUserDetails(String username) {
-        CompletableFuture<UserNoPass> future = chatApi.onGetUserDetails(username);
-        future.thenAccept(userNoPass -> {
-            user = new UserNoPass(userNoPass.getUsername(),userNoPass.getDisplayName(),userNoPass.getProfilePic());
-        });
-        return user;
+    public void receivedMessage(int id, String created, String sender, String content) {
+        new Thread(() -> {
+            CompletableFuture<UserNoPass> future = chatApi.onGetUserDetails(sender);
+            future.thenAccept(userNoPass -> {
+                Message message = new Message(id, created, userNoPass, content);
+                new Thread(() -> {
+                    chatDao.insert(message);
+                    sentMessages.add(message);
+                    chatListData.postValue(sentMessages);
+                }).start();
+            });
+        }).start();
     }
+
+//        public UserNoPass getUserDetails (String username){
+//            CompletableFuture<UserNoPass> future = chatApi.onGetUserDetails(username);
+//            future.thenAccept(userNoPass -> {
+//                user = new UserNoPass(userNoPass.getUsername(), userNoPass.getDisplayName(), userNoPass.getProfilePic());
+//            });
+//            return user;
+//        }
 
     class ChatListData extends MutableLiveData<List<Message>> {
         public ChatListData() {
