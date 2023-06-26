@@ -28,6 +28,10 @@ public class ContactViewModel extends ViewModel {
         return repository.getAll();
     }
 
+    public void onReceivedMessage(int id, String created, String sender, String content) {
+        repository.receivedMessage(id, created, sender, content);
+    }
+
 
 //    public void delete(Contact contact) {
 //        repository.delete(contact);

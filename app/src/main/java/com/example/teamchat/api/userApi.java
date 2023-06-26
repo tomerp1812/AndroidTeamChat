@@ -65,10 +65,10 @@ public class userApi {
 
 
 
-    public CompletableFuture<ResponseBody> onLogin(UserForLogin user) {
+    public CompletableFuture<ResponseBody> onLogin(String fireBaseToken, UserForLogin user) {
         CompletableFuture<ResponseBody> future = new CompletableFuture<>();
 
-        Call<ResponseBody> call = usersApiService.Login(user);
+        Call<ResponseBody> call = usersApiService.Login(fireBaseToken,user);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

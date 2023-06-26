@@ -9,6 +9,7 @@ import com.example.teamchat.Dao.Chat.ChatDB;
 import com.example.teamchat.Dao.Chat.ChatDao;
 import com.example.teamchat.api.ChatApi;
 import com.example.teamchat.entities.messages.Message;
+import com.example.teamchat.entities.user.UserNoPass;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,10 +55,10 @@ public class ChatRepository {
 
         CompletableFuture<List<Message>> future = chatApi.onGetMessages();
         future.thenAccept(messages -> {
-            for (Message message: messages) {
-                if(message.getSender().getUsername().equals(sender)){
+            for (Message message : messages) {
+                if (message.getSender().getUsername().equals(sender)) {
                     message.setReceiver(receiver);
-                }else{
+                } else {
                     message.setReceiver(sender);
                 }
             }
@@ -65,8 +66,8 @@ public class ChatRepository {
 
             //update room
             new Thread(() -> {
-                for(Message message: messages){
-                    if(chatDao.getMessageById(message.getId()) == null){
+                for (Message message : messages) {
+                    if (chatDao.getMessageById(message.getId()) == null) {
                         chatDao.insert(message);
                     }
                 }
@@ -88,6 +89,21 @@ public class ChatRepository {
             }).start();
         });
 
+    }
+
+
+    public void receivedMessage(int id, String created, String sender, String content) {
+        new Thread(() -> {
+            CompletableFuture<UserNoPass> future = chatApi.onGetUserDetails(sender);
+            future.thenAccept(userNoPass -> {
+                Message message = new Message(id, created, userNoPass, content);
+                new Thread(() ->{
+                    chatDao.insert(message);
+                    sentMessages.add(message);
+                    chatListData.postValue(sentMessages);
+                }).start();
+            });
+        }).start();
     }
 
     class ChatListData extends MutableLiveData<List<Message>> {

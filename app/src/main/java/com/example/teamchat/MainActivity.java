@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,6 +20,7 @@ import com.example.teamchat.api.userApi;
 import com.example.teamchat.chats.ContactList;
 import com.example.teamchat.entities.SettingsEntity;
 import com.example.teamchat.entities.user.UserForLogin;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -78,27 +80,40 @@ public class MainActivity extends AppCompatActivity {
 
             UserForLogin user = new UserForLogin(edName, edPassword);
             userApi userApi = new userApi(context);
-            CompletableFuture<ResponseBody> loginFuture = userApi.onLogin(user);
-            loginFuture.thenAccept(responseBody -> {
-                try {
-                    String response = responseBody.string();
-                    String authorizationHeader = "bearer " + response;
-                    Intent i = new Intent(this, ContactList.class);
-                    // Pass the token to the next activity if needed
-                    i.putExtra("me", edName);
-                    i.putExtra("token", authorizationHeader);
-                    startActivity(i);
-                    // token variable now contains the token string
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    errorTextView.setText("Invalid username or password");
-                    errorTextView.setVisibility(View.VISIBLE);                }
-            }).exceptionally(ex -> {
-                errorTextView.setText("Invalid username or password");
-                errorTextView.setVisibility(View.VISIBLE);
-                return null;
-            });
+
+            // Retrieve the Firebase token
+            FirebaseMessaging.getInstance().getToken()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful() && task.getResult() != null) {
+                            String fireBaseToken = task.getResult();
+                            CompletableFuture<ResponseBody> loginFuture = userApi.onLogin(fireBaseToken, user);
+                            loginFuture.thenAccept(responseBody -> {
+                                try {
+                                    String response = responseBody.string();
+                                    String authorizationHeader = "bearer " + response;
+                                    Intent i = new Intent(this, ContactList.class);
+                                    // Pass the token to the next activity if needed
+                                    i.putExtra("me", edName);
+                                    i.putExtra("token", authorizationHeader);
+                                    startActivity(i);
+                                    // token variable now contains the token string
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    errorTextView.setText("Invalid username or password");
+                                    errorTextView.setVisibility(View.VISIBLE);
+                                }
+                            }).exceptionally(ex -> {
+                                errorTextView.setText("Invalid username or password");
+                                errorTextView.setVisibility(View.VISIBLE);
+                                return null;
+                            });
+                        } else {
+                            // Handle the failure to retrieve the Firebase token
+                            Log.e("Firebase", "Failed to retrieve Firebase token: " + task.getException());
+                        }
+                    });
         });
+
 
     }
 

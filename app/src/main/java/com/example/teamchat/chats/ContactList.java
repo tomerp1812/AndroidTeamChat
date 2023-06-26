@@ -1,7 +1,9 @@
 package com.example.teamchat.chats;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,6 +14,7 @@ import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,10 +29,27 @@ public class ContactList extends AppCompatActivity {
     private ContactViewModel viewModel;
     private Context context;
 
+    private final BroadcastReceiver messageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int id = intent.getIntExtra("id", -1);
+            String created = intent.getStringExtra("created");
+            String sender = intent.getStringExtra("sender");
+            String content = intent.getStringExtra("content");
+            viewModel.onReceivedMessage(id, created, sender, content);
+
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_list);
+
+        // Register the broadcast receiver
+        IntentFilter intentFilter = new IntentFilter("ACTION_MESSAGE_RECEIVED");
+        LocalBroadcastManager.getInstance(this).registerReceiver(messageReceiver, intentFilter);
+
         context = getApplicationContext();
         // Retrieve the token from the intent
         String me = getIntent().getStringExtra("me");
@@ -45,11 +65,10 @@ public class ContactList extends AppCompatActivity {
         viewModel.get().observe(this, adapter::setContacts);
 
 
-
-       ///// DATABASE!!!!!
+        ///// DATABASE!!!!!
         //add contact to the list
         FloatingActionButton btnAdd = findViewById(R.id.btnAdd);
-        btnAdd.setOnClickListener(view ->{
+        btnAdd.setOnClickListener(view -> {
             Intent intent = new Intent(this, AddContact.class);
             intent.putExtra("me", me);
             intent.putExtra("token", authorizationHeader);
@@ -69,6 +88,7 @@ public class ContactList extends AppCompatActivity {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
@@ -80,9 +100,6 @@ public class ContactList extends AppCompatActivity {
                 adapter.filterContacts(searchText);
             }
         });
-
-
-
 
 
 //        move to the chat screen
@@ -113,10 +130,12 @@ public class ContactList extends AppCompatActivity {
                 }
                 return false;
             }
+
             @Override
             public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
 
             }
+
             @Override
             public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
 

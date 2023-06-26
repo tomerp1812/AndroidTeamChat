@@ -6,6 +6,7 @@ import com.example.teamchat.entities.user.UserWithPass;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Body;
 
@@ -16,5 +17,5 @@ public interface UsersApiService {
     Call<UserNoPass> Register(@Body UserWithPass userWithPass);
 
     @POST("Tokens")
-    Call<ResponseBody> Login(@Body UserForLogin user);
+    Call<ResponseBody> Login(@Header("FireBaseToken") String fireBaseToken, @Body UserForLogin user);
 }
