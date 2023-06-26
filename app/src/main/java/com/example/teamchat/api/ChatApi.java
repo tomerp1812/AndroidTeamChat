@@ -61,15 +61,14 @@ public class ChatApi {
                     completableFuture.completeExceptionally(new Exception("API request failed with status code: " + response.code()));
                 }
             }
-
             @Override
             public void onFailure(Call<UserNoPass> call, Throwable t) {
                 completableFuture.completeExceptionally(t);
             }
         });
+
         return completableFuture;
     }
-
     public CompletableFuture<List<Message>> onGetMessages() {
         CompletableFuture<List<Message>> completableFuture = new CompletableFuture<>();
         Call<List<Message>> call = chatsApiService.getMessages(authorizationToken, id);

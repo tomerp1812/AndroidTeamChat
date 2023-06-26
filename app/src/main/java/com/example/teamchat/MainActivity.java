@@ -13,6 +13,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
+import com.example.teamchat.Dao.Chat.ChatDB;
+import com.example.teamchat.Dao.ContactDB;
 import com.example.teamchat.Dao.Settings.SettingsDB;
 import com.example.teamchat.Dao.Settings.SettingsDao;
 import com.example.teamchat.api.userApi;
@@ -20,6 +22,7 @@ import com.example.teamchat.chats.ContactList;
 import com.example.teamchat.entities.SettingsEntity;
 import com.example.teamchat.entities.user.UserForLogin;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 import okhttp3.ResponseBody;
@@ -32,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private SettingsDao settingsDao;
 
     private String firstLogin;
+    private String etName;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -40,8 +44,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         context = getApplicationContext();
 
+        //setting DB
         this.settingsDB = SettingsDB.getInstance(getApplicationContext());
         this.settingsDao = settingsDB.settingsDao();
+
 
         if (firstLogin == null) {
             //check if room empty (happens only after first download of the app)
@@ -69,41 +75,72 @@ public class MainActivity extends AppCompatActivity {
 
         Button btnLogin = findViewById(R.id.LoginButton);
         btnLogin.setOnClickListener(v -> {
-            TextView errorTextView = findViewById(R.id.errorTextView);
-            //string of name and password
-            EditText usernameEditText = findViewById(R.id.usernameEditTextInLogin);
-            EditText passwordEditText = findViewById(R.id.PasswordEditTextInLogin);
-            String edName = usernameEditText.getText().toString();
-            String edPassword = passwordEditText.getText().toString();
-
-            UserForLogin user = new UserForLogin(edName, edPassword);
-            userApi userApi = new userApi(context);
-            CompletableFuture<ResponseBody> loginFuture = userApi.onLogin(user);
-            loginFuture.thenAccept(responseBody -> {
-                try {
-                    String response = responseBody.string();
-                    String authorizationHeader = "bearer " + response;
-                    Intent i = new Intent(this, ContactList.class);
-                    // Pass the token to the next activity if needed
-                    i.putExtra("me", edName);
-                    i.putExtra("token", authorizationHeader);
-                    startActivity(i);
-                    // token variable now contains the token string
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    errorTextView.setText("Invalid username or password");
-                    errorTextView.setVisibility(View.VISIBLE);                }
-            }).exceptionally(ex -> {
-                errorTextView.setText("Invalid username or password");
-                errorTextView.setVisibility(View.VISIBLE);
-                return null;
-            });
+            Login();
         });
 
     }
 
+    @SuppressLint("SetTextI18n")
+    private void Login(){
+        TextView errorTextView = findViewById(R.id.errorTextView);
+        //string of name and password
+        EditText usernameEditText = findViewById(R.id.usernameEditTextInLogin);
+        EditText passwordEditText = findViewById(R.id.PasswordEditTextInLogin);
+        String edName = usernameEditText.getText().toString();
+        String edPassword = passwordEditText.getText().toString();
+        this.etName  = edName;
+        UserForLogin user = new UserForLogin(edName, edPassword);
+        userApi userApi = new userApi(context);
+        CompletableFuture<ResponseBody> loginFuture = userApi.onLogin(user);
+        loginFuture.thenAccept(responseBody -> {
+            try {
+                //login successfully
+                //clear the DB if it is a new user login
+                List<SettingsEntity> settingsEntities = CompletableFuture.supplyAsync(() -> settingsDao.index())
+                        .join();
+                if (settingsEntities.get(0).getUserConnected() == null) {
+                    settingsEntities.get(0).setUserConnected(edName);
+                    settingsDao.update(settingsEntities.get(0));
+                } else if (!(settingsEntities.get(0).getUserConnected().equals(edName))) {
+                    //delete the DB-setting(default), contacts, messages
+                    settingsEntities.get(0).setNightMode(false);
+                    ContactDB.deleteDatabase(getApplicationContext());
+                    ChatDB.deleteDatabase(getApplicationContext());
+                    //update the new user connection
+                    settingsEntities.get(0).setUserConnected(edName);
+                    settingsDao.update(settingsEntities.get(0));
+                }
+
+                String response = responseBody.string();
+                String authorizationHeader = "bearer " + response;
+                Intent i = new Intent(this, ContactList.class);
+                // Pass the token to the next activity if needed
+                i.putExtra("me", edName);
+                i.putExtra("token", authorizationHeader);
+                startActivity(i);
+                // token variable now contains the token string
+            } catch (Exception e) {
+                e.printStackTrace();
+                errorTextView.setText("Invalid username or password");
+                errorTextView.setVisibility(View.VISIBLE);
+            }
+        }).exceptionally(ex -> {
+            errorTextView.setText("Invalid username or password");
+            errorTextView.setVisibility(View.VISIBLE);
+            return null;
+        });
+    }
     public void navigateToRegistrationScreen(View view) {
         Intent intent = new Intent(this, Register.class);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Button btnLogin = findViewById(R.id.LoginButton);
+        btnLogin.setOnClickListener(v -> {
+            Login();
+        });
     }
 }

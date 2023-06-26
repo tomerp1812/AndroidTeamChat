@@ -10,11 +10,14 @@ public class SettingsEntity {
     int id;
 
     private String url;
+
+    private String userConnected;
     private boolean isNightMode;
 
     public SettingsEntity(String url, boolean isNightMode) {
         this.url = url;
         this.isNightMode = isNightMode;
+        this.userConnected = null;
     }
 
     public String getUrl() {
@@ -40,4 +43,13 @@ public class SettingsEntity {
     public void setId(int id) {
         this.id = id;
     }
+
+    public String getUserConnected() {
+        return userConnected;
+    }
+
+    public void setUserConnected(String userConnected) {
+        this.userConnected = userConnected;
+    }
+
 }
