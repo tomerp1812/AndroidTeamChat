@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase;
 
 import com.example.teamchat.entities.SettingsEntity;
 
-@Database(entities = {SettingsEntity.class}, version = 4)
+@Database(entities = {SettingsEntity.class}, version = 6)
 public abstract class SettingsDB extends RoomDatabase {
 
     private static final String DATABASE_NAME = "ServerUrl_db";

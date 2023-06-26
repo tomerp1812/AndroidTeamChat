@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.teamchat.entities.messages.Message;
+import com.example.teamchat.entities.user.UserNoPass;
 import com.example.teamchat.repositories.ChatRepository;
 
 import java.util.List;
@@ -38,5 +39,8 @@ public class ChatViewModel extends ViewModel {
     }
 
 //    public UserNoPass getUserDetail(String username){ return chatRepository.getUserDetails(username);}
+//    public UserNoPass getUserDetail(String username) {
+//        return chatRepository.getUserDetails(username);
+//    }
 
 }

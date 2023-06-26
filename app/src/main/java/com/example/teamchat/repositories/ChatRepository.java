@@ -24,6 +24,7 @@ public class ChatRepository {
     private String authorizationHeader;
 
     private ChatDB chatDB;
+    private UserNoPass user;
 
     private List<Message> sentMessages;
 
@@ -97,7 +98,7 @@ public class ChatRepository {
             CompletableFuture<UserNoPass> future = chatApi.onGetUserDetails(sender);
             future.thenAccept(userNoPass -> {
                 Message message = new Message(id, created, userNoPass, content);
-                new Thread(() ->{
+                new Thread(() -> {
                     chatDao.insert(message);
                     sentMessages.add(message);
                     chatListData.postValue(sentMessages);
@@ -105,6 +106,14 @@ public class ChatRepository {
             });
         }).start();
     }
+
+//        public UserNoPass getUserDetails (String username){
+//            CompletableFuture<UserNoPass> future = chatApi.onGetUserDetails(username);
+//            future.thenAccept(userNoPass -> {
+//                user = new UserNoPass(userNoPass.getUsername(), userNoPass.getDisplayName(), userNoPass.getProfilePic());
+//            });
+//            return user;
+//        }
 
     class ChatListData extends MutableLiveData<List<Message>> {
         public ChatListData() {
