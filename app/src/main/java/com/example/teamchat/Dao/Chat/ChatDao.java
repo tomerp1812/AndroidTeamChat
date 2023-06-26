@@ -3,6 +3,7 @@ package com.example.teamchat.Dao.Chat;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.example.teamchat.entities.messages.Message;
@@ -15,7 +16,7 @@ public interface ChatDao {
     @Query("SELECT * FROM Message")
     List<Message> index();
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(Message messages);
 
     @Query("SELECT * FROM Message WHERE id = :id")

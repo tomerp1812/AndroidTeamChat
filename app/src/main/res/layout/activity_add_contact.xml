@@ -1,71 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
     style="@style/SCREEN"
     android:gravity="center"
-    tools:context=".chats.AddContact">
+    tools:context=".chats.AddContact"
+    android:layout_height="match_parent">
 
-
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.395"
-        tools:layout_editor_absoluteX="-16dp">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/tvAddNewContact"
-            android:layout_width="wrap_content"
-            android:layout_height="67dp"
-            android:layout_gravity="center"
-            android:text="@string/AddNewContact"
-            style="@style/TEXT"
-            android:textSize="50sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.172" />
-
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="90dp"
-            style="@style/IMAGE"
-            android:layout_gravity="center"
-            android:layout_height="90dp"
-            app:srcCompat="@drawable/baseline_person_add_alt_1_24" />
-
-        <EditText
-            android:id="@+id/etContent"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:inputType="textPersonName"
-            android:background="@drawable/edittext_rounded_background"
-            android:drawablePadding="20dp"
-            android:hint="@string/etEnterUsername"
-            android:padding="20dp"
-            style="@style/TEXT"
-            />
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.395"
+            tools:layout_editor_absoluteX="-16dp">
 
-        <Button
-            android:id="@+id/btnAdd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            style="@style/TEXT"
-            android:text="Add" />
+            <TextView
+                android:id="@+id/tvAddNewContact"
+                android:layout_width="wrap_content"
+                android:layout_height="67dp"
+                android:layout_gravity="center"
+                android:text="@string/AddNewContact"
+                style="@style/TEXT"
+                android:textSize="50sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.172" />
 
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="90dp"
+                style="@style/IMAGE"
+                android:layout_gravity="center"
+                android:layout_height="90dp"
+                app:srcCompat="@drawable/baseline_person_add_alt_1_24" />
 
+            <EditText
+                android:id="@+id/etContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:inputType="textPersonName"
+                android:background="@drawable/edittext_rounded_background"
+                android:drawablePadding="20dp"
+                android:hint="@string/etEnterUsername"
+                android:padding="20dp"
+                style="@style/TEXT"
+                />
 
+            <Button
+                android:id="@+id/btnAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                style="@style/TEXT"
+                android:text="Add" />
 
+        </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

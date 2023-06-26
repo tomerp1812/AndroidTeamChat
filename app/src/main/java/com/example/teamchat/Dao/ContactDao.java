@@ -3,6 +3,7 @@ package com.example.teamchat.Dao;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -20,7 +21,7 @@ public interface ContactDao {
     @Query("SELECT * FROM Contact WHERE id = :id")
     Contact get(int id);
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(Contact contact);
 
     @Update

@@ -9,6 +9,7 @@ import com.example.teamchat.Dao.Chat.ChatDB;
 import com.example.teamchat.Dao.Chat.ChatDao;
 import com.example.teamchat.api.ChatApi;
 import com.example.teamchat.entities.messages.Message;
+import com.example.teamchat.entities.user.UserNoPass;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,7 @@ public class ChatRepository {
     private String authorizationHeader;
 
     private ChatDB chatDB;
+    private UserNoPass user;
 
     private List<Message> sentMessages;
 
@@ -88,6 +90,15 @@ public class ChatRepository {
             }).start();
         });
 
+    }
+
+
+    public UserNoPass getUserDetails(String username) {
+        CompletableFuture<UserNoPass> future = chatApi.onGetUserDetails(username);
+        future.thenAccept(userNoPass -> {
+            user = new UserNoPass(userNoPass.getUsername(),userNoPass.getDisplayName(),userNoPass.getProfilePic());
+        });
+        return user;
     }
 
     class ChatListData extends MutableLiveData<List<Message>> {
