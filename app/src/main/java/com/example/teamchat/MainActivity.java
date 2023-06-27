@@ -64,6 +64,11 @@ public class MainActivity extends AppCompatActivity {
                             } else {
                                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                             }
+//                            Intent intent = new Intent(this, ContactList.class);
+//                            // Pass the token to the next activity if needed
+//                            intent.putExtra("me", settingsEntities.get(0).getUserConnected());
+//                            intent.putExtra("token", settingsEntities.get(0).getAuthorizationHeader());
+//                            startActivity(intent);
                         }
                     });
         }
@@ -145,13 +150,17 @@ public class MainActivity extends AppCompatActivity {
                         String fireBaseToken = task.getResult();
                         CompletableFuture<ResponseBody> loginFuture = userApi.onLogin(fireBaseToken, user);
                         loginFuture.thenAccept(responseBody -> {
+
                             try {
+                                String response = responseBody.string();
+                                String authorizationHeader = "bearer " + response;
                                 //login successfully
                                 //clear the DB if it is a new user login
                                 List<SettingsEntity> settingsEntities = CompletableFuture.supplyAsync(() -> settingsDao.index())
                                         .join();
                                 if (settingsEntities.get(0).getUserConnected() == null) {
                                     settingsEntities.get(0).setUserConnected(edName);
+                                    settingsEntities.get(0).setAuthorizationHeader(authorizationHeader);
                                     settingsDao.update(settingsEntities.get(0));
                                 } else if (!(settingsEntities.get(0).getUserConnected().equals(edName))) {
                                     //delete the DB-setting(default), contacts, messages
@@ -160,11 +169,11 @@ public class MainActivity extends AppCompatActivity {
                                     ChatDB.deleteDatabase(getApplicationContext());
                                     //update the new user connection
                                     settingsEntities.get(0).setUserConnected(edName);
+                                    settingsEntities.get(0).setAuthorizationHeader(authorizationHeader);
                                     settingsDao.update(settingsEntities.get(0));
                                 }
 
-                                String response = responseBody.string();
-                                String authorizationHeader = "bearer " + response;
+
                                 Intent i = new Intent(this, ContactList.class);
                                 // Pass the token to the next activity if needed
                                 i.putExtra("me", edName);

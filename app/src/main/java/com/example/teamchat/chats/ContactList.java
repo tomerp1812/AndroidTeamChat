@@ -42,6 +42,36 @@ public class ContactList extends AppCompatActivity {
     };
 
     @Override
+    public void onBackPressed() {
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        builder.setTitle("Logout");
+//        builder.setMessage("Are you sure you want to logout?");
+//        builder.setPositiveButton("Logout", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                // Add your logout functionality here
+//                SettingsDB.deleteDatabase(getApplicationContext());
+//                ContactDB.deleteDatabase(getApplicationContext());
+//                ChatDB.deleteDatabase(getApplicationContext());
+//
+//                // move to the login activity
+//                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//                startActivity(intent);
+//                dialog.dismiss();
+//            }
+//        });
+//        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                dialog.dismiss();
+//            }
+//        });
+//
+//        AlertDialog dialog = builder.create();
+//        dialog.show();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_list);

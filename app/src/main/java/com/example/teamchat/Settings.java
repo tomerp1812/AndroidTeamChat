@@ -1,6 +1,7 @@
 package com.example.teamchat;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
+import com.example.teamchat.Dao.Chat.ChatDB;
+import com.example.teamchat.Dao.ContactDB;
 import com.example.teamchat.Dao.Settings.SettingsDB;
 import com.example.teamchat.Dao.Settings.SettingsDao;
 import com.example.teamchat.entities.SettingsEntity;
@@ -65,6 +68,24 @@ public class Settings extends AppCompatActivity {
                 tvSuccess.setVisibility(View.VISIBLE);
             }
         });
+
+
+        Button btnLogout = findViewById(R.id.btnLogout);
+        btnLogout.setOnClickListener(view ->{
+            logout();
+        });
+
+    }
+
+    public void logout(){
+        // delete all the DB from the app
+//        SettingsDB.deleteDatabase(getApplicationContext());
+        ContactDB.deleteDatabase(getApplicationContext());
+        ChatDB.deleteDatabase(getApplicationContext());
+
+        // move to the login activity
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
 
     }
 }

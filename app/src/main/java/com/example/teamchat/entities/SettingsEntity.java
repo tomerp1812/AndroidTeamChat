@@ -13,11 +13,13 @@ public class SettingsEntity {
 
     private String userConnected;
     private boolean isNightMode;
+    private String authorizationHeader;
 
     public SettingsEntity(String url, boolean isNightMode) {
         this.url = url;
         this.isNightMode = isNightMode;
         this.userConnected = null;
+        this.authorizationHeader = null;
     }
 
     public String getUrl() {
@@ -52,4 +54,11 @@ public class SettingsEntity {
         this.userConnected = userConnected;
     }
 
+    public String getAuthorizationHeader() {
+        return authorizationHeader;
+    }
+
+    public void setAuthorizationHeader(String authorizationHeader) {
+        this.authorizationHeader = authorizationHeader;
+    }
 }
