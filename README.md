@@ -89,6 +89,8 @@ $ npm start
 # sync project with Gradle files
 # run the app
 
+# Client side - web
+# Open the browser- "http://localhost:5000"
 ```
 
 ## Authors
