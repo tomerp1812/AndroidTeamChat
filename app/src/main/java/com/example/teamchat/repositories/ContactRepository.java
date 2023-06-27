@@ -18,9 +18,7 @@ public class ContactRepository {
     private ContactDao contactDao;
     private ContactApi contactApi;
     private ContactListData contactListData;
-
     private Context context;
-
     private ContactDB db;
     private static ContactRepository contactRepository;
     private String authorizationHeader;
@@ -32,7 +30,6 @@ public class ContactRepository {
         this.contactApi = new ContactApi(context, authorizationHeader);
         this.authorizationHeader = authorizationHeader;
         this.context = context;
-
     }
 
     public void setContext(Context context) {
@@ -43,7 +40,6 @@ public class ContactRepository {
         this.authorizationHeader = authorizationHeader;
         contactApi.setAuthorizationHeader(authorizationHeader);
     }
-
     public static ContactRepository getRepository(Context context, String authorizationHeader) {
         if (contactRepository == null) {
             contactRepository = new ContactRepository(context, authorizationHeader);
@@ -54,6 +50,7 @@ public class ContactRepository {
         return contactRepository;
     }
 
+    // get all the contact list
     public LiveData<List<Contact>> getAll() {
         CompletableFuture.supplyAsync(() -> contactDao.index())
                 .thenAccept(contactList -> contactListData.postValue(contactList));
@@ -74,7 +71,7 @@ public class ContactRepository {
         return contactListData;
     }
 
-
+    // add new contact to user list
     public void add(final String contact) {
         CompletableFuture<ContactNoMsg> future = contactApi.onAddContact(contact);
 
@@ -107,14 +104,6 @@ public class ContactRepository {
         }).start();
     }
 
-
-//    public Contact getContact(int id){
-//        return contactApi.onGetContactDetails(id);
-//    }
-
-//    public void delete(final Contact contact) {
-//        contactApi.onDeleteContact();
-//    }
 
     class ContactListData extends MutableLiveData<List<Contact>> {
         public ContactListData() {

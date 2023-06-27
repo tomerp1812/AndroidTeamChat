@@ -40,7 +40,16 @@
                 style="@style/TEXT"
                 android:layout_width="match_parent"
                 android:layout_height="60dp" />
-
+            <TextView
+                android:id="@+id/tvUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                style="@style/TEXT"
+                android:text="@string/for_example_http_10_100_102_85_5000"
+                android:textStyle="bold"
+                android:gravity="center"
+               />
             <TextView
                 android:id="@+id/successTextView"
                 android:layout_width="match_parent"

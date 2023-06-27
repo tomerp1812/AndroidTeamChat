@@ -15,7 +15,6 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface ContactApiService {
-    //////////TOKEN/////////
     @GET("Chats")
     Call<List<Contact>> getContacts(@Header("Authorization") String authorization);
 

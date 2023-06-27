@@ -20,7 +20,6 @@ import com.example.teamchat.entities.contacts.Contact;
 import java.util.ArrayList;
 import java.util.List;
 public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.ContactViewHolder> {
-
     class ContactViewHolder extends RecyclerView.ViewHolder {
         private final ImageView profilePic;
         private final TextView username;
@@ -39,9 +38,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
 
     private final LayoutInflater mInflater;
     private List<Contact> contacts;
-
     private List<Contact> filteredContactList;
-
     private List<Contact> tempContacts;
 
     public ContactListAdapter(Context context) {
@@ -51,7 +48,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
         tempContacts = new ArrayList<>();
     }
 
-
+    // create view holder for contacts list
     @NonNull
     @Override
     public ContactViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -59,12 +56,14 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
         return new ContactViewHolder(itemView);
     }
 
+    // bind the information for the contact list- like username, time, picture and last message
     @Override
     public void onBindViewHolder(@NonNull ContactViewHolder holder, int position) {
         if (contacts != null) {
             final Contact contact = contacts.get(position);
             if(contact.getUser() != null){
                 holder.username.setText(contact.getUser().getUsername());
+                //set image format
                 byte[] imageInBytes = Base64.decode(contact.getUser().getProfilePic(), Base64.DEFAULT);
                 Bitmap bitmap = BitmapFactory.decodeByteArray(imageInBytes,0, imageInBytes.length);
                 holder.profilePic.setImageBitmap(bitmap);
@@ -72,7 +71,6 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
                 holder.username.setText("");
                 holder.profilePic.setImageBitmap(null);
             }
-
             if(contact.getLastMessage() == null){
                 holder.lastMessage.setText("");
                 holder.date.setText("");
@@ -86,14 +84,15 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
         }
     }
 
+    //set the contact list and notify data changes
     public void setContacts(List<Contact> s) {
         contacts = s;
         tempContacts.clear();
         tempContacts.addAll(s);
-//        filterContacts("");
         notifyDataSetChanged();
     }
 
+    //filter contact list from the server only the contact that the user add
     public void filterContacts(String searchText) {
         filteredContactList.clear();
         if (TextUtils.isEmpty(searchText)) {
@@ -111,7 +110,6 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
         contacts.clear();
         contacts.addAll(filteredContactList);
         notifyDataSetChanged();
-        //contacts = tempContacts;
     }
 
     @Override

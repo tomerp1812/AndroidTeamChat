@@ -2,7 +2,6 @@ package com.example.teamchat.api;
 
 import android.content.Context;
 
-import com.example.teamchat.Dao.ContactDao;
 import com.example.teamchat.Dao.Settings.SettingsDB;
 import com.example.teamchat.Dao.Settings.SettingsDao;
 import com.example.teamchat.entities.SettingsEntity;
@@ -20,18 +19,12 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ContactApi {
-    private ContactDao contactDao;
     private Retrofit retrofit;
     private ContactApiService contactApiService;
-
     private Context context;
-
     private String authorizationHeader;
-
     private SettingsDB settingsDB;
-
     private SettingsDao settingsDao;
-
     private List<SettingsEntity> settingsEntityList;
 
     public ContactApi(Context context1, String authorizationHeader) {
@@ -56,6 +49,7 @@ public class ContactApi {
         return authorizationHeader;
     }
 
+    // get all the contact list  from the server
     public CompletableFuture<List<Contact>> onGetContactList() {
         CompletableFuture<List<Contact>> future = new CompletableFuture<>();
         Call<List<Contact>> call = contactApiService.getContacts(authorizationHeader);
@@ -66,20 +60,18 @@ public class ContactApi {
                     future.complete(response.body());
                 }
             }
-
             @Override
             public void onFailure(Call<List<Contact>> call, Throwable t) {
-                future.completeExceptionally(t); // Resolve the future with the failure exception
+                future.completeExceptionally(t);
             }
         });
         return future;
     }
 
-
+    // add new contact to the server and return contactNoMsg object
     public CompletableFuture<ContactNoMsg> onAddContact(String username) {
         CompletableFuture<ContactNoMsg> future = new CompletableFuture<>();
         Username newUser = new Username(username);
-
         Call<ContactNoMsg> call = contactApiService.addContact(authorizationHeader, newUser);
         call.enqueue(new Callback<ContactNoMsg>() {
             @Override
@@ -91,7 +83,6 @@ public class ContactApi {
                     future.completeExceptionally(new Exception("Failed to add contact")); // Resolve the future with an exception
                 }
             }
-
             @Override
             public void onFailure(Call<ContactNoMsg> call, Throwable t) {
                 future.completeExceptionally(t); // Resolve the future with the failure exception
@@ -101,19 +92,4 @@ public class ContactApi {
         return future;
     }
 
-    public void onDeleteContact() {
-        /////need to add id
-        Call<Void> call = contactApiService.deleteContact(authorizationHeader, 1);
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-
-            }
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-
-            }
-        });
-    }
 }
