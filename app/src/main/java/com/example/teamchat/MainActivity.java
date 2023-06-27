@@ -64,11 +64,11 @@ public class MainActivity extends AppCompatActivity {
                             } else {
                                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                             }
-                            Intent intent = new Intent(this, ContactList.class);
-                            // Pass the token to the next activity if needed
-                            intent.putExtra("me", settingsEntities.get(0).getUserConnected());
-                            intent.putExtra("token", settingsEntities.get(0).getAuthorizationHeader());
-                            startActivity(intent);
+//                            Intent intent = new Intent(this, ContactList.class);
+//                            // Pass the token to the next activity if needed
+//                            intent.putExtra("me", settingsEntities.get(0).getUserConnected());
+//                            intent.putExtra("token", settingsEntities.get(0).getAuthorizationHeader());
+//                            startActivity(intent);
                         }
                     });
         }

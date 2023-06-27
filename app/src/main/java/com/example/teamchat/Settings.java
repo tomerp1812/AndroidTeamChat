@@ -79,7 +79,7 @@ public class Settings extends AppCompatActivity {
 
     public void logout(){
         // delete all the DB from the app
-        SettingsDB.deleteDatabase(getApplicationContext());
+//        SettingsDB.deleteDatabase(getApplicationContext());
         ContactDB.deleteDatabase(getApplicationContext());
         ChatDB.deleteDatabase(getApplicationContext());
 

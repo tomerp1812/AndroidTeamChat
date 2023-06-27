@@ -2,7 +2,6 @@ package com.example.teamchat.chats;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
@@ -14,16 +13,11 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.teamchat.Dao.Chat.ChatDB;
-import com.example.teamchat.Dao.ContactDB;
-import com.example.teamchat.Dao.Settings.SettingsDB;
-import com.example.teamchat.MainActivity;
 import com.example.teamchat.R;
 import com.example.teamchat.Settings;
 import com.example.teamchat.adapters.ContactListAdapter;
@@ -49,32 +43,32 @@ public class ContactList extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Logout");
-        builder.setMessage("Are you sure you want to logout?");
-        builder.setPositiveButton("Logout", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Add your logout functionality here
-                SettingsDB.deleteDatabase(getApplicationContext());
-                ContactDB.deleteDatabase(getApplicationContext());
-                ChatDB.deleteDatabase(getApplicationContext());
-
-                // move to the login activity
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-                dialog.dismiss();
-            }
-        });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        builder.setTitle("Logout");
+//        builder.setMessage("Are you sure you want to logout?");
+//        builder.setPositiveButton("Logout", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                // Add your logout functionality here
+//                SettingsDB.deleteDatabase(getApplicationContext());
+//                ContactDB.deleteDatabase(getApplicationContext());
+//                ChatDB.deleteDatabase(getApplicationContext());
+//
+//                // move to the login activity
+//                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//                startActivity(intent);
+//                dialog.dismiss();
+//            }
+//        });
+//        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                dialog.dismiss();
+//            }
+//        });
+//
+//        AlertDialog dialog = builder.create();
+//        dialog.show();
     }
 
     @Override
