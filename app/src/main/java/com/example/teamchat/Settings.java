@@ -61,7 +61,12 @@ public class Settings extends AppCompatActivity {
             if (!input.equals("")) {
                 new Thread(() -> {
                     settingsEntity = settingsDao.index();
-                    settingsEntity.get(0).setUrl(input + "/api/");
+                    if (input.contains("api")) {
+                        settingsEntity.get(0).setUrl(input);
+                    }else{
+                        settingsEntity.get(0).setUrl(input + "/api/");
+                    }
+
                     settingsDao.update(settingsEntity.get(0));
                 }).start();
                 tvSuccess.setText("URL changed successfully");

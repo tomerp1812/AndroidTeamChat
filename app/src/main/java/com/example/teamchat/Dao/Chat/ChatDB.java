@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase;
 
 import com.example.teamchat.entities.messages.Message;
 
-import java.io.File;
+import java.util.concurrent.CompletableFuture;
 
 @Database(entities = {Message.class}, version = 14)
 public abstract class ChatDB extends RoomDatabase {
@@ -27,23 +27,16 @@ public abstract class ChatDB extends RoomDatabase {
     public abstract ChatDao chatDao();
 
     public static void deleteDatabase(Context context) {
-        // Step 1: Close any open instances of the database (if applicable)
-        if (instance != null && instance.isOpen()) {
-            instance.close();
-        }
 
-        // Step 2: Delete the database file
-        File databaseFile = context.getDatabasePath(DATABASE_NAME);
+        ChatDB db = ChatDB.getInstance(context);
+        ChatDao chatDao = db.chatDao();
 
-        if (databaseFile.exists()) {
-            if (databaseFile.delete()) {
-                // Database file deleted successfully
-                instance = null; // Reset the instance
-            } else {
-                // Failed to delete the database file
-            }
-        } else {
-            // Database file does not exist
-        }
+        CompletableFuture.supplyAsync(chatDao::index)
+                .thenAccept(chatList -> {
+                    for (int i = chatList.size() - 1; i >= 0; i--){
+                        chatDao.delete(chatList.get(i));
+                    }
+                });
+
     }
 }
