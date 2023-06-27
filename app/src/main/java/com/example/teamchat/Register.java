@@ -31,7 +31,6 @@ public class Register extends AppCompatActivity {
     public static Context context;
     private static final int GALLERY_REQUEST_CODE = 1;
     private ImageView profilePic;
-
     private Uri selectedImageUri;
 
     @Override
@@ -41,12 +40,14 @@ public class Register extends AppCompatActivity {
         createTermsView();
         context = getApplicationContext();
 
+        //move to login screen
         TextView moveToLogin = findViewById(R.id.toLoginTextViewInRegister);
         moveToLogin.setOnClickListener(view -> {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         });
 
+        //clicking the button, a gallery will open to choose a profile picture
         profilePic = findViewById(R.id.ProfileImageImageView);
         LinearLayout profileImageLayout = findViewById(R.id.ProfileImageLinearLayout);
         profileImageLayout.setOnClickListener(new View.OnClickListener() {
@@ -73,9 +74,11 @@ public class Register extends AppCompatActivity {
 
             TextView errorTextView = findViewById(R.id.errorTextView);
 
+
             String regex = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,16}$";
             Pattern pattern = Pattern.compile(regex);
             Matcher matcher = pattern.matcher(password);
+
             //check registration details
             if (username.length() < 2 || username.length() > 10) {
                 errorTextView.setText("Invalid username");
@@ -93,6 +96,7 @@ public class Register extends AppCompatActivity {
                 errorTextView.setText("Select picture");
                 errorTextView.setVisibility(View.VISIBLE);
             } else {
+                //if everything is correct - create the user in the server
                 UserWithPass user = new UserWithPass(username, password, displayName, transferToBase64());
                 userApi userApi = new userApi(context);
 
@@ -106,7 +110,7 @@ public class Register extends AppCompatActivity {
                         errorTextView.setVisibility(View.VISIBLE);                    }
                 });
             }
-        });//end of click
+        });
     }
 
     // Method to open the gallery
@@ -150,11 +154,6 @@ public class Register extends AppCompatActivity {
             profilePic.setImageURI(selectedImageUri);
         }
     }
-
-    //    public void navigateToLoginScreen() {
-    //        Intent intent = new Intent(this, MainActivity.class);
-    //        startActivity(intent);
-    //    }
 
     public void createTermsView() {
         //creating instances of the edit texts

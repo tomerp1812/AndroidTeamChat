@@ -26,6 +26,7 @@ public abstract class ChatDB extends RoomDatabase {
 
     public abstract ChatDao chatDao();
 
+    //delete all the items from the db
     public static void deleteDatabase(Context context) {
 
         ChatDB db = ChatDB.getInstance(context);

@@ -19,12 +19,9 @@ public class ChatRepository {
     private ChatDao chatDao;
     private ChatApi chatApi;
     private ChatListData chatListData;
-
     private int id;
     private String authorizationHeader;
-
     private ChatDB chatDB;
-    private UserNoPass user;
 
     private List<Message> sentMessages;
 
@@ -39,6 +36,7 @@ public class ChatRepository {
     }
 
 
+    //get all the messages from the server and filter it for specific contact
     public LiveData<List<Message>> getAll(String receiver, String sender) {
         List<Message> filteredMessages = new ArrayList<>();
         CompletableFuture.supplyAsync(() -> chatDao.index())
@@ -79,6 +77,7 @@ public class ChatRepository {
         return chatListData;
     }
 
+    //add new message to the db and server
     public void add(String msg, String receiver) {
         CompletableFuture<Message> future = chatApi.onAddMessage(msg);
         future.thenAccept(message -> {
@@ -91,7 +90,6 @@ public class ChatRepository {
         });
 
     }
-
 
     public void receivedMessage(int id, String created, String sender, String content) {
         new Thread(() -> {
@@ -107,13 +105,7 @@ public class ChatRepository {
         }).start();
     }
 
-//        public UserNoPass getUserDetails (String username){
-//            CompletableFuture<UserNoPass> future = chatApi.onGetUserDetails(username);
-//            future.thenAccept(userNoPass -> {
-//                user = new UserNoPass(userNoPass.getUsername(), userNoPass.getDisplayName(), userNoPass.getProfilePic());
-//            });
-//            return user;
-//        }
+
 
     class ChatListData extends MutableLiveData<List<Message>> {
         public ChatListData() {

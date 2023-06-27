@@ -37,6 +37,7 @@
     <string name="errorMessage">Invalid username or password</string>
     <string name="displayNameTermsMessage">Display name must be between 2 and 10 characters.</string>
     <string name="Logout">logout</string>
+    <string name="for_example_http_10_100_102_85_5000">For example: http://10.100.102.85:5000</string>
     <!--    <string name="userUrl">http://192.168.221.1:5000/api/Users/</string>-->
 
     <!--  from 11.06.2023 strings  -->

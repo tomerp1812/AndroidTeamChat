@@ -65,6 +65,8 @@ public class ChatScreen extends AppCompatActivity {
 
         int id = getIntent().getIntExtra("id", -1);
 
+
+        // change the image format to bitmap
         ImageView imContact = findViewById(R.id.imContact);
         byte[] imageInBytes = Base64.decode(profilePic, Base64.DEFAULT);
         Bitmap bitmap = BitmapFactory.decodeByteArray(imageInBytes, 0, imageInBytes.length);
@@ -74,7 +76,7 @@ public class ChatScreen extends AppCompatActivity {
         RecyclerView lvChat = findViewById(R.id.lvChat);
         lvChat.setLayoutManager(new LinearLayoutManager(this));
 
-
+        // get user detail and retrieve the profilePic
         ChatApi chatApi = new ChatApi(getApplicationContext(),authorizationHeader,1);
         CompletableFuture<UserNoPass> future = chatApi.onGetUserDetails(me);
         future.whenComplete((user, throwable) -> {
@@ -90,11 +92,10 @@ public class ChatScreen extends AppCompatActivity {
 
 
 
-
         TextView tvContact = findViewById(R.id.tvContact);
         tvContact.setText(username);
 
-
+        // sending new message
         ImageButton ibSend = findViewById(R.id.ibSend);
         ibSend.setOnClickListener(view -> {
             EditText etMessage = findViewById(R.id.etMessage);

@@ -18,14 +18,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChatListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
     private static final int VIEW_TYPE_SENDER = 0;
     private static final int VIEW_TYPE_RECEIVER = 1;
     private final LayoutInflater mInflater;
     private List<Message> messages;
-
     private String me;
-
     private Bitmap imContact;
     private Bitmap imMy;
 
@@ -38,7 +35,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         this.imMy = imMy;
     }
 
-
+    // get the type of the message- receiver/sender
     @Override
     public int getItemViewType(int position) {
         Message message = messages.get(position);
@@ -53,16 +50,18 @@ public class ChatListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        //NEED TO CHANGE SENDER/RECEIVER
         View itemView;
         if (viewType == VIEW_TYPE_SENDER) {
+            // move to SentMessageViewHolder. set the design as send message
             itemView = inflater.inflate(R.layout.item_send_message, parent, false);
             return new SentMessageViewHolder(itemView,imMy);
         }
+        // move to ReceivedMessageViewHolder- set the design as receiver message
         itemView = inflater.inflate(R.layout.item_receive_message, parent, false);
         return new ReceivedMessageViewHolder(itemView,imContact);
     }
 
+    // bing the message
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (messages != null) {
@@ -86,12 +85,10 @@ public class ChatListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
-
     public void setMessages(List<Message> s) {
         messages = s;
         notifyDataSetChanged();
     }
-
 
     private static class SentMessageViewHolder extends RecyclerView.ViewHolder {
         private final TextView msg;
@@ -112,7 +109,6 @@ public class ChatListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             }
         }
     }
-
 
     private static class ReceivedMessageViewHolder extends RecyclerView.ViewHolder {
         private final TextView msg;
