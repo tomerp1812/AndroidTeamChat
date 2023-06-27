@@ -19,18 +19,12 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ChatApi {
-
     private Retrofit retrofit;
     private ChatsApiService chatsApiService;
-
     private String authorizationToken;
-
     private int id;
-
     private SettingsDB settingsDB;
-
     private SettingsDao settingsDao;
-
     private List<SettingsEntity> settingsEntityList;
 
     public ChatApi(Context context, String authorizationToken, int id) {
@@ -47,6 +41,7 @@ public class ChatApi {
         this.id = id;
     }
 
+    //the function gets username and return all the user details from the server
     public CompletableFuture<UserNoPass> onGetUserDetails(String username) {
         CompletableFuture<UserNoPass> completableFuture = new CompletableFuture<>();
         Call<UserNoPass> call = chatsApiService.getUserDetails(authorizationToken, username);
@@ -69,10 +64,12 @@ public class ChatApi {
 
         return completableFuture;
     }
+
+
+    // the function sends to the server contact id and returns all the messages between the user and contact
     public CompletableFuture<List<Message>> onGetMessages() {
         CompletableFuture<List<Message>> completableFuture = new CompletableFuture<>();
         Call<List<Message>> call = chatsApiService.getMessages(authorizationToken, id);
-
         call.enqueue(new Callback<List<Message>>() {
             @Override
             public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
@@ -84,7 +81,6 @@ public class ChatApi {
                     completableFuture.completeExceptionally(new Exception("API request failed"));
                 }
             }
-
             @Override
             public void onFailure(Call<List<Message>> call, Throwable t) {
                 // Handle network or other errors
@@ -94,6 +90,7 @@ public class ChatApi {
         return completableFuture;
     }
 
+    // the function get message string- and return the message format from the server
     public CompletableFuture<Message> onAddMessage(String message) {
         CompletableFuture<Message> completableFuture = new CompletableFuture<>();
         MessageString messageString = new MessageString(message);
@@ -111,7 +108,6 @@ public class ChatApi {
                     completableFuture.completeExceptionally(new Exception("API request failed"));
                 }
             }
-
             @Override
             public void onFailure(Call<Message> call, Throwable t) {
                 // Handle network or other errors

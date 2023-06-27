@@ -22,11 +22,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class userApi {
     private Retrofit retrofit;
     private UsersApiService usersApiService;
-
     private SettingsDao settingsDao;
-
     private SettingsDB settingsDB;
-
     private List<SettingsEntity> settingsEntityList;
 
     public userApi(Context context){
@@ -39,9 +36,10 @@ public class userApi {
         usersApiService = retrofit.create(UsersApiService.class);
     }
 
+
+    // register new user -  return UserNoPass object (username, displayName, profilePic)
     public CompletableFuture<UserNoPass> onRegister(UserWithPass user) {
         CompletableFuture<UserNoPass> future = new CompletableFuture<>();
-
         Call<UserNoPass> call = usersApiService.Register(user);
         call.enqueue(new Callback<UserNoPass>() {
             @Override
@@ -53,7 +51,6 @@ public class userApi {
                     future.completeExceptionally(new RuntimeException("Registration failed")); // Complete the future exceptionally
                 }
             }
-
             @Override
             public void onFailure(Call<UserNoPass> call, Throwable t) {
                 future.completeExceptionally(t); // Complete the future exceptionally
@@ -65,9 +62,9 @@ public class userApi {
 
 
 
+    // login to the app  -  the server return the token for the specific user
     public CompletableFuture<ResponseBody> onLogin(String fireBaseToken, UserForLogin user) {
         CompletableFuture<ResponseBody> future = new CompletableFuture<>();
-
         Call<ResponseBody> call = usersApiService.Login(fireBaseToken,user);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -78,7 +75,6 @@ public class userApi {
                     future.completeExceptionally(new RuntimeException("Login failed")); // Complete the future exceptionally
                 }
             }
-
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 future.completeExceptionally(t); // Complete the future exceptionally

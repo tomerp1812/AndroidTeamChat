@@ -28,6 +28,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class ContactList extends AppCompatActivity {
     private ContactViewModel viewModel;
     private Context context;
+    private  ContactListAdapter adapter;
 
     private final BroadcastReceiver messageReceiver = new BroadcastReceiver() {
         @Override
@@ -41,34 +42,9 @@ public class ContactList extends AppCompatActivity {
         }
     };
 
+    // eliminates the option to go back to the login screen
     @Override
     public void onBackPressed() {
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//        builder.setTitle("Logout");
-//        builder.setMessage("Are you sure you want to logout?");
-//        builder.setPositiveButton("Logout", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                // Add your logout functionality here
-//                SettingsDB.deleteDatabase(getApplicationContext());
-//                ContactDB.deleteDatabase(getApplicationContext());
-//                ChatDB.deleteDatabase(getApplicationContext());
-//
-//                // move to the login activity
-//                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//                startActivity(intent);
-//                dialog.dismiss();
-//            }
-//        });
-//        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                dialog.dismiss();
-//            }
-//        });
-//
-//        AlertDialog dialog = builder.create();
-//        dialog.show();
     }
 
     @Override
@@ -79,24 +55,26 @@ public class ContactList extends AppCompatActivity {
         // Register the broadcast receiver
         IntentFilter intentFilter = new IntentFilter("ACTION_MESSAGE_RECEIVED");
         LocalBroadcastManager.getInstance(this).registerReceiver(messageReceiver, intentFilter);
-
         context = getApplicationContext();
-        // Retrieve the token from the intent
+
+        // Retrieve information from the intent
         String me = getIntent().getStringExtra("me");
         String authorizationHeader = getIntent().getStringExtra("token");
+
         viewModel = new ContactViewModel(context, authorizationHeader);
 
+        //set the recyclerView
         RecyclerView lvContactList = findViewById(R.id.lvContactList);
         lvContactList.setClickable(true);
         lvContactList.setLayoutManager(new LinearLayoutManager(this));
 
-        final ContactListAdapter adapter = new ContactListAdapter(this);
+        // set the adapter using viewModel
+        adapter = new ContactListAdapter(this);
         lvContactList.setAdapter(adapter);
         viewModel.get().observe(this, adapter::setContacts);
 
 
-        ///// DATABASE!!!!!
-        //add contact to the list
+        //add new contact to the list
         FloatingActionButton btnAdd = findViewById(R.id.btnAdd);
         btnAdd.setOnClickListener(view -> {
             Intent intent = new Intent(this, AddContact.class);
@@ -105,32 +83,27 @@ public class ContactList extends AppCompatActivity {
             startActivity(intent);
         });
 
-        ///// Settings!!!!!
+        // move to the setting activity
         ImageButton settingsBtn = findViewById(R.id.ibPreferences);
         settingsBtn.setOnClickListener(v -> {
             Intent settingIntent = new Intent(this, Settings.class);
+            settingIntent.putExtra("isContactList",1);
             startActivity(settingIntent);
         });
 
-        //search contacts!
+        //search contacts
         EditText etSearch = findViewById(R.id.etSearch);
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
             @Override
             public void afterTextChanged(Editable s) {
                 String searchText = s.toString();
                 adapter.filterContacts(searchText);
             }
         });
-
 
 //        move to the chat screen
         lvContactList.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
@@ -173,5 +146,10 @@ public class ContactList extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        viewModel.get().observe(this, adapter::setContacts);
 
+    }
 }

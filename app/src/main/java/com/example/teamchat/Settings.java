@@ -21,11 +21,8 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
 import java.util.List;
 
 public class Settings extends AppCompatActivity {
-
     private SettingsDB settingsDB;
-
     private SettingsDao settingsDao;
-
     private List<SettingsEntity> settingsEntity;
 
     @SuppressLint("SetTextI18n")
@@ -33,14 +30,14 @@ public class Settings extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-
+        int isContactList = getIntent().getIntExtra("isContactList",-1);
+        // open the settings DB
         this.settingsDB = SettingsDB.getInstance(getApplicationContext());
         this.settingsDao = settingsDB.settingsDao();
 
         //switch night/light mode
         SwitchMaterial switchBtn = findViewById(R.id.SwitchModeBtn);
         switchBtn.setOnClickListener(v -> {
-
             settingsEntity = settingsDao.index();
             settingsEntity.get(0).setNightMode(!settingsEntity.get(0).getNightMode()); // switch mode
             settingsDao.update(settingsEntity.get(0));
@@ -49,7 +46,6 @@ public class Settings extends AppCompatActivity {
             } else {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             }
-
         });
         TextView tvSuccess = findViewById(R.id.successTextView);
 
@@ -72,8 +68,11 @@ public class Settings extends AppCompatActivity {
                 tvSuccess.setText("URL changed successfully");
                 tvSuccess.setVisibility(View.VISIBLE);
             }
+            // if the user changed the url from the contactList- it will logout
+            if(isContactList == 1){
+                logout();
+            }
         });
-
 
         Button btnLogout = findViewById(R.id.btnLogout);
         btnLogout.setOnClickListener(view ->{
@@ -84,7 +83,6 @@ public class Settings extends AppCompatActivity {
 
     public void logout(){
         // delete all the DB from the app
-//        SettingsDB.deleteDatabase(getApplicationContext());
         ContactDB.deleteDatabase(getApplicationContext());
         ChatDB.deleteDatabase(getApplicationContext());
 

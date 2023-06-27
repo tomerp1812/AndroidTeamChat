@@ -18,7 +18,6 @@ public interface ChatsApiService {
     Call<UserNoPass> getUserDetails(@Header("Authorization") String authorization, @Path("username") String username);
     @GET("Chats/{id}/Messages")
     Call<List<Message>> getMessages(@Header("Authorization") String authorization, @Path("id") int id);
-
     @POST("Chats/{id}/Messages")
     Call<Message> addMessage(@Header("Authorization") String authorization, @Path("id") int id , @Body MessageString msg);
 }

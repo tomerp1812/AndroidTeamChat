@@ -25,6 +25,8 @@ public abstract class ContactDB extends RoomDatabase {
     }
 
     public abstract ContactDao contactDao();
+
+    //delete all the items from the db
     public static void deleteDatabase(Context context) {
         ContactDB db = ContactDB.getInstance(context);
         ContactDao contactDao = db.contactDao();

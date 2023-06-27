@@ -18,10 +18,12 @@ public class AddContact extends AppCompatActivity {
         // Retrieve the token from the intent
         String token = getIntent().getStringExtra("token");
         ContactRepository repository = ContactRepository.getRepository(this, token);
+        //Clicking on the button add new contact to the list
         Button btnAdd = findViewById(R.id.btnAdd);
         btnAdd.setOnClickListener(view ->{
             EditText username = findViewById(R.id.etContent);
             String user = username.getText().toString();
+            // add the contact to the db and server
             repository.add(user);
             finish();
         });
