@@ -164,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
                                     settingsDao.update(settingsEntities.get(0));
                                 } else if (!(settingsEntities.get(0).getUserConnected().equals(edName))) {
                                     //delete the DB-setting(default), contacts, messages
-                                    settingsEntities.get(0).setNightMode(false);
+//                                    settingsEntities.get(0).setNightMode(false);
                                     ContactDB.deleteDatabase(getApplicationContext());
                                     ChatDB.deleteDatabase(getApplicationContext());
                                     //update the new user connection
@@ -202,12 +202,12 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Button btnLogin = findViewById(R.id.LoginButton);
-        btnLogin.setOnClickListener(v -> {
-            Login();
-        });
-    }
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        Button btnLogin = findViewById(R.id.LoginButton);
+//        btnLogin.setOnClickListener(v -> {
+//            Login();
+//        });
+//    }
 }

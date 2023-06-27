@@ -48,6 +48,14 @@ public class ContactApi {
         contactApiService = retrofit.create(ContactApiService.class);
     }
 
+    public void setAuthorizationHeader(String authorizationHeader) {
+        this.authorizationHeader = authorizationHeader;
+    }
+
+    public String getAuthorizationHeader() {
+        return authorizationHeader;
+    }
+
     public CompletableFuture<List<Contact>> onGetContactList() {
         CompletableFuture<List<Contact>> future = new CompletableFuture<>();
         Call<List<Contact>> call = contactApiService.getContacts(authorizationHeader);

@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase;
 
 import com.example.teamchat.entities.contacts.Contact;
 
-import java.io.File;
+import java.util.concurrent.CompletableFuture;
 
 @Database(entities = {Contact.class}, version = 14)
 public abstract class ContactDB extends RoomDatabase {
@@ -26,24 +26,15 @@ public abstract class ContactDB extends RoomDatabase {
 
     public abstract ContactDao contactDao();
     public static void deleteDatabase(Context context) {
-        // Step 1: Close any open instances of the database (if applicable)
-        if (instance != null && instance.isOpen()) {
-            instance.close();
-        }
+        ContactDB db = ContactDB.getInstance(context);
+        ContactDao contactDao = db.contactDao();
 
-        // Step 2: Delete the database file
-        File databaseFile = context.getDatabasePath(DATABASE_NAME);
-
-        if (databaseFile.exists()) {
-            if (databaseFile.delete()) {
-                // Database file deleted successfully
-                instance = null; // Reset the instance
-            } else {
-                // Failed to delete the database file
-            }
-        } else {
-            // Database file does not exist
-        }
+        CompletableFuture.supplyAsync(contactDao::index)
+                .thenAccept(contactList -> {
+                    for (int i = contactList.size() - 1; i >= 0; i--){
+                        contactDao.delete(contactList.get(i));
+                    }
+                });
     }
 
 }

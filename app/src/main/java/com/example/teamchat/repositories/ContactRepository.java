@@ -41,6 +41,7 @@ public class ContactRepository {
 
     public void setAuthorizationHeader(String authorizationHeader){
         this.authorizationHeader = authorizationHeader;
+        contactApi.setAuthorizationHeader(authorizationHeader);
     }
 
     public static ContactRepository getRepository(Context context, String authorizationHeader) {
