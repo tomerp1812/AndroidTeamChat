@@ -1,0 +1,534 @@
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-image: url("profilePictures/backgroundImage.jpg");
+  background-size: cover;
+  font-family: "proxima-nova", "Source Sans Pro", sans-serif;
+  font-size: 1em;
+  letter-spacing: 0.1px;
+  color: rgb(3, 4, 66);
+  text-rendering: optimizeLegibility;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+  -webkit-font-smoothing: antialiased;
+}
+
+#frame {
+  width: 100%;
+  width: 700px;
+  min-width: 360px;
+  max-width: 900px;
+  height: 80vh;
+  min-height: 300px;
+  max-height: 520px;
+  background-image: url("profilePictures/chatScreenBackground.jpg");
+}
+
+
+@media screen and (max-width: 360px) {
+  #frame {
+    width: 100%;
+    height: 100vh;
+  }
+}
+
+#frame #sidepanel {
+  float: left;
+  min-width: 280px;
+  max-width: 340px;
+  width: 40%;
+  height: 100%;
+  background: rgb(3, 4, 66);
+  color: #f5f5f5;
+  overflow: hidden;
+  position: relative;
+}
+
+.addNewContact {
+  color: black;
+}
+
+@media screen and (max-width: 735px) {
+  #frame #sidepanel {
+    /* width: 58px;
+    min-width: 58px; */
+  }
+}
+
+/* logout button */
+.button {
+  right: 0;
+  top: 0;
+  position: absolute;
+
+}
+
+.font_small {
+  font-size: xx-small;
+}
+
+#frame #sidepanel #profile {
+  width: 80%;
+  margin: 10px auto;
+}
+
+
+
+#frame #sidepanel #profile.expanded .wrap {
+  height: 210px;
+  line-height: initial;
+}
+
+#frame #sidepanel #profile.expanded .wrap p {
+  margin-top: 20px;
+}
+
+#frame #sidepanel #profile.expanded .wrap i.expand-button {
+  -moz-transform: scaleY(-1);
+  -o-transform: scaleY(-1);
+  -webkit-transform: scaleY(-1);
+  transform: scaleY(-1);
+  -ms-filter: "FlipH";
+}
+
+#frame #sidepanel #profile .wrap {
+  height: 60px;
+  line-height: 60px;
+  overflow: hidden;
+  -moz-transition: 0.3s height ease;
+  -o-transition: 0.3s height ease;
+  -webkit-transition: 0.3s height ease;
+  transition: 0.3s height ease;
+}
+
+@media screen and (max-width: 735px) {
+  #frame #sidepanel #profile .wrap {
+    height: 55px;
+  }
+}
+
+#frame #sidepanel #profile .wrap img {
+  /* width: 50px;
+  border-radius: 50%; */
+  border-radius: 50%;
+  width: 50px;
+  /* Adjust the width and height according to your needs */
+  height: 50px;
+  object-fit: cover;
+  /* Change the color as desired */
+
+  
+  padding: 3px;
+  border: 2px solid #5b5dee;
+  float: left;
+
+}
+
+@media screen and (max-width: 735px) {
+  #frame #sidepanel #profile .wrap img {
+    /* width: 40px; */
+    margin-left: 4px;
+
+    border-radius: 50%;
+    width: 30px; /* Adjust the width and height according to your needs */
+    height: 30px;
+    object-fit: cover;
+    border: 3px solid #000; /* Change the color as desired */
+  }
+}
+
+#frame #sidepanel #profile .wrap p {
+  float: left;
+  margin-left: 15px;
+}
+
+@media screen and (max-width: 735px) {
+  #frame #sidepanel #profile .wrap p {
+    display: none;
+  }
+}
+
+
+
+@media screen and (max-width: 735px) {
+  #frame #sidepanel #profile .wrap i.expand-button {
+    display: none;
+  }
+}
+
+
+/*search label*/
+#frame #sidepanel #search {
+  border-top: 1px solid rgba(17, 19, 131, 0.53);
+  border-bottom: 1px solid rgba(17, 19, 131, 0.53);
+  font-weight: 300;
+}
+
+
+#frame #sidepanel #search label {
+  position: absolute;
+  margin: 10px 0 0 20px;
+}
+
+#frame #sidepanel #search input {
+  font-family: "proxima-nova", "Source Sans Pro", sans-serif;
+  padding: 10px 0 10px 15px;
+  width: 100%;
+  border: none;
+  background: rgba(17, 19, 131, 0.53);
+  color: #f5f5f5;
+}
+
+.boldFont {
+  font-weight: bold;
+}
+
+.font_medium {
+  font-size: small;
+}
+
+#frame #sidepanel #search input::-webkit-input-placeholder {
+  color: #f5f5f5;
+}
+
+#frame #sidepanel #contacts ul {
+  padding-left: 0;
+}
+
+#frame #sidepanel #contacts ul li.contact:nth-child(2) img {
+  clear: left;
+}
+
+#frame #sidepanel #contacts {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  height: calc(100% - 169px);
+  overflow-y: auto;
+}
+
+#frame #sidepanel #contacts ul li.contact {
+  position: relative;
+  padding: 10px 0 15px 0;
+  font-size: 0.9em;
+  cursor: pointer;
+  border-bottom: 1px solid #ccc;
+  /* add a border to separate contacts */
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
+  /* add a box-shadow to give the contact depth */
+}
+
+
+.selected {
+  background: rgba(17, 19, 131, 0.53);
+
+}
+
+#frame #sidepanel #contacts ul li.contact:hover:not(.selected) {
+  background-color: #080638;
+  /* lighter shade of the original background color */
+}
+
+#frame #sidepanel #contacts ul li.contact .wrap {
+  display: flex;
+  align-items: center;
+  width: 88%;
+  margin-left: 10px;
+  min-height: 27px;
+  position: relative;
+}
+
+
+#frame #sidepanel #contacts ul li.contact .wrap img {
+  /* width: 40px;
+  border-radius: 50%; */
+  /* float: left; */
+  margin-right: 10px;
+
+  border-radius: 50%;
+  width: 40px;
+  /* Adjust the width and height according to your needs */
+  height: 40px;
+  object-fit: cover;
+  border: 3px solid #2c0dde;
+  /* Change the color as desired */
+}
+
+/* costumize scroll bar for contacts */
+#frame #sidepanel #contacts::-webkit-scrollbar {
+  width: 6px;
+}
+
+#frame #sidepanel #contacts::-webkit-scrollbar-track {
+  background-color: #f5f5f5;
+  border-radius: 3px;
+}
+
+#frame #sidepanel #contacts::-webkit-scrollbar-thumb {
+  background-color: rgba(17, 19, 131, 0.53);
+  border-radius: 3px;
+}
+
+#frame #sidepanel #contacts::-webkit-scrollbar-thumb:hover {
+  background-color: #2c3e50;
+}
+
+#frame #sidepanel #contacts ul li.contact .wrap .meta {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#frame #sidepanel #contacts ul li.contact .wrap .meta p {
+  margin: 0;
+}
+
+#frame #sidepanel #bottom-bar {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}
+
+/*Add contents button*/
+#frame #sidepanel #bottom-bar button {
+  float: left;
+  border: none;
+  width: 100%;
+  padding: 10px 0;
+  background: rgba(17, 19, 131, 0.53);
+  color: #f5f5f5;
+  cursor: pointer;
+  font-size: 0.85em;
+  font-family: "proxima-nova", "Source Sans Pro", sans-serif;
+}
+
+
+#frame .content {
+  min-width: 60%;
+  max-width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+@media screen and (max-width: 735px) {
+  #frame .content {
+    /* width: calc(100% - 58px); */
+    min-width: 300px !important;
+  }
+}
+
+@media screen and (min-width: 900px) {
+  #frame .content {
+    width: calc(100% - 340px);
+  }
+}
+
+/*contact-profile*/
+#frame .content .contact-profile {
+  width: 100%;
+  height: 60px;
+  line-height: 60px;
+  background: #f5f5f5;
+
+}
+.deleteButton{
+  float: right;
+  height: 40px;
+
+  margin-right: 5px;
+}
+/*profile image position*/
+#frame .content .contact-profile img {
+  /* width: 40px;
+  border-radius: 50%;
+   */
+  border-radius: 50%;
+  width: 40px;
+  /* Adjust the width and height according to your needs */
+  height: 40px;
+  object-fit: cover;
+  border: 3px solid #000;
+  /* Change the color as desired */
+
+  float: left;
+  margin: 9px 12px 0 9px;
+}
+
+.contactBackgroundColor {
+  color: #000000;
+}
+
+#frame .content .messages {
+  overflow-y: auto;
+  height: 80%;
+  max-height: 400px;
+  padding-bottom: 15px;
+  scroll-behavior: smooth; /* Enable smooth scrolling */
+  scroll-snap-type: y mandatory; /* Enable snapping to scroll container */
+}
+
+#frame .content .messages ul {
+  scroll-snap-align: end; /* Snap each message to the bottom of the scroll container */
+}
+
+#frame .content .messages ul li {
+  font-size: 0.9em;
+}
+
+
+
+/* my messages */
+#frame .content .messages ul li.sent {
+  clear: both; /* Clear the float from previous messages */
+}
+
+#frame .content .messages ul li.sent img {
+  float: left;
+  margin: 6px 0 0 8px;
+}
+
+#frame .content .messages ul li.sent p {
+  background: rgb(3, 4, 66);
+}
+
+/*design of send massage*/
+/* Friend's messages */
+#frame .content .messages ul li.replies {
+  clear: both; /* Clear the float from previous messages */
+}
+
+#frame .content .messages ul li.replies img {
+  float: right; /* Align the friend's image to the left */
+  margin: 6px 8px 2px 0;
+}
+
+#frame .content .messages ul li.replies p {
+  background: #2aa066;
+  float: right;
+}
+
+#frame .content .messages ul li.replies:last-child {
+  margin-bottom: 50px;
+}
+
+
+
+/*design of received massage*/
+#frame .content .messages ul li p {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 30px;
+  max-width: 80%;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  border: 1px solid #ccc;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+
+  
+}
+
+#frame .content .messages ul li img {
+  border-radius: 50%;
+  width: 30px;
+  /* Adjust the width and height according to your needs */
+  height: 30px;
+  object-fit: cover;
+  /* Change the color as desired */
+
+  
+  padding: 3px;
+  border: 2px solid #5b5dee;
+  float: left;
+}
+
+
+/* Customize scrollbar for messages*/
+#frame .content .messages::-webkit-scrollbar {
+  width: 10px;
+}
+
+#frame .content .messages::-webkit-scrollbar-track {
+  background-color: #f5f5f5;
+}
+
+#frame .content .messages::-webkit-scrollbar-thumb {
+  background-color: rgb(3, 4, 66);
+  border-radius: 5px;
+}
+
+#frame .content .messages::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+
+
+/*position of input text and button send*/
+#frame .content .message-input {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  z-index: 99;
+}
+
+/*write a massage input-design*/
+#frame .content .message-input .wrap input {
+  font-family: "proxima-nova", "Source Sans Pro", sans-serif;
+  float: left;
+  border: none;
+  width: calc(100% - 90px);
+  padding: 14px 32px 10px 8px;
+  font-size: 0.8em;
+  color: rgb(3, 4, 66);
+}
+
+
+/*send button*/
+#frame .content .message-input .wrap button {
+  float: right;
+  border: none;
+  width: 90px;
+  padding: 12px 0;
+  cursor: pointer;
+  background: rgb(3, 4, 66);
+  color: #f5f5f5;
+}
+
+
+.listClass {
+  padding-left: 2%;
+  padding-top: 2%;
+  padding-bottom: 1%;
+}
+
+.messageMargin {
+  margin: 5px 3px 5px 3px;
+}
+
+/* welcome message for no friends */
+
+.welcome-message {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 20px;
+  text-align: center;
+  font-size: 18px;
+  color: #666;
+  background-image: url("profilePictures/chatScreenBackground.jpg");
+}
+
+.welcome-message h2 {
+  font-size: 32px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.preview {
+  font-size: 0.6em;
+}

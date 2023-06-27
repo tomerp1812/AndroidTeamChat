@@ -1,0 +1,72 @@
+.loginImage {
+   width: 50px;
+}
+
+
+* {
+   color: rgba(241, 239, 239, 0.94);
+   font-family: system-ui;
+}
+
+/*Places the text in the center of the page*/
+.middlePosition {
+   text-align: center;
+   align-self: center;
+}
+
+.login-box {
+   width: 350px;
+   background-color: rgba(12, 12, 12, 0.71);
+   padding: 30px;
+   border-radius: 10px;
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   margin: 0 -50% 0 0;
+   transform: translate(-50%, -50%)
+
+}
+
+.marginSmall {
+   margin-bottom: 5%;
+}
+
+.marginMedium {
+   margin-bottom: 7%;
+}
+
+.marginBig {
+   margin-bottom: 15%;
+}
+
+
+
+html {
+   background-image: url("../profilePictures/backgroundImage.jpg");
+   background-size: cover;
+ }
+ 
+ .background {
+   background-image: url("../profilePictures/backgroundImage.jpg");
+   color: rgba(241, 239, 239, 0.94);
+   background-size: cover; }
+
+.bolder {
+   font-weight: bold;
+}
+
+.font_big {
+   font-size: xxx-large;
+}
+.font_error{
+   font-size: small;
+   color: red;
+   text-align: center;
+   
+}
+input:invalid {
+   border:4px solid rgba(226, 164, 218, 0.565);
+ }
+ 
