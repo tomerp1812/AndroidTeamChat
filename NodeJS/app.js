@@ -40,7 +40,7 @@ mongoose.connect(process.env.CONNECTION_STRING, {
   console.log("Error connecting to MongoDB:", error);
 });
 
-
+app.use(express.static('public'));
 // Set up routes
 app.use('/api/Users', users);
 app.use('/api/Chats', chats);
